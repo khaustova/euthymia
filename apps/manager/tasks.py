@@ -25,6 +25,30 @@ def add_feedback(name, email, message):
     return f'Added a new feedback {message[:50]}'
 
 
+@shared_task(name='reply_feedback')
+def reply_feedback(name, email, reply):
+    """
+    Отправляет ответ на фидбек.
+    """
+    subject = 'Subject' 
+    message = get_template("manager/emails/reply_feedback.html").render(
+        {'name': name, 'reply': reply}
+    )
+    connection = get_connection()
+    connection.open()
+    mail = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[email],
+        reply_to=[settings.EMAIL_HOST_USER]
+    )
+    mail.content_subtype = 'html'
+    mail.send()
+    connection.close()
+    return f'Feedback was sent.'
+
+
 @shared_task(name='send_notification')
 def send_notification(article_pk):
     """

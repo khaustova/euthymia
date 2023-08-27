@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.db import transaction
 from .models import EmailSubscription, Feedback
+from .tasks import reply_feedback
 
 @admin.register(EmailSubscription)
 class EmailSubscriptionAdmin(admin.ModelAdmin):
@@ -25,8 +27,5 @@ class FeedbackAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if obj.reply:
             obj.reply_status = True
+            transaction.on_commit(lambda: reply_feedback.delay(obj.name, obj.email, obj.reply))
         super().save_model(request, obj, form, change)
-
-
-    
-    
