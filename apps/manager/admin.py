@@ -1,13 +1,5 @@
-from email.headerregistry import ContentTypeHeader
 from django.contrib import admin
-from django.shortcuts import render
-from django.urls import path
-from django.urls import reverse
-from django.utils.safestring import mark_safe
-from django.utils.html import format_html
-from django.contrib.contenttypes.models import ContentType
 from .models import EmailSubscription, Feedback
-from django.template.response import TemplateResponse
 
 @admin.register(EmailSubscription)
 class EmailSubscriptionAdmin(admin.ModelAdmin):

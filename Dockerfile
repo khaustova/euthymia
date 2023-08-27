@@ -20,6 +20,15 @@ RUN pip install -r requirements.txt
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g' /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # copy project
 COPY . /app
+
+# run entrypoint.sh
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
 

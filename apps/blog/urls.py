@@ -1,5 +1,4 @@
-from django.conf import settings
-from django.urls import path, re_path
+from django.urls import path
 from blog.views import (
     ArticleView, 
     ArticleDetailView, 
@@ -9,7 +8,7 @@ from blog.views import (
     subscribe_form, 
     feedback_form
 )
-from django.views.static import serve
+
 app_name = 'blog'
 
 urlpatterns = [

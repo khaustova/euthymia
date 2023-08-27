@@ -6,6 +6,7 @@ from .forms import CommentForm, SubscribeForm, FeedbackForm
 from .search import search
 from manager.tasks import add_email, add_feedback
 
+
 def feedback_form(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
@@ -140,25 +141,4 @@ class SearchView(ListView):
         if query is not None:
             return search(query)
         return
-    
-    
-    # model = Article
-    # template_name = 'blog/search.html'
-    # paginate_by = 10
-    # paginate_orphans = 5
-
-    # def get_context_data(self):
-    #     context_data = super().get_context_data()
-    #     context_data['articles'] = {}
-    #     query = self.request.GET.get('query')
-    #     search_results = Article.search_results.search(query)
-    #     for each in search_results:
-    #         article_text = each.body
-    #         query_start_ind, query_end_ind = re.search(query, article_text).span()
-    #         raw_text = article_text[query_end_ind:query_end_ind + 500]
-    #         print(raw_text)
-    #         article_summary = re.sub('<.*>', '', raw_text)
-    #         print(article_summary)
-    #         context_data['articles'][each] = article_summary
-    #     return context_data
-    
+   

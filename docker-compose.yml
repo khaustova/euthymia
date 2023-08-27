@@ -60,12 +60,9 @@ services:
       - .env
     ports:
       - 8888:8888
-    volumes:
-      - fldata:/etc/db/
     depends_on:
       - rabbitmq
     
 volumes:
   pgdata: {}
   esdata: {}
-  fldata: {}

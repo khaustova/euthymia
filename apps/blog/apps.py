@@ -7,5 +7,5 @@ class BlogConfig(AppConfig):
     name = 'blog'
     verbose_name = 'Блог'
     
-    # def ready(self):
-    #     connections.configure(**settings.ELASTICSEARCH_DSL)
+    def ready(self):
+        connections.configure(**settings.ELASTICSEARCH_DSL)

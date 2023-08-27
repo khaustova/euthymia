@@ -1,7 +1,6 @@
 {% load blog_tags %}
 
 {% for article in articles %}
-{% if article.status == 'published' %}
 <div class="summary article-block">
     <div class="summary__image-block">
         <img src="{{ article.image.url }}" class="summary__image">
@@ -20,5 +19,4 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% endfor %}

@@ -105,3 +105,4 @@ GitHub.sublime-settings
 
 # Docker #
 docker-compose.prod.yml
+sent_emails
