@@ -32,7 +32,6 @@ prompt-toolkit==3.0.39
 psycopg2==2.9.6
 python-dateutil==2.8.2
 pytz==2023.3
-regex==2023.6.3
 six==1.16.0
 soupsieve==2.4.1
 sqlparse==0.4.4
