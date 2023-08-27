@@ -8,6 +8,10 @@ from manager.tasks import add_email, add_feedback
 
 
 def feedback_form(request):
+    """
+    Получает заполненную форму обратной связи и передаёт данные из неё в задачу,
+    отвечающую за добавление их в базу данных.
+    """
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
@@ -19,6 +23,10 @@ def feedback_form(request):
 
 
 def subscribe_form(request):
+    """
+    Получает заполненную форму подписки на блог и передаёт данные из неё в задачу,
+    отвечающую за добавление email в базу данных.
+    """
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():

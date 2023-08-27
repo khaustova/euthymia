@@ -8,6 +8,10 @@ from imagekit.processors import ResizeToFill
 
 
 class UserProfile(models.Model):
+    """
+    Модель, расширяющая стандартную модель пользователя возможностью добавления
+    аватара.
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = ProcessedImageField(
         upload_to='avatars/', 

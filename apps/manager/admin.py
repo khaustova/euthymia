@@ -3,6 +3,7 @@ from django.db import transaction
 from .models import EmailSubscription, Feedback
 from .tasks import reply_feedback
 
+
 @admin.register(EmailSubscription)
 class EmailSubscriptionAdmin(admin.ModelAdmin):
     list_display = ('email', 'subscription_date')
@@ -15,7 +16,7 @@ class FeedbackAdmin(admin.ModelAdmin):
     list_filter = ('reply_status',)
     fields = ('name', 'email', 'message'[:50], 'reply')
 
-    change_form_template = 'manager/feedback_reply_form.html'
+    change_form_template = 'admingo/feedback_reply_form.html'
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}

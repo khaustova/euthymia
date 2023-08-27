@@ -1,16 +1,12 @@
-from django.db import transaction
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.urls import path
-from mptt.admin import DraggableMPTTAdmin
-from manager.tasks import send_notification
 from .models import Notification
 
 
 @admin.action(description="Отметить как прочитанное")
 def make_read(modeladmin, request, queryset):
+    """Действие для отметки всех сообщений модели Уведомления прочитанными"""
     queryset.update(read=True)
 
 
@@ -33,10 +29,7 @@ class NotificationAdmin(admin.ModelAdmin):
         self.message_user(request, "Все уведомления отмечены как прочитанные.")
         return HttpResponseRedirect("../")
 
-    
     def delete_all(self, request):
         Notification.objects.all().delete()
         self.message_user(request, "Все уведомления удалены.")
         return HttpResponseRedirect("../")
-    
-    

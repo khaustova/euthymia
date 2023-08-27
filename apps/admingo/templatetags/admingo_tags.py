@@ -25,15 +25,23 @@ from ..models import Notification
 
 register = template.Library()
 
+
 @register.simple_tag
 def get_notifications_message(list):
+    """
+    Вовзращает сообщение из уведомления.
+    """
     message = list[-2]
     soup = BeautifulSoup(message, 'lxml')
     notification = soup.find('a')
     return format_html(notification.text)
 
+
 @register.simple_tag
 def get_notifications_status(notification):
+    """
+    Возвращает статус уведомления, как прочитанное или непрочитанное.
+    """
     field_read = notification[-1].split()
     if field_read[-1].startswith('alt="False"'):
         return False
@@ -42,6 +50,9 @@ def get_notifications_status(notification):
 
 @register.tag(name="notifications_result_list")
 def notifications_result_list_tag(parser, token):
+    """
+    Возвращает шаблон для страницы с уведомлениями.
+    """
     return InclusionAdminNode(
         parser,
         token,
@@ -50,8 +61,12 @@ def notifications_result_list_tag(parser, token):
         takes_context=False,
     )
 
+
 @register.simple_tag
 def get_notifications() -> int:
+    """
+    Возвращает количество непрочитанных уведомлений.
+    """
     unread_notifications = Notification.objects.filter(read=False)
     return unread_notifications.count()
 
