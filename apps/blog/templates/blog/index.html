@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %} Главная страница {% endblock %}
+
+{% block info %}
+{% url 'blog:index' as index %}
+<a href="{{ index }}" class="{% if request.path == index %} active-sort {% endif %}">
+    <span class="material-symbols-outlined sort-icon middle-icon">calendar_month</span> По дате</a>
+<a href="{{ index }}hot" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
+    <span class="material-symbols-outlined sort-icon middle-icon">local_fire_department</span> По популярности</a>
+{% endblock %}
+
+{% block content %}
+{% include 'blog/includes/articles_summary.html' %}
+{% endblock %}
+
+{% block pagination %}
+{% include 'blog/includes/pagination.html' %}
+{% endblock %}

@@ -1,0 +1,117 @@
+{% load static %}
+{% load blog_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block description %}
+    {% endblock %}
+    <title>{% block title %} {% endblock %}</title>
+    <link href="{% static 'blog/css/base.css' %}" rel="stylesheet">
+    <link href="{% static 'blog/css/navigation.css' %}" rel="stylesheet">
+    <link href="{% static 'blog/css/articles.css' %}" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'blog/img/icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'blog/img/icons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'blog/img/icons/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'blog/img/icons/site.webmanifest' %}">
+
+    {% block extra_head %}{% endblock %}
+    <link href="{% static 'blog/css/responsive.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="logo">
+                <a href="{% url 'blog:index' %}"><img src="{% static 'blog/img/logo.png' %}" class="logo__img"></a>
+            </div>
+            <div class="top-navigation">
+                    <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openSearch()">search</span>
+                    <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openSubscribe()">email</span>
+                    <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openMenu()">menu</span>
+            </div>
+        </header>
+        <aside>
+            <nav class="sidebar-content menu">
+                <strong>
+                    <span class="sidebar__title">
+                        <span class="material-symbols-outlined navigation-icon middle-icon">bookmark</span> Навигация</span></strong>
+                <hr class="sidebar__line">
+                <ul class="navigation">    
+                    {% get_categories as categories %} 
+                    {% for category in categories %}
+                        {% if category.children.all|length  %}
+                        <li class="navigation__item">
+                            <a href="javascript:void(0)" class="sidebar__link">{{ category }} <i class="fa fa-angle-down angle-down" aria-hidden="true"></i></a>
+                            <ul class="navigation__dropdown-container">
+                                {% for child in category.children.all %}
+                                <li class="navigation__dropdown-item"><a href="{{ child.get_absolute_url }}" class="sidebar__link">{{ child.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% elif not category.is_child_node %}
+                            <li class="navigation__item"><a href="{{ category.get_absolute_url }}" class="sidebar__link">{{ category.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="navigation__item"><a href="#" class="sidebar__link">О сайте</a></li>
+                    <li class="navigation__item"><a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">Обратная связь</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-content search">
+                <form action="{% url 'blog:search' %}" method="get" class="search__form">
+                    <input type="text" name="query" class="search-field" required=True placeholder="Поиск...">
+                    <button type="submit" class="search-button"></button>
+                </form>
+            </div>
+            <div class="sidebar-content tags">
+                <strong><span class="sidebar__title"><span class="material-symbols-outlined navigation-icon middle-icon">label</span> Теги</span></strong>
+                <hr class="sidebar__line">
+                <div class="tags-content">
+                    {% get_tags as tags %}
+                    {% for tag in tags %}
+                    <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% subscribe_form %}
+        </aside>
+        <main>
+            <div class="info">
+                {% block info %}{% endblock %}
+            </div>
+            <div class="feedback-modal">
+                <div class="feedback-modal__inner">
+                    <div class="feedback__info">
+                        <span class="material-symbols-outlined button-icon middle-icon feedback__close" onclick="closeFeedbackModal()">close</span>
+                        <h2>Обратная связь</h2>
+                        <p class="feedback__text">Если вы хотите связаться со мной, то можете использовать следующую форму обратной связи:</p>
+                    </div>
+                    {% feedback_form %}
+                </div>
+            </div>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            {% block pagination %}{% endblock %}
+            <span>&#169 euthymia.ru, 2023. Все права защищены</span>
+        </footer>
+    </div>
+    
+    <button class="back-to-top back-to-top_hide">
+        <span class="material-symbols-outlined back-to-top-icon">
+            arrow_upward
+        </span>
+    </button>
+
+    <script src="{% static 'blog/js/navigation.js' %}" defer></script>
+    <script src="{% static 'blog/js/modal.js' %}" defer></script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

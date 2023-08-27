@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load blog_tags %}
+
+{% block title %} Поиск {% endblock %}
+
+{% block content %}
+{% if articles %}
+    {% get_results_word articles|length 0 as find_word %}
+    {% get_results_word articles|length 1 as results_word %}
+    <div class="search-results__info">
+        По запросу «<b>{{ request.GET.query }}</b>» {{ find_word }} {{ articles|length }} {{ results_word }}:
+    </div>
+    {% for article in articles %}
+    <div class="article article-block">
+        <a href="{{ article.get_absolute_url }}" class="search-results__title">{{ article.title }}</a>
+        {{ article.body|safe|truncatechars:280 }} <a href="{{ article.get_absolute_url }}">читать далее</a></p>
+    </div>
+    {% endfor %}
+{% else %}
+<div class="bunny-message">
+    <div class="bunny-message__bubble">
+        По Вашему запрос ничего не найдено! 😢<br>Попробуйте поискать ещё раз.<br>
+        <a href="{{ request.META.HTTP_REFERER }}">Назад</a>
+    </div>
+    <div><img src="{% static 'blog/img/nothing_found.png' %}"></div>
+</div>
+{% endif %}
+{% endblock %}

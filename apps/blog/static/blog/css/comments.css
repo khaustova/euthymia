@@ -1,0 +1,120 @@
+.comment-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 150px repeat(2, auto);
+    row-gap: 8px;
+    column-gap: 10px;
+    margin: 5px 0 15px 0;
+}
+
+.admin-comment-form {
+    row-gap: 4px;
+}
+
+.comment__info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-form__name-field {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.comment-form__email-field {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.comment-form__comment-field {
+    grid-row: 1;
+    grid-column: span 3;
+    font-size: 1.7rem;
+}
+
+.comment-field::placeholder {
+    font-size: 1.7rem;
+}
+
+.comment-form__post-button {
+    grid-row: 3;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    background: var(--color-primary);
+    padding: 8px;
+}
+
+.comments__tree {
+    max-width: 96vw;
+}
+
+.comments__each {
+    display: grid;
+    grid-template-columns: 55px auto auto;
+    grid-template-rows: 30px auto 30px;
+    background:var(--color-primary);
+    opacity: 0.9;
+    border-radius: 15px;
+    padding: 12px 15px 3px 15px;
+    margin-bottom: 10px;
+}
+
+.comments__number {
+    color: var(--color-accent);
+}
+
+.comments__line {
+    margin-bottom: 15px;
+}
+
+.comments__tab {
+    margin-left: 40px;
+}
+
+.comments__parent {
+    display: none;
+}
+
+.comments__date {
+    font-size: 1.2rem;
+    color: rgb(151, 151, 151);
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: end;
+}
+
+.comments__avatar-block {
+    grid-column: 1;
+    grid-row: span 3;
+    margin-top: 10px;
+}
+
+.comments__avatar {
+    font-size: 3rem;
+}
+
+.comments__name {
+    color: var(--color-accent);
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.comments__guest-name {
+    color: var(--color-text);
+}
+
+.comments__body {
+    grid-column: 2/4;
+    grid-row: 2;
+    margin-left: 5px;
+}
+
+.comments__reply {
+    color: var(--color-accent);
+    grid-row: 3;
+    grid-column: 3;
+    justify-self: end;
+    padding-bottom: 10px;
+}

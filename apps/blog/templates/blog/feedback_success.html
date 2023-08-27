@@ -1,0 +1,17 @@
+{% extends 'blog/index.html' %}
+{% load static %}
+
+{% block title %} Спасибо за обратную связь! {% endblock %}
+
+{% block info %}
+{% endblock %}
+
+{% block content %}
+<div class="bunny-message">
+    <div class="bunny-message__bubble">
+        Спасибо за сообщение! 🌸<br>Я обязательно отвечу Вам в ближайшее время!<br>
+        <a href="{{ request.META.HTTP_REFERER }}">Назад</a>
+    </div>
+    <div><img src="{% static 'blog/img/thanks.png' %}"></div>
+</div>
+{% endblock %}

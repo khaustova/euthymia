@@ -1,0 +1,17 @@
+{% extends 'blog/index.html' %}
+{% load static %}
+
+{% block title %} Спасибо за подписку! {% endblock %}
+
+{% block info %}
+{% endblock %}
+
+{% block content %}
+<div class="bunny-message">
+    <div class="bunny-message__bubble">
+        Спасибо за подписку! 🌸<br>На указанную почту будут приходить уведомления о новых записях, но Вы можете отписаться в любой момент. <br>
+        <a href="{{ request.META.HTTP_REFERER }}">Назад</a>
+    </div>
+    <div><img src="{% static 'blog/img/thanks.png' %}"></div>
+</div>
+{% endblock %}

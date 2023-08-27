@@ -1,0 +1,62 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load blog_tags %}
+
+{% block title %} {{ article.title }} {% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
+<link href="{% static 'blog/css/comments.css' %}" rel="stylesheet">
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script>
+{% endblock %}
+
+{% block description %}
+<meta name="description" content="{{ article.summary }}">
+<meta name="keywords" content="{{ article.keywords }}">
+{% endblock %}
+
+
+{% block info %}
+<div class="breadcrumbs">
+    <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная</a>&nbsp;&nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;
+    <a href="{% url 'blog:category' slug=article.category.slug %}" class="article__link">{{ article.category }}</a>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="article article-block">
+        <div class="article__date">
+            <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
+        </div>
+        <h1 class="article__title">{{ article.title }}</h1>
+        {{ article.body|safe }}
+        <div class="article__info">
+            <div class="article__prev">
+            {% if article.prev_article %}
+                <a href="{{ article.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> Назад</a>
+            {% endif %}
+            </div>
+            <div class="article__next">
+            {% if article.next_article %}
+                <a href="{{ article.next_article.get_absolute_url }}" class="article__navigation-button">Дальше <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            {% endif %}
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="article-block">Теги:
+        {% for tag in article.tags.all %}
+        <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
+        {% endfor %}
+    </div>
+{% include 'blog/includes/comments.html' %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'blog/js/comments.js' %}" defer></script>
+<script>
+  hljs.highlightAll();
+</script>
+{% endblock %}
