@@ -3,14 +3,13 @@ version: '3'
 services:
   web:
     build: .
-    container_name: django
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/usr/src/app
     ports:
       - 8000:8000
     env_file:
-      - .env
+      - .env.example
     depends_on:
       - elasticsearch
       - postgres
@@ -27,18 +26,18 @@ services:
   postgres:
     image: postgres:15.3
     env_file:
-      - .env
-    container_name: postgres
+      - .env.example
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3.12.2
+    container_name: rabiitmq
     ports:
       - 5672:5672
     hostname: rabbit1
     env_file:
-      - .env
+      - .env.example
 
   celery:
     build: .
@@ -47,7 +46,7 @@ services:
     volumes:
       - .:/usr/src/app
     env_file:
-      - .env
+      - .env.example
     depends_on:
       - postgres
       - rabbitmq
@@ -57,7 +56,7 @@ services:
     image: mher/flower:0.9.5
     command: celery flower --persisten=True
     env_file:
-      - .env
+      - .env.example
     ports:
       - 8888:8888
     depends_on:

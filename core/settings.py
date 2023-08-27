@@ -12,7 +12,7 @@ path.append(str(BASE_DIR / 'apps'))
 env = Env(
     DEBUG=(bool, False)
 )
-Env.read_env(BASE_DIR / '.env')
+Env.read_env(BASE_DIR / '.env.example')
 
 SECRET_KEY = env('SECRET_KEY')
 
