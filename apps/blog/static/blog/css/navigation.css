@@ -71,11 +71,32 @@
 
 .navigation {
     list-style: none;
-    margin: 10px 15px 10px 15px;
+    margin: 10px 5px;
+}
+
+.navigation__content {
+    line-height: 2.3rem;
+}
+
+.content__item {
+    padding-left: 10px;
+}
+
+.content__title {
+    font-size: 1.2rem;
 }
 
 .navigation__item {
-    margin: 10px 0 10px 0;
+    margin: 5px 0;
+}
+
+.navigation__icon {
+    font-size: 22px;
+}
+
+.navigation__link-block {
+    display: grid;
+    grid-template-columns: 40px 1fr;
 }
 
 .navigation__dropdown-container {

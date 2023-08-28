@@ -1,4 +1,6 @@
 from django import template
+from django.utils.html import escape
+from django.utils.safestring import SafeText, mark_safe
 from ..models import Article, Category, Tag
 from ..forms import SubscribeForm, FeedbackForm
 
@@ -11,6 +13,43 @@ def get_categories():
     Возвращает все категории.
     """
     return Category.objects.all()
+
+
+@register.simple_tag
+def get_first_article(category):
+    subcategories = [cat.name for cat in category.get_children()]
+    article = Article.objects.filter(category__name__in=subcategories).first()
+    article_url = article.get_absolute_url()
+    return article_url 
+
+
+@register.simple_tag
+def get_content_links(article):
+    subcategory = article.category
+    content_links = {}
+    subcategories = [ cat.name for cat in subcategory.get_siblings(include_self=True)]
+    for subcategory in subcategories:
+        content_links[subcategory] = Article.objects.filter(category__name=subcategory)
+    return content_links
+
+
+@register.simple_tag
+def get_category(article):
+    """
+    Возвращает все теги.
+    """
+    return article.category.get_root()
+
+@register.filter
+def cut_number(text: str) -> SafeText:
+    text_words = escape(text).split()
+    
+    if not len(text_words):
+        return ''
+
+    text = ' '.join([word for word in text_words[1:]])
+    
+    return mark_safe(text)
 
 
 @register.simple_tag

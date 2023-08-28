@@ -3,6 +3,10 @@
 
 {% block title %} Главная страница {% endblock %}
 
+{% block sidebar %}
+{% include 'blog/includes/sidebar_index.html' %}
+{% endblock %}
+
 {% block info %}
 {% url 'blog:index' as index %}
 <a href="{{ index }}" class="{% if request.path == index %} active-sort {% endif %}">

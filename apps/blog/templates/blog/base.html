@@ -56,48 +56,7 @@
             </div>
         </header>
         <aside>
-            <nav class="sidebar-content menu">
-                <strong>
-                    <span class="sidebar__title">
-                        <span class="material-symbols-outlined navigation-icon middle-icon">bookmark</span> Навигация</span></strong>
-                <hr class="sidebar__line">
-                <ul class="navigation">    
-                    {% get_categories as categories %} 
-                    {% for category in categories %}
-                        {% if category.children.all|length  %}
-                        <li class="navigation__item">
-                            <a href="javascript:void(0)" class="sidebar__link">{{ category }} <i class="fa fa-angle-down angle-down" aria-hidden="true"></i></a>
-                            <ul class="navigation__dropdown-container">
-                                {% for child in category.children.all %}
-                                <li class="navigation__dropdown-item"><a href="{{ child.get_absolute_url }}" class="sidebar__link">{{ child.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        {% elif not category.is_child_node %}
-                            <li class="navigation__item"><a href="{{ category.get_absolute_url }}" class="sidebar__link">{{ category.name }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    <li class="navigation__item"><a href="#" class="sidebar__link">О сайте</a></li>
-                    <li class="navigation__item"><a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">Обратная связь</a></li>
-                </ul>
-            </nav>
-            <div class="sidebar-content search">
-                <form action="{% url 'blog:search' %}" method="get" class="search__form">
-                    <input type="text" name="query" class="search-field" required=True placeholder="Поиск...">
-                    <button type="submit" class="search-button"></button>
-                </form>
-            </div>
-            <div class="sidebar-content tags">
-                <strong><span class="sidebar__title"><span class="material-symbols-outlined navigation-icon middle-icon">label</span> Теги</span></strong>
-                <hr class="sidebar__line">
-                <div class="tags-content">
-                    {% get_tags as tags %}
-                    {% for tag in tags %}
-                    <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-            {% subscribe_form %}
+            {% block sidebar %}{% endblock %}
         </aside>
         <main>
             <div class="info">

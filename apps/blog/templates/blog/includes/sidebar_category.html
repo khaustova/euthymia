@@ -1,0 +1,43 @@
+{% load static %}
+{% load blog_tags %}
+
+<nav class="sidebar-content menu">
+    <strong>
+        <span class="sidebar__title">
+            {% get_category article as category %}
+            <span class="material-symbols-outlined navigation-icon middle-icon">description</span> {{ category }}</span></strong>
+    <hr class="sidebar__line">
+    <ul class="navigation navigation__content">   
+        {% get_content_links article as content_links %}
+
+        {% for subcategory, articles in content_links.items %}
+        <span class="content__title">{{ subcategory|upper|cut_number }}</span>
+            {% for content_article in articles %}
+                <li class="navigation__item content__item">
+                    {% if content_article.get_absolute_url == article.get_absolute_url %}
+                    {{ content_article.title|cut_number }}
+                    {% else %}
+                        <a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title|cut_number }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</nav>
+<div class="sidebar-content search">
+    <form action="{% url 'blog:search' %}" method="get" class="search__form">
+        <input type="text" name="query" class="search-field" required=True placeholder="Поиск...">
+        <button type="submit" class="search-button"></button>
+    </form>
+</div>
+{% comment %} <div class="sidebar-content tags">
+    <strong><span class="sidebar__title"><span class="material-symbols-outlined navigation-icon middle-icon">label</span> Метки</span></strong>
+    <hr class="sidebar__line">
+    <div class="tags-content">
+        {% get_tags as tags %}
+        {% for tag in tags %}
+        <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
+        {% endfor %}
+    </div>
+</div> {% endcomment %}
+{% subscribe_form %}

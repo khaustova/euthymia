@@ -10,7 +10,7 @@
             <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
         </div>
         <div class="summary__title">
-            <a href='{{ article.get_absolute_url }}'>{{ article.title }}</a>
+            <a href='{{ article.get_absolute_url }}'>{{ article.title|cut_number }}</a>
         </div>
         {{ article.summary|truncatechars:180 }}
         <div class="summary__info">

@@ -1,0 +1,40 @@
+{% load static %}
+{% load blog_tags %}
+
+<nav class="sidebar-content menu">
+    <strong>
+        <span class="sidebar__title">
+            <span class="material-symbols-outlined navigation-icon middle-icon">bookmark</span> Навигация</span></strong>
+    <hr class="sidebar__line">
+    <ul class="navigation">    
+        {% get_categories as categories %} 
+        {% for category in categories %}
+            {% if category.level == 0 %}
+            {% get_first_article category as article_url %}
+            <li class="navigation__item"><a href="{{ article_url }}" class="sidebar__link">{{ category.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+        <li class="navigation__item"><a href="#" class="sidebar__link">
+            О сайте</a>
+        </li>
+        <li class="navigation__item"><a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">
+            Обратная связь</a></li>
+    </ul>
+</nav>
+<div class="sidebar-content search">
+    <form action="{% url 'blog:search' %}" method="get" class="search__form">
+        <input type="text" name="query" class="search-field" required=True placeholder="Поиск...">
+        <button type="submit" class="search-button"></button>
+    </form>
+</div>
+{% comment %} <div class="sidebar-content tags">
+    <strong><span class="sidebar__title"><span class="material-symbols-outlined navigation-icon middle-icon">label</span> Метки</span></strong>
+    <hr class="sidebar__line">
+    <div class="tags-content">
+        {% get_tags as tags %}
+        {% for tag in tags %}
+        <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
+        {% endfor %}
+    </div>
+</div> {% endcomment %}
+{% subscribe_form %}

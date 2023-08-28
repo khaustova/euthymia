@@ -17,11 +17,17 @@
 <meta name="keywords" content="{{ article.keywords }}">
 {% endblock %}
 
+{% block sidebar %}
+{% include 'blog/includes/sidebar_category.html' %}
+{% endblock %}
+
 
 {% block info %}
 <div class="breadcrumbs">
-    <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная</a>&nbsp;&nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;
-    <a href="{% url 'blog:category' slug=article.category.slug %}" class="article__link">{{ article.category }}</a>
+    <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная страница</a>
+    {% comment %}&nbsp;&nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i>
+    &nbsp; 
+     <a href="{% url 'blog:category' slug=article.category.slug %}" class="article__link">{{ article.category }}</a> {% endcomment %}
 </div>
 {% endblock %}
 
@@ -30,7 +36,7 @@
         <div class="article__date">
             <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
         </div>
-        <h1 class="article__title">{{ article.title }}</h1>
+        <h1 class="article__title">{{ article.title|cut_number }}</h1>
         {{ article.body|safe }}
         <div class="article__info">
             <div class="article__prev">
@@ -46,11 +52,11 @@
         </div>
         <hr>
     </div>
-    <div class="article-block">Теги:
+    {% comment %} <div class="article-block">Теги:
         {% for tag in article.tags.all %}
         <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
         {% endfor %}
-    </div>
+    </div> {% endcomment %}
 {% include 'blog/includes/comments.html' %}
 {% endblock %}
 
