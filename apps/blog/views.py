@@ -1,10 +1,12 @@
 
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
-from .models import Article, Comment, Category, Tag
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Article, Comment
 from .forms import CommentForm, SubscribeForm, FeedbackForm
 from .search import search
 from manager.tasks import add_email, add_feedback
+from manager.models import EmailSubscription
 
 
 def feedback_form(request):
@@ -33,6 +35,15 @@ def subscribe_form(request):
             email = form.cleaned_data.get('email')
             add_email.delay(email)
     return render(request, 'blog/subscribe_success.html')
+
+
+def unsubscribe(request):
+    try:
+        sub_email = EmailSubscription.objects.get(email_hash=request.GET['uid'], email=request.GET['email'])
+        sub_email.delete()
+        return render(request, 'blog/unsubscribe_success.html')
+    except ObjectDoesNotExist:
+        return render(request, 'blog/unsubscribe_failure.html')
 
 
 class ArticleView(ListView):
@@ -87,56 +98,6 @@ class ArticleDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
         
         
-class CategoryView(ListView):
-    model = Article
-    template_name = 'blog/category.html'
-    context_object_name = 'articles'
-    paginate_by = 2
-    paginate_orphans = 2
-
-    def get_ordering(self):
-        sort = self.kwargs.get('sort')
-        if sort == 'views':
-            return ('-views', '-created_date')
-        return ('-created_date')
-
-    def get_queryset(self, **kwargs):
-        queryset = super().get_queryset()
-        category = get_object_or_404(Category, slug=self.kwargs.get('slug'))
-        return queryset.filter(category=category)
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data()
-        category = get_object_or_404(Category, slug=self.kwargs.get('slug'))
-        context_data['category'] = category
-        return context_data
-    
-    
-class TagView(ListView):
-    model = Article
-    template_name = 'blog/tag.html'
-    context_object_name = 'articles'
-    paginate_by = 2
-    paginate_orphans = 2
-    
-    def get_ordering(self):
-        sort = self.kwargs.get('sort')
-        if sort == 'views':
-            return ('-views', '-created_date')
-        return ('-created_date')
-
-    def get_queryset(self, **kwargs):
-        queryset = super().get_queryset()
-        tag = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
-        return queryset.filter(tags=tag)
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data()
-        tag = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
-        context_data['tag'] = tag
-        return context_data
-
-
 class SearchView(ListView):
     model = Article
     template_name = 'blog/search.html'
