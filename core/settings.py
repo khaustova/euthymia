@@ -26,7 +26,6 @@ LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     'admingo.apps.AdmingoConfig',
-    #'jazzmin',
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -202,11 +201,12 @@ ELASTICSEARCH_DSL = {
 }
 
 # Email
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'irinakhaus@gmail.com'
-EMAIL_HOST_PASSWORD = 'dilpjxdfbrtllerz' #past the key or password app here
-EMAIL_PORT = 587
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
+
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'default from email'
 
@@ -230,12 +230,15 @@ ADMINGO_CUSTOMIZATION = {
         'blog.comment': 'chat',
         'manager.feedback': 'rate_review',
         'manager.emailsubscription': 'email',
+        'manager.sitedescription': 'settings',
         'django_celery_results.taskresult': 'task',
     },
     'hidden_apps': ['admingo'],
     'hidden_models': ['auth.group', 'django_celery_results.groupresult'],
-    'apps_order': ['blog', 'blog.article', 'blog.tag', 'blog.category', 'manager', 'django_celery_results', 'auth'],
-    'is_extra_links': True,
+    'apps_order': ['blog', 'blog.article', 'blog.tag', 'blog.category', 
+                   'manager', 'manager.feedback', 'manager.emailsubscription', 'manager.sitedescription',
+                   'django_celery_results', 
+                   'auth'],
     'extra_links' : [{'manager': [
                             {'name': 'Документация', 'admin_url': '/admin/doc/', 'icon': 'description'},
                         ]}
