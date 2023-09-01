@@ -177,6 +177,10 @@ header {
     margin: 10px 0 5px 0; */
 }
 
+.info_end {
+    justify-content: end;
+}
+
 .search {
     margin: 0 !important;
 }
@@ -191,33 +195,6 @@ footer {
     margin-bottom: 5px;
     text-align: center;
     align-self: end;
-}
-
-/* Search results */
-
-.search-results__info {
-    padding-left: 10px;
-    margin-bottom: 6px;
-}
-
-.search-results__title {
-    color: var(--color-accent);
-    font-size: 1.8rem;
-    font-weight: bold;
-}
-
-.search-results__nothing {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 100px;
-}
-
-.search-results__nothing-message {
-	position: relative;
-	background: var(--color-primary);
-	border-radius: 15px;
-    padding: 18px 18px 15px 18px;
 }
 
 /* Feedback */

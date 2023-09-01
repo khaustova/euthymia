@@ -49,6 +49,11 @@
         margin: 0;
     }
 
+    .info_end {
+        justify-content: space-between;
+        height: 0;
+    }
+
     main {
         flex-grow: 1;
     }
@@ -118,6 +123,10 @@
         grid-template-columns: calc(86vw - 35px) 35px;
     }
 
+    #close-search {
+        font-size: 32px !important;
+    }
+
     .summary__text {
         margin-left: 0;
     }
@@ -133,6 +142,15 @@
 
     .comment-form__comment-field {
         height: 120px;
+    }
+
+    .bunny-message {
+        margin: 0;
+    }
+
+    .bunny-message__bubble {
+        width: 100%;
+        max-width: none;
     }
 }
 

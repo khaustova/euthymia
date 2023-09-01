@@ -149,6 +149,7 @@ button.search-button_open {
 
 #close-search {
     align-self: center;
+    font-size: 28px !important;
 }
 
 .search-button::before {
@@ -169,11 +170,46 @@ button.search-button_open {
     display: none;
 }
 
-/* Tags */
-
-.menu {
-    order: 0;
+button[type="submit"].search-nothing-button {
+    border-radius: 0 4px 4px 0;
 }
+
+input[type="search"].search-nothing-input {
+    border: 1px solid var(--color-accent);
+    border-radius: 4px 0 0 4px;
+}
+
+.search-nothing__form {
+    grid-template-columns: calc(100% - 35px) 35px;
+}
+
+/* Search results */
+
+.search-results__info {
+    padding-left: 10px;
+}
+
+.search-results__title {
+    color: var(--color-accent);
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.search-results__nothing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 100px;
+}
+
+.search-results__nothing-message {
+	position: relative;
+	background: var(--color-primary);
+	border-radius: 15px;
+    padding: 18px 18px 15px 18px;
+}
+
+/* About */
 
 .about {
     background-color: var(--color-primary);
@@ -191,25 +227,6 @@ button.search-button_open {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
-}
-
-.tags__link {
-    padding: 4px;
-    margin: 3px;
-    border-radius: 4px;
-    display: inline-block;
-}
-
-.tags__link, .tags__link:link, .tags__link:visited  {
-    color: var(--color-accent);
-    background: var(--color-primary);
-    border: 1px solid var(--color-accent)
-}
-
-.tags__link:hover {
-    color: var(--color-text);
-    background: var(--color-primary);
-    border: 1px solid var(--color-text);
 }
 
 /* Subscribe */

@@ -1,14 +1,20 @@
 {% load static %}
 {% load blog_tags %}
 <div class="sidebar-content about">
+    {% get_site_description as site_description %}
+    {% if site_description.site_image %}
+    <img src="{{ site_description.site_image.url }}">
+    {% else %}
     <img src="{% static 'blog/img/admin_avatar.png' %}">
+    {% endif %}
     <div class="tags-content">
+        {{ site_description.site_description|safe  }}
         Персональный сайт Jingmi丨Cui Qingcai профессионально предоставляет вам учебные пособия по сканерам, 
         сканеры Python, сканеры Python, учебные пособия по сканерам Python и книги по сканерам. 
         Для получения более подробной информации свяжитесь с нами. 
         <div class="about__links">
-        <a href="#"><i class="fa-brands fa-github"></i> Github</a>
-        <a href="#"><i class="fa-regular fa-envelope"></i> Обратная связь</a>
+        <a href="https://github.com/khaustiv"><i class="fa-brands fa-github"></i> Github</a>
+        <a href="javascript:void(0)" onclick="openFeedbackModal();"><i class="fa-regular fa-envelope"></i> Обратная связь</a>
         </div>
     </div>
 </div>
@@ -27,30 +33,5 @@
         <li class="navigation__item"><a href="{{ article_url }}" class="sidebar__link">{{ category.name }}</a></li>
         {% endif %}
     {% endfor %}
-        <li class="navigation__item"><a href="{% url 'blog:about_site' %}" class="sidebar__link">
-            О сайте</a>
-        </li>
-        <li class="navigation__item"><a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">
-            Обратная связь</a></li>
     </ul>
 </nav>
-{% comment %} <div class="sidebar-content search">
-    <form action="{% url 'blog:search' %}" method="get" class="search__form">
-        <input type="text" id="search-input" name="query" class="search-field" required=True placeholder="Поиск...">
-        <button type="submit" id="open-search-button" class="search-button"></button>
-    </form>
-    <span class="material-symbols-outlined button-icon top-icon" onclick="openTopSearch()">search</span> 
-
-</div>{% endcomment %}
-
-
-{% comment %} <div class="sidebar-content tags">
-    <strong><span class="sidebar__title"><span class="material-symbols-outlined navigation-icon middle-icon">label</span> Метки</span></strong>
-    <hr class="sidebar__line">
-    <div class="tags-content">
-        {% get_tags as tags %}
-        {% for tag in tags %}
-        <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
-        {% endfor %}
-    </div>
-</div> {% endcomment %}
