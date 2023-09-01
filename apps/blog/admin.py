@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from mptt.admin import DraggableMPTTAdmin
 from manager.tasks import send_notification
-from .models import Article, Category, Tag, Comment, UserProfile
+from .models import Article, Category, Comment, UserProfile
 
 
 class UserInline(admin.StackedInline):
@@ -27,7 +27,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
     list_filter = ('category',)
     prepopulated_fields = {"slug": ("title",)}
-    autocomplete_fields = ('next_article', 'prev_article', 'tags', 'category')
+    autocomplete_fields = ('next_article', 'prev_article', 'category')
     list_per_page = 50
     date_hierarchy = 'created_date'
     search_fields = ('title',)
@@ -42,18 +42,7 @@ class ArticleAdmin(admin.ModelAdmin):
 class CategoryAdmin(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title',)
     search_fields = ('name',)
-    prepopulated_fields = {"slug": ("name",)}
     mptt_level_indent = 2
-    
-    
-@admin.register(Tag)
-class TagAdmin(DraggableMPTTAdmin):
-    list_display = ('tree_actions', 'indented_title',)
-    prepopulated_fields = {"slug": ("name",)}
-    fields = ('name', 'slug')
-    search_fields = ('name',)
-    list_per_page = 2
-    mptt_level_indent = 1
     
 
 @admin.register(Comment)

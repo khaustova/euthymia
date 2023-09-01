@@ -1,0 +1,16 @@
+{% extends 'blog/index.html' %}
+{% load static %}
+
+{% block title %} Отписка от уведомлений {% endblock %}
+
+{% block info %}
+{% endblock %}
+
+{% block content %}
+<div class="bunny-message">
+    <div class="bunny-message__bubble">
+        Упс! Что-то пошло не так! <br>Возможно, Вы уже отписались? 🌸<br>
+    </div>
+    <div><img src="{% static 'blog/img/thanks.png' %}"></div>
+</div>
+{% endblock %}

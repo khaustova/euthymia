@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     avatar = ProcessedImageField(
         upload_to='avatars/', 
         verbose_name='Аватар',
-        default='avatars/avatar.jpg',
+        default='static/blog/img/admin_avatar.png',
         processors=[ResizeToFill(50, 50)],
         blank=True
     )
@@ -33,11 +33,6 @@ class Category(MPTTModel):
     name = models.CharField(
         max_length=128, 
         verbose_name='Категория')
-    slug = models.SlugField(unique=True, verbose_name='url')
-    description = models.TextField(
-        max_length=256, 
-        verbose_name='Описание',
-    )
     parent = TreeForeignKey(
         'self', 
         null=True,
@@ -61,30 +56,7 @@ class Category(MPTTModel):
     def get_article_list(self):
         return Article.objects.filter(category=self)
     
-
-class Tag(MPTTModel):
-    name = models.CharField(max_length=128, verbose_name='Тег')
-    slug = models.SlugField(unique=True, verbose_name='url')
-    parent = TreeForeignKey(
-        'self', 
-        null=True,
-        blank=True, 
-        on_delete=models.CASCADE,
-        verbose_name='Родительский тег',
-        related_name='children'
-    )
-    
-    class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
-    
-    def __str__(self):
-        return self.name
-    
-    def get_absolute_url(self):
-        return reverse_lazy('blog:tag', kwargs={'slug': self.slug})
-    
-        
+  
 class Article(models.Model):
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     summary = models.TextField(
@@ -122,7 +94,6 @@ class Article(models.Model):
         blank=True,
         help_text='Перечислите ключевые слова через запятую.'
     )   
-    tags = models.ManyToManyField(Tag, verbose_name='Теги') 
     next_article = models.ForeignKey(
         'self', 
         blank=True,

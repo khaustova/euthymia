@@ -1,10 +1,18 @@
 from django import template
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
-from ..models import Article, Category, Tag
+from manager.models import AboutSite
+from ..models import Article, Category
 from ..forms import SubscribeForm, FeedbackForm
 
 register = template.Library()
+
+@register.simple_tag
+def get_site_description():
+    """
+    Возвращает все категории.
+    """
+    return AboutSite.objects.all().first()
 
 
 @register.simple_tag
@@ -50,14 +58,6 @@ def cut_number(text: str) -> SafeText:
     text = ' '.join([word for word in text_words[1:]])
     
     return mark_safe(text)
-
-
-@register.simple_tag
-def get_tags():
-    """
-    Возвращает все теги.
-    """
-    return Tag.objects.all()
 
 
 @register.simple_tag

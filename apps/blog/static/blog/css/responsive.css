@@ -46,11 +46,34 @@
 
     .info {
         align-self: start;
-        margin: 2px 0 8px 0;
+        margin: 0;
     }
 
     main {
         flex-grow: 1;
+    }
+
+    aside {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu {
+        order: 0;
+    }
+
+    .about {
+        order: 1;
+        margin-bottom: 0;
+    }
+
+    .subscribe {
+        order: 2;
+        margin-top: 5px;
+    }
+
+    .article-block {
+        margin-bottom: 7px;
     }
 
     footer {
@@ -59,12 +82,9 @@
         align-self: center;
     }
 
-    .sidebar__title,
-    .sidebar__line,
     .menu,
     .search,
-    .tags,
-    .subscribe {
+    .tags {
         display: none;
     }
 
@@ -95,7 +115,7 @@
     }
     
     .search__form {
-        grid-template-columns: calc(90vw - 35px) 35px;
+        grid-template-columns: calc(86vw - 35px) 35px;
     }
 
     .summary__text {

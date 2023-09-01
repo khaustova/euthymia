@@ -6,7 +6,7 @@
 .article-block {
     background:var(--color-primary);
     opacity: 0.9;
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 18px 18px 15px 18px;
     margin: 0 0 10px 0;
 }
@@ -73,7 +73,7 @@
 
 .summary__title {
     color: var(--color-accent);
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 .summary__text {

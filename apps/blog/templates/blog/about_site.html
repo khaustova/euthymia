@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load static blog_tags %}
+
+{% block title %} О сайте {% endblock %}
+
+{% block sidebar %}
+{% include 'blog/includes/sidebar_index.html' %}
+{% endblock %}
+
+{% block info %}
+<div class="breadcrumbs">
+    <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная страница</a>
+    {% comment %}&nbsp;&nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i>
+    &nbsp; 
+     <a href="{% url 'blog:category' slug=article.category.slug %}" class="article__link">{{ article.category }}</a> {% endcomment %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="article article-block">
+<h1 class="article__title">О сайте</h1>
+{% get_site_description as site_description %}
+{{ site_description.about_site|safe }}
+</div>
+{% endblock %}
+
+{% block pagination %}
+{% include 'blog/includes/pagination.html' %}
+{% endblock %}

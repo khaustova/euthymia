@@ -50,9 +50,15 @@
                 <a href="{% url 'blog:index' %}"><img src="{% static 'blog/img/logo.png' %}" class="logo__img"></a>
             </div>
             <div class="top-navigation">
-                    <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openSearch()">search</span>
-                    <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openSubscribe()">email</span>
+                    <span class="material-symbols-outlined button-icon top-menu-icon" id="open-mobile-search-button" onclick="openSearch()">search</span>
                     <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openMenu()">menu</span>
+            </div>
+            <div class="mobile-search">
+                <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeSearch()">undo</span>
+                <form action="{% url 'blog:search' %}" method="get" class="search__form">
+                    <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
+                    <button type="submit" class="search-button"></button>
+                </form>
             </div>
         </header>
         <aside>
@@ -60,7 +66,8 @@
         </aside>
         <main>
             <div class="info">
-                {% block info %}{% endblock %}
+                {% block info %}
+                {% endblock %}
             </div>
             <div class="feedback-modal">
                 <div class="feedback-modal__inner">
@@ -76,7 +83,7 @@
         </main>
         <footer>
             {% block pagination %}{% endblock %}
-            <span>&#169 euthymia.ru, 2023. Все права защищены</span>
+            <span>&#169 <a href="{% url 'blog:index' %}">euthymia.ru</a>, 2023. Все права защищены</span>
         </footer>
     </div>
     

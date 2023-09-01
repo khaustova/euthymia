@@ -1,32 +1,49 @@
 {% load static %}
 {% load blog_tags %}
-
+<div class="sidebar-content about">
+    <img src="{% static 'blog/img/admin_avatar.png' %}">
+    <div class="tags-content">
+        Персональный сайт Jingmi丨Cui Qingcai профессионально предоставляет вам учебные пособия по сканерам, 
+        сканеры Python, сканеры Python, учебные пособия по сканерам Python и книги по сканерам. 
+        Для получения более подробной информации свяжитесь с нами. 
+        <div class="about__links">
+        <a href="#"><i class="fa-brands fa-github"></i> Github</a>
+        <a href="#"><i class="fa-regular fa-envelope"></i> Обратная связь</a>
+        </div>
+    </div>
+</div>
+{% subscribe_form %}
 <nav class="sidebar-content menu">
     <strong>
         <span class="sidebar__title">
-            <span class="material-symbols-outlined navigation-icon middle-icon">bookmark</span> Навигация</span></strong>
+        <span class="material-symbols-outlined navigation-icon middle-icon">bookmark</span> Навигация</span>
+    </strong>
     <hr class="sidebar__line">
     <ul class="navigation">    
-        {% get_categories as categories %} 
-        {% for category in categories %}
-            {% if category.level == 0 %}
-            {% get_first_article category as article_url %}
-            <li class="navigation__item"><a href="{{ article_url }}" class="sidebar__link">{{ category.name }}</a></li>
-            {% endif %}
-        {% endfor %}
-        <li class="navigation__item"><a href="#" class="sidebar__link">
+    {% get_categories as categories %} 
+    {% for category in categories %}
+        {% if category.level == 0 %}
+        {% get_first_article category as article_url %}
+        <li class="navigation__item"><a href="{{ article_url }}" class="sidebar__link">{{ category.name }}</a></li>
+        {% endif %}
+    {% endfor %}
+        <li class="navigation__item"><a href="{% url 'blog:about_site' %}" class="sidebar__link">
             О сайте</a>
         </li>
         <li class="navigation__item"><a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">
             Обратная связь</a></li>
     </ul>
 </nav>
-<div class="sidebar-content search">
+{% comment %} <div class="sidebar-content search">
     <form action="{% url 'blog:search' %}" method="get" class="search__form">
-        <input type="text" name="query" class="search-field" required=True placeholder="Поиск...">
-        <button type="submit" class="search-button"></button>
+        <input type="text" id="search-input" name="query" class="search-field" required=True placeholder="Поиск...">
+        <button type="submit" id="open-search-button" class="search-button"></button>
     </form>
-</div>
+    <span class="material-symbols-outlined button-icon top-icon" onclick="openTopSearch()">search</span> 
+
+</div>{% endcomment %}
+
+
 {% comment %} <div class="sidebar-content tags">
     <strong><span class="sidebar__title"><span class="material-symbols-outlined navigation-icon middle-icon">label</span> Метки</span></strong>
     <hr class="sidebar__line">
@@ -37,4 +54,3 @@
         {% endfor %}
     </div>
 </div> {% endcomment %}
-{% subscribe_form %}

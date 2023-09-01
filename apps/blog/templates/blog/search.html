@@ -4,6 +4,10 @@
 
 {% block title %} Поиск {% endblock %}
 
+{% block sidebar %}
+{% include 'blog/includes/sidebar_index.html' %}
+{% endblock %}
+
 {% block content %}
 {% if articles %}
     {% get_results_word articles|length 0 as find_word %}

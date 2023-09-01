@@ -41,7 +41,7 @@ html {
 body {
     background-color: var(--color-secondary);
     color: var(--color-text);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-family: 'Rubik', sans-serif;
     line-height: 1.6;
@@ -70,12 +70,13 @@ h1, h2 {
 
 input[type="text"],
 input[type="email"],
+input[type="search"],
 textarea {
     background-color: var(--color-primary);
     color: var(--color-text);
     font-size: 1.6rem;
     opacity: 0.9;
-    border: 1px solid var(--color-accent);
+    /* border: 1px solid var(--color-accent); */
     border-radius: 4px;
     padding: 5px 15px;
 
@@ -90,12 +91,14 @@ textarea {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
+input[type="search"]:focus,
 textarea:focus {
     outline: none;
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="search"] {
     height: 35px;
 }
 
@@ -104,7 +107,7 @@ input[type="email"] {
     height: 35px;
     width: 35px;
     color: var(--color-accent);
-    border: 1px solid var(--color-accent);
+    /* border: 1px solid var(--color-accent); */
     border-right: none;
     vertical-align: middle;
     padding: 5px 0px 5px 5px;
@@ -137,7 +140,7 @@ button[type="submit"]:hover {
 }
 
 .logo__img {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 /* Layots */
@@ -166,8 +169,16 @@ header {
 }
 
 .info {
-    align-self: center;
-    margin: 10px 0 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px
+    /* align-self: center;
+    margin: 10px 0 5px 0; */
+}
+
+.search {
+    margin: 0 !important;
 }
 
 aside {
@@ -227,7 +238,7 @@ footer {
     }
 
 .feedback-modal__inner {
-    background:var(--color-primary);
+    background:var(--color-secondary);
     border: 1px solid var(--color-accent);
     opacity: 0.9;
     border-radius: 0.5rem;
@@ -253,6 +264,7 @@ footer {
 
 .feedback-form__field {
     width: 100%;
+    padding: 10px;
 }
 
 .feedback-form__textarea {
@@ -322,6 +334,7 @@ footer {
 
 .button-icon {
     color: var(--color-accent);
+    font-size: 32px !important;
 }
 
 .button-icon:hover {
