@@ -29,7 +29,7 @@ class Feedback(models.Model):
     email = models.EmailField(max_length=256, verbose_name='Email')
     message = models.TextField(verbose_name='Сообщение')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
-    reply = models.TextField(blank='True', null='True', verbose_name='Ответ')
+    reply = RichTextUploadingField()
     reply_status = models.BooleanField(default=False, verbose_name='Статус ответа')
     
     class Meta:

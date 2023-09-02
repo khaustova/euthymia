@@ -73,7 +73,7 @@ def reply_feedback(name, email, reply):
     """
     Отправляет ответ на фидбек.
     """
-    subject = 'Subject' 
+    subject = '[Euthymia] Ответ на сообщение, полученное через обратную связь' 
     message = get_template("manager/emails/reply_feedback.html").render(
         {'name': name, 'reply': reply}
     )
