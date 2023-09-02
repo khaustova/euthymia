@@ -1,19 +1,12 @@
 from django import template
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
-from manager.models import AboutSite
+from manager.models import SiteDescription
 from ..models import Article, Category
 from ..forms import SubscribeForm, FeedbackForm
+from ..utils import get_word
 
 register = template.Library()
-
-@register.simple_tag
-def get_site_description():
-    """
-    Возвращает все категории.
-    """
-    return AboutSite.objects.all().first()
-
 
 @register.simple_tag
 def get_categories():
@@ -22,9 +15,19 @@ def get_categories():
     """
     return Category.objects.all()
 
+@register.simple_tag
+def get_category(article):
+    """
+    Возвращает название категории для статьи.
+    """
+    return article.category.get_root()
+
 
 @register.simple_tag
 def get_first_article(category):
+    """
+    Возвращает первую статью в категории.
+    """
     subcategories = [cat.name for cat in category.get_children()]
     article = Article.objects.filter(category__name__in=subcategories).first()
     article_url = article.get_absolute_url()
@@ -33,6 +36,10 @@ def get_first_article(category):
 
 @register.simple_tag
 def get_content_links(article):
+    """
+    Возвращает содержание категории в виде словаря, где ключи - подкатегории,
+    значения - список статей подкатегории.
+    """
     subcategory = article.category
     content_links = {}
     subcategories = [ cat.name for cat in subcategory.get_siblings(include_self=True)]
@@ -41,15 +48,11 @@ def get_content_links(article):
     return content_links
 
 
-@register.simple_tag
-def get_category(article):
-    """
-    Возвращает все теги.
-    """
-    return article.category.get_root()
-
 @register.filter
 def cut_number(text: str) -> SafeText:
+    """
+    Обрезает номер в заголовке статьи.
+    """
     text_words = escape(text).split()
     
     if not len(text_words):
@@ -86,20 +89,6 @@ def feedback_form(**kwargs):
     return {'feedback_form' : form }
 
 
-def get_word(n):
-    """
-    Возвращает группу склонения существительного после числительного.
-    """
-    n %= 100
-    if n >= 5 and n <= 20:
-        return 0
-    n %= 10;
-    if n == 1:
-        return 1
-    elif n >= 2 and n <= 4:
-        return 2
-    return 0
-
 @register.simple_tag
 def get_results_word(n, i):
     """
@@ -131,3 +120,11 @@ def get_search_results_count(article):
     Вовзвращает количество найденных статей.
     """
     return article.count()
+
+
+@register.simple_tag
+def get_site_description():
+    """
+    Возвращает описание сайта.
+    """
+    return SiteDescription.objects.all().first()

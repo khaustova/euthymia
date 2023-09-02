@@ -2,13 +2,13 @@ from django.contrib import admin
 from django.db import transaction
 from django.contrib.auth.hashers import make_password
 import re
-from .models import EmailSubscription, Feedback, AboutSite
+from .models import EmailSubscription, Feedback, SiteDescription
 from .tasks import reply_feedback
 
 
-@admin.register(AboutSite)
-class AboutSiteAdmin(admin.ModelAdmin):
-    list_display = ('about_site'[:256],)
+@admin.register(SiteDescription)
+class SiteDescriptionAdmin(admin.ModelAdmin):
+    list_display = ('site_description'[:256],)
     
 
 @admin.register(EmailSubscription)

@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField 
 
 class EmailSubscription(models.Model):
@@ -38,8 +40,15 @@ class Feedback(models.Model):
         return f'{self.name}: {self.message[:50]}'
     
     
-class AboutSite(models.Model):
-    about_site = RichTextUploadingField()
+class SiteDescription(models.Model):
+    site_description = RichTextUploadingField()
+    site_image = ProcessedImageField(
+        upload_to='uploads/', 
+        verbose_name='Аватар',
+        default='/static/blog/img/admin_avatar.png',
+        processors=[ResizeToFill(50, 50)],
+        blank=True
+    )
     
     class Meta:
         verbose_name = 'О сайте'

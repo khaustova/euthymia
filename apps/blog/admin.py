@@ -7,20 +7,6 @@ from manager.tasks import send_notification
 from .models import Article, Category, Comment, UserProfile
 
 
-class UserInline(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-    verbose_name_plural = 'Дополнительная информация'
- 
- 
-class UserAdmin(UserAdmin):
-    inlines = (UserInline, )
- 
- 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-
-
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'views', 'updated_date')
@@ -32,10 +18,10 @@ class ArticleAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_date'
     search_fields = ('title',)
     
-    # def save_model(self, request, obj, form, change):
-    #     super().save_model(request, obj, form, change)
-    #     if not change:
-    #         transaction.on_commit(lambda: send_notification.delay(obj.pk))
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if not change:
+            transaction.on_commit(lambda: send_notification.delay(obj.pk))
     
     
 @admin.register(Category)
@@ -51,4 +37,18 @@ class CommentAdmin(DraggableMPTTAdmin):
     mptt_level_indent = 2
     list_display_links = ('article',)
     list_filter = ('created_date',)
+    
+    
+class UserInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'Дополнительная информация'
+ 
+ 
+class UserAdmin(UserAdmin):
+    inlines = (UserInline, )
+ 
+ 
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
     

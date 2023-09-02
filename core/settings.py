@@ -241,6 +241,7 @@ ADMINGO_CUSTOMIZATION = {
                    'auth'],
     'extra_links' : [{'manager': [
                             {'name': 'Документация', 'admin_url': '/admin/doc/', 'icon': 'description'},
+                            {'name': 'Яндекс Метрика', 'admin_url': 'https://metrika.yandex.ru/list', 'icon': 'monitoring'}
                         ]}
                      ],
 }
