@@ -3,6 +3,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField 
 
+
 class EmailSubscription(models.Model):
     email = models.EmailField(
         max_length=256, 
