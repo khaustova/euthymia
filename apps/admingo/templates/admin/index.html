@@ -11,6 +11,76 @@
     {% endif %}
     <div class="content_wrapper">
         <div class="content-apps">
+            <div class="content-metrics_wrapper">
+                {% get_metrics as metrics %}
+                <div class="content-card content-metrics">
+                    <div class="metrics__title">
+                        Посетители
+                    </div>
+                    <div class="tabs guests"> 
+                        <input class="metrics__input" id="guestTodayTab" type="radio" name="guests" checked> 
+                        <label class="metrics__label" for="guestTodayTab">За сегодня</label> 
+                        <input class="metrics__input" id="guestWeekTab" type="radio" name="guests"> 
+                        <label class="metrics__label" for="guestWeekTab">За 7 дней</label> 
+                        <input class="metrics__input" id="guestMonthTab" type="radio" name="guests"> 
+                        <label class="metrics__label" for="guestMonthTab">За 30 дней</label> 
+                        <section class="metrics__section" id="guestTodayContent"> 
+                            <div class="metrics__num">
+                                {{ metrics.today.guests }}
+                            </div>
+                        </section>   
+                        <section class="metrics__section" id="guestWeekContent"> 
+                            <div class="metrics__num">
+                                {{ metrics.week.guests }}
+                            </div>
+                        </section>  
+                        <section class="metrics__section" id="guestMonthContent"> 
+                            <div class="metrics__num">
+                                {{ metrics.month.guests }}
+                            </div>
+                        </section> 
+                        <div class="metrics__graph_wrapper">
+                            <div class="metrics__graph">
+                                <canvas id="guestChart" width="100%"></canvas>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="content-card content-metrics">
+                    <div class="metrics__title">
+                        Просмотры
+                    </div>
+                    <div class="tabs views"> 
+                        <input class="metrics__input" id="viewsTodayTab" type="radio" name="views" checked> 
+                        <label class="metrics__label" for="viewsTodayTab">За сегодня</label> 
+                        <input class="metrics__input" id="viewsWeekTab" type="radio" name="views"> 
+                        <label class="metrics__label" for="viewsWeekTab">За 7 дней</label> 
+                        <input class="metrics__input" id="viewsMonthTab" type="radio" name="views"> 
+                        <label class="metrics__label" for="viewsMonthTab">За 30 дней</label> 
+                        <section class="metrics__section" id="viewsTodayContent"> 
+                            <div class="metrics__num">
+                                {{ metrics.today.views }}
+                            </div>
+                        </section>    
+                        <section class="metrics__section" id="viewsWeekContent"> 
+                            <div class="metrics__num">
+                                {{ metrics.week.views }}
+                            </div>
+                        </section>  
+                        <section class="metrics__section" id="viewsMonthContent"> 
+                            <div class="metrics__num">
+                                {{ metrics.month.views }}
+                            </div>
+                        </section> 
+                        <div class="metrics__graph_wrapper">
+                            <div class="metrics__graph">
+                                <canvas id="viewChart" width="100%"></canvas>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
         {% block content-apps %}
         {% for app in apps %}
             <div class="content-card">
