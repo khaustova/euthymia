@@ -29,7 +29,9 @@
 {% block extrahead %}{% endblock %}
 
 <script src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> {% endcomment %}
+
+
 </head>
 
 <body class="{% if is_popup %}popup {% endif %}{% sidebar_status request %}"
@@ -279,7 +281,6 @@
 <script src="{% static 'admingo/js/navigation.js' %}" defer></script>
 <script src="{% static 'admingo/js/sidebar.js' %}" defer></script>
 <script src="{% static 'admingo/js/theme.js' %}" defer></script>
-<script src="{% static 'admingo/js/metrics.js' %}" defer></script>
 {% endif %}
 {% endblock %}
 </body>

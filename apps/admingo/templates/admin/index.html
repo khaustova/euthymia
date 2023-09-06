@@ -4,6 +4,11 @@
 
 {% block title %}{{ customization.title }}{% endblock %}
 
+{% block extrahead %}
+<script src="{% static "vendor/chart.js/chart.js" %}"></script>
+<script src="{% static 'admingo/js/metrics.js' %}" defer></script>
+{% endblock %}
+
 {% block content %}
     {% get_apps as apps %}
     {% if apps %}
