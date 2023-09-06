@@ -1,3 +1,6 @@
+import requests
+import json
+
 from typing import Dict, List
 from json import loads, JSONDecodeError
 from copy import deepcopy
@@ -19,11 +22,49 @@ from django.utils.html import format_html
 from bs4 import BeautifulSoup
  
 from ..settings import get_settings
+from core.settings import YANDEX_METRIKA_TOKEN, YANDEX_METRIKA_COUNTER
 from ..utils import order_items
-
 from ..models import Notification
 
 register = template.Library()
+
+
+@register.simple_tag()
+def get_metrics():
+    """
+    Возвращает количество посителей и просмотров за день, неделю и месяц, 
+    полученное из Яндекс Метрики.
+    """
+    API_URL = 'https://api-metrika.yandex.ru/stat/v1/data/bytime'
+    params = {
+        'date1': '30daysAgo',
+        'date2': 'today',
+        'metrics': 'ym:s:visits,ym:s:users',
+        'group': 'day',
+        'filters' : "ym:s:isRobot=='No'",
+        'id': YANDEX_METRIKA_COUNTER,
+        }
+    req = requests.get(API_URL, params = params, headers={
+            'Authorization': YANDEX_METRIKA_TOKEN
+            }
+        )
+    json_data = json.loads(req.text)
+    
+    results = {}
+    results['today'] = {
+        'views': int(json_data['totals'][0][-1]), 
+        'guests': int(json_data['totals'][1][-1])
+        }
+    results['week'] = {
+        'views': int(sum(json_data['totals'][0][-7:])), 
+        'guests': int(sum(json_data['totals'][1][-7:])), 
+        }
+    results['month'] = {
+        'views': int(sum(json_data['totals'][0])), 
+        'guests': int(sum(json_data['totals'][1])), 
+        }
+    
+    return results
 
 
 @register.simple_tag
@@ -34,6 +75,7 @@ def get_notifications_message(list):
     message = list[-2]
     soup = BeautifulSoup(message, 'lxml')
     notification = soup.find('a')
+    
     return format_html(notification.text)
 
 
@@ -43,6 +85,7 @@ def get_notifications_status(notification):
     Возвращает статус уведомления, как прочитанное или непрочитанное.
     """
     field_read = notification[-1].split()
+    
     if field_read[-1].startswith('alt="False"'):
         return False
     return True
@@ -68,6 +111,7 @@ def get_notifications() -> int:
     Возвращает количество непрочитанных уведомлений.
     """
     unread_notifications = Notification.objects.filter(read=False)
+    
     return unread_notifications.count()
 
 
@@ -258,5 +302,3 @@ def sort_header(header: Dict, forloop: Dict) -> str:
         classes.append('sorting')
 
     return ' '.join(classes)
-
-
