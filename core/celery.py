@@ -10,6 +10,6 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 
 app.conf.enable_utc = False
 
-app.conf.update(timezone = 'Europe/Moscow')
+app.conf.update(timezone='Europe/Moscow')
 
 app.autodiscover_tasks()

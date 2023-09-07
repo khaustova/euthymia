@@ -19,6 +19,7 @@ html[data-theme="light"],
     --color-timeline-line: #dee2e6;
     --color-code: #000747;
     --color-doc-line: #dbdbdb;
+    --color-error: #b30000;
 }
 
 html[data-theme="dark"],
@@ -222,6 +223,132 @@ footer {
     width: 49.5%;
     gap: 10px;
 }
+
+.content-metrics_wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.content-metrics {
+    width: 100%;
+    justify-content: center;
+    overflow: hidden !important;
+    height: 175px;
+}
+
+.metrics__title {
+    width: calc(100% - 100px);
+    margin: 0 auto;
+    font-weight: 900;
+    text-align: center;
+    position: relative;
+    top: -10px;
+}
+
+.metrics__num {
+    font-weight: 600;
+    font-size: 2.8rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.metrics__graph_wrapper {
+    width: calc(100% - 100px);
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 100px;
+    top: 45px;
+}
+
+.metrics__graph {
+    width: 110px;
+    margin: 0 auto;
+}
+
+/* #viewChart {
+    position: absolute;
+    left: 100px;
+    top: 45px;
+} */
+
+
+.tabs { 
+    width: 100%; 
+    padding: 0px; 
+    margin: 0 auto; 
+    position: relative; 
+  } 
+
+section.metrics__section { 
+    display: none;  
+    padding: 5px; 
+    background: transparent; 
+    position: absolute; 
+    top: 0; 
+    left: 100px; 
+    margin: 0 auto;
+    width: calc(100% - 100px);
+} 
+
+p { 
+    margin: 0; 
+} 
+
+input.metrics__input { 
+    display: none; 
+} 
+
+label.metrics__label { 
+    display: block; 
+    width: 100px; 
+    padding: 5px; 
+    color: var(--color-accent); 
+    background: transparent; 
+    cursor: pointer; 
+} 
+
+input.metrics__input:checked + label.metrics__label { 
+    color: var(--color-text); 
+    background: transparent; 
+} 
+
+#guestTodayTab:checked ~ #guestTodayContent, 
+#guestWeekTab:checked ~ #guestWeekContent, 
+#guestMonthTab:checked ~ #guestMonthContent { 
+    display: block; 
+} 
+
+#viewsTodayTab:checked ~ #viewsTodayContent, 
+#viewsWeekTab:checked ~ #viewsWeekContent, 
+#viewsMonthTab:checked ~ #viewsMonthContent { 
+    display: block; 
+} 
+
+section.metrics__section { 
+    animation: scale 0.7s ease-in-out; 
+} 
+
+@keyframes scale { 
+    0% { 
+        transform: scale(0.9); 
+        opacity: 0; 
+    } 
+    50% { 
+        transform: scale(1.005); 
+        opacity: 0.5; 
+    } 
+    100% { 
+        transform: scale(1); 
+        opacity: 1; 
+    } 
+}
+
+
 
 .content-history {
     width: 49.5%;

@@ -1,7 +1,3 @@
-"""
-Django settings for core project.
-"""
-
 from pathlib import Path
 from environ import Env
 from sys import path
@@ -41,7 +37,6 @@ INSTALLED_APPS = [
     'manager.apps.ManagerConfig',
     'django_elasticsearch_dsl',
     'django_celery_results',
-    
 ]
 
 MIDDLEWARE = [
@@ -53,7 +48,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
-    'django.middleware.locale.LocaleMiddleware'
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -78,7 +73,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
@@ -92,7 +86,6 @@ DATABASES = {
 }
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -109,9 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru-ru'
 
@@ -121,24 +112,24 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
+# Static files
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 # Media files
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CKEDITOR config
+
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
@@ -147,26 +138,26 @@ CKEDITOR_CONFIGS = {
         'skin': 'moonocolor',
         'width': '100%',
         'toolbar': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'Preview', '-',]
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'Preview', '-']
              },
             {'name': 'clipboard', 'items': ['Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
              },
-            {'name': 'editing', 'items': ['Find', 'Replace',]
+            {'name': 'editing', 'items': ['Find', 'Replace']
              },
             '/',
-            {'name': 'basicstyles','items':  ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 
-                                              'Superscript', '-', 'RemoveFormat']
+            {'name': 'basicstyles', 'items':  ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
+                                               'Superscript', '-', 'RemoveFormat']
              },
-            {'name': 'paragraph', 'items':  ['NumberedList', 'BulletedList', '-', 
-                                             'Outdent', 'Indent', '-',  'Blockquote', 
-                                             '-', 'JustifyLeft', 'JustifyCenter', 
+            {'name': 'paragraph', 'items':  ['NumberedList', 'BulletedList', '-',
+                                             'Outdent', 'Indent', '-',  'Blockquote',
+                                             '-', 'JustifyLeft', 'JustifyCenter',
                                              'JustifyRight', 'JustifyBlock']
-              },
+             },
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']
              },
-            {'name': 'insert','items': ['Image', 'Flash', 'Table', 'HorizontalRule', 
-                                        'Smiley', 'SpecialChar']
-            },
+            {'name': 'insert', 'items': ['Image', 'Flash', 'Table', 'HorizontalRule',
+                                         'Smiley', 'SpecialChar']
+             },
             '/',
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']
              },
@@ -174,24 +165,25 @@ CKEDITOR_CONFIGS = {
              },
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']
              },
-            '/', 
-            {'name': 'yourcustomtools', 'items': ['Maximize', 'CodeSnippet',]
+            '/',
+            {'name': 'yourcustomtools', 'items': ['Maximize', 'CodeSnippet']
              },
-        ],
+            ],
         'tabSpaces': 4,
         'codeSnippet_theme': 'tomorrow-night-blue',
         'extraPlugins': ','.join([
             'codesnippet',
             'widget',
             'dialog',
-        ]),
+            ]),
         'codeSnippet_languages': {
             'python': 'Python',
-        },
+            },
+        }
     }
-}
 
 # Elasticsearch
+
 ELASTICSEARCH_DSL = {
     'default': {
         'hosts': 'elasticsearch:9200',
@@ -201,6 +193,7 @@ ELASTICSEARCH_DSL = {
 }
 
 # Email
+
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
@@ -211,6 +204,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'default from email'
 
 # Celery
+
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 CELERY_ACCEPT_CONTENT = {'application/json'}
 CELERY_RESULT_SERIALIZER = 'json'
@@ -219,10 +213,12 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_EXTENDED = True
 
+# Admingo
+
 ADMINGO_CUSTOMIZATION = {
     'search_model': 'blog.article',
     'sidebar_icons': {
-        'auth.user': 'person', 
+        'auth.user': 'person',
         'auth.group': 'groups',
         'blog.article': 'article',
         'blog.tag': 'bookmark',
@@ -235,13 +231,18 @@ ADMINGO_CUSTOMIZATION = {
     },
     'hidden_apps': ['admingo'],
     'hidden_models': ['auth.group', 'django_celery_results.groupresult'],
-    'apps_order': ['blog', 'blog.article', 'blog.tag', 'blog.category', 
+    'apps_order': ['blog', 'blog.article', 'blog.tag', 'blog.category',
                    'manager', 'manager.feedback', 'manager.emailsubscription', 'manager.sitedescription',
                    'django_celery_results', 
                    'auth'],
-    'extra_links' : [{'manager': [
+    'extra_links': [{'manager': [
                             {'name': 'Документация', 'admin_url': '/admin/doc/', 'icon': 'description'},
-                            {'name': 'Яндекс Метрика', 'admin_url': 'https://metrika.yandex.ru/list', 'icon': 'monitoring'}
+                            {'name': 'Яндекс Метрика', 'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id=94751613', 'icon': 'monitoring'}
                         ]}
-                     ],
+                    ],
 }
+
+# Analytics
+
+YANDEX_METRIKA_TOKEN = env('YANDEX_METRIKA_TOKEN')
+YANDEX_METRIKA_COUNTER = env('YANDEX_METRIKA_COUNTER')

@@ -1,16 +1,22 @@
 let url = "https://api-metrika.yandex.net/stat/v1/data/bytime?metrics=ym:s:hits,ym:s:users&date1=6daysAgo&date2=today&group=day&filters=ym:s:isRobot=='No'&id=94751613";
 
+// Получение данных в формате JSON от Яндекс Метрики.
+
 async function getJSONData() {
   const response = await fetch(url)
   const json = await response.json();
   return json
 }
 
+// Построение графиков по полученным данным (просмотры и посетители).
+
 getJSONData().then(data => {
   data;
   chartMetrics(data['totals'][0], 'viewChart');
   chartMetrics(data['totals'][1], 'guestChart');
 });
+
+// Построение линейного графика по полученным данным на канве с полученным id.
 
 async function chartMetrics(data, chartId) {
   new Chart(

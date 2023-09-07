@@ -1,6 +1,6 @@
 'use strict'; 
 
-/* CSRF-token */
+// CSRF-token
 
 function getCookie(name) {
     let cookieValue = null;
@@ -19,7 +19,7 @@ function getCookie(name) {
 
 const csrftoken = getCookie('csrftoken');
 
-/* Create comment form */
+// Создание формы для комментария для гостя и для администратора
 
 function createGuestCommentForm(author, parentID, commentID = -1) {
     let formClass = '';
@@ -88,7 +88,7 @@ function createForm(author, parentID, commentID, template) {
     }
 }
 
-/* Remove comment form */
+// Удаление формы для комментария
 
 function closeCommentForm () {
     document.getElementsByClassName('comment')[1].remove();

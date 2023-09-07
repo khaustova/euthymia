@@ -1,3 +1,7 @@
+'use strict'; 
+
+// Смена темы
+
 let toggle = document.getElementById("theme-toggle");
 
 let storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");

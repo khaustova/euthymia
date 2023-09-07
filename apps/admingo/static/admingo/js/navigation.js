@@ -1,6 +1,6 @@
 'use strict'; 
 
-/* Show/hide user menu */
+// Открытие/закрытие выпадающего меню пользователя.
 
 const mainMenu = document.getElementById("user-menu");
 const userMenu = document.getElementById("expand-user-menu");
@@ -13,7 +13,7 @@ username.addEventListener("click", function() {
   : "close";
 })
 
-/* Close admin message */
+// Закрытие административного сообщения.
 
 const closeMessageButton = document.getElementsByClassName("message_close")[0];
 
@@ -24,7 +24,7 @@ if (closeMessageButton) {
   });
 }
 
-/* Open/close mobile sidebar */
+// Открытие/закрытие мобильной боковой панели.
 
 const aside = document.getElementsByTagName("aside")[0];
 const openMenuButton = document.getElementById("open-menu");
@@ -43,7 +43,8 @@ closeMenuButton.addEventListener("click", function() {
   aside.classList.add("hide-menu");
 })
 
-/* Open/close mobile search */
+
+// Открытие/закрытие мобильного поиска.
 
 const searchButton = document.getElementById("top-search");
 const searchForm = document.getElementsByClassName("search-top__form")[0]

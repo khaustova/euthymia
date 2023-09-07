@@ -1,7 +1,7 @@
 from smtplib import SMTPException
 from django.conf import settings
 from django.core.mail import EmailMessage, get_connection
-from django.urls import reverse
+from django.utils.safestring import SafeText
 from django.template.loader import get_template
 from celery import shared_task
 from blog.models import Article
@@ -9,7 +9,7 @@ from manager.models import EmailSubscription, Feedback
 
 
 @shared_task(name='add_email')
-def add_email(email):
+def add_email(email: str) -> str:
     """
     Добавляет email в рассылку.
     """
@@ -18,7 +18,7 @@ def add_email(email):
 
 
 @shared_task(name='remove_email')
-def remove_email(email):
+def remove_email(email: str) -> str:
     """
     Удаляет email из рассылки.
     """
@@ -27,7 +27,7 @@ def remove_email(email):
 
 
 @shared_task(name='send_notification')
-def send_notification(article_pk):
+def send_notification(article_pk: int) -> str:
     """
     Отправляет уведомление о новой записи на email из рассылки.
     """
@@ -36,31 +36,33 @@ def send_notification(article_pk):
     connection.open()
     for email in EmailSubscription.objects.all():
         try:
-            subject = '[Euthymia] Опубликована новая запись ' + '«' + article.title + '»'
+            subject = '[Euthymia] Опубликована новая запись «'
+            + article.title
+            + '»'
             message = get_template("manager/emails/notification.html").render(
                 {'article': article,
-                'email': email.email,
-                'email_hash': email.email_hash
-                }
-            )
+                 'email': email.email,
+                 'email_hash': email.email_hash
+                 }
+                )
             mail = EmailMessage(
                 subject=subject,
                 body=message,
                 from_email=settings.EMAIL_HOST_USER,
                 to=[email],
                 reply_to=[settings.EMAIL_HOST_USER]
-            )
+                )
             mail.content_subtype = 'html'
             mail.send()
-        except SMTPException as e:
+        except SMTPException:
             continue
     connection.close()
-    
+
     return f'Notifications about new article {article.title} were sent.'
 
 
 @shared_task(name='add_feedback')
-def add_feedback(name, email, message):
+def add_feedback(name: str, email: str, message: str) -> str:
     """
     Добавляет новый фидбек.
     """
@@ -69,14 +71,16 @@ def add_feedback(name, email, message):
 
 
 @shared_task(name='reply_feedback')
-def reply_feedback(name, email, reply):
+def reply_feedback(name: str, email: str, reply: SafeText) -> str:
     """
     Отправляет ответ на фидбек.
     """
-    subject = '[Euthymia] Ответ на сообщение, полученное через обратную связь' 
+    subject = '[Euthymia] Ответ на сообщение, полученное через обратную связь'
     message = get_template("manager/emails/reply_feedback.html").render(
-        {'name': name, 'reply': reply}
-    )
+        {'name': name,
+         'reply': reply
+         }
+        )
     connection = get_connection()
     connection.open()
     mail = EmailMessage(
@@ -85,8 +89,8 @@ def reply_feedback(name, email, reply):
         from_email=settings.EMAIL_HOST_USER,
         to=[email],
         reply_to=[settings.EMAIL_HOST_USER]
-    )
+        )
     mail.content_subtype = 'html'
     mail.send()
     connection.close()
-    return f'Feedback was sent.'
+    return 'Feedback was sent.'

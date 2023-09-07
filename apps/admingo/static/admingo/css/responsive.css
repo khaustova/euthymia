@@ -1,4 +1,10 @@
 @media (max-width: 1280px) {
+
+    .content-metrics_wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
     /* Documentation */
 
     .doc_wrapper {
@@ -156,6 +162,15 @@
 
     .content_wrapper {
         margin: 5px 5px 0;
+    }
+
+    .content-metrics_wrapper {
+        flex-direction: column;
+    }
+    
+    .content-metrics {
+        width: 100%;
+        display: flex;
     }
 
     header {

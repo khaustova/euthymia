@@ -1,6 +1,6 @@
 'use strict'; 
 
-/* Открыть/закрыть меню в мобильной версии */
+// Открытие/закрытие верхнего меню в мобильной версии
 
 const topNavigation = document.getElementsByClassName('top-navigation')[0];
 const topNavigationTemplate = `<span class="material-symbols-outlined button-icon top-menu-icon" onclick="openSearch()">search</span>
@@ -17,7 +17,7 @@ function closeMenu() {
     topNavigation.innerHTML = topNavigationTemplate;
 }
 
-/* Открыть/закрыть поиск в декстопной версии */
+// Открытие/закрытие поиска в десктопной версии
 
 const openSearchButton = document.getElementById("open-search-button")
 const searchForm = document.getElementById("search-form")
@@ -32,7 +32,7 @@ function closeTopSearch() {
     openSearchButton.classList.remove('hide');
 }
 
-/* Открыть/закрыть поиск в мобильной версии */
+// Открытие/закрытие поиска в мобильной версии
 
 const openMobileSearchButton = document.getElementById("open-mobile-search-button")
 const search = document.getElementsByClassName('mobile-search')[0];
@@ -50,7 +50,7 @@ function closeSearch() {
     search.style.display = 'none';
 }
 
-/* Прокрутка к верху страницы */ 
+// Прокрутка к верху страницы
 
 const showOnPx = 100;
 const backToTopButton = document.querySelector(".back-to-top");

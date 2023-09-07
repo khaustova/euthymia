@@ -1,5 +1,7 @@
 'use strict'; 
 
+// Сворачивание/разворачивание боковой панели.
+
 const toggleSidebar = document.getElementById('toggle-sidebar');
 
 if (toggleSidebar !== null) {

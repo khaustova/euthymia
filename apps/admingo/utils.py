@@ -1,7 +1,10 @@
-from typing import List, Callable
+from typing import Callable
 
 
-def order_items(original: List, reference: List, getter: Callable = lambda x: x) -> List:
+def order_items(original: list,
+                reference: list,
+                getter: Callable = lambda x: x
+                ) -> list:
     """
     Возвращает список, упорядоченный в соответствии с расположением элементов 
     в списке-образце.

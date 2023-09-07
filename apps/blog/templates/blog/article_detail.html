@@ -30,20 +30,22 @@
         &nbsp;{{ article.title|cut_number }}
     </div>
     <div class="search">
-        <div class="search-form">
+        <div class="search-form" id="search-form">
             <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
             <form action="{% url 'blog:search' %}" method="get" class="search__form">
                 <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
                 <button type="submit" class="search-button"></button>
             </form>
         </div>
-        <span id="open-search-button"><span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span></span>
+        <span id="open-search-button">
+            <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
+        </span>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-    <div class="article article-block">
+    <article class="article article-block">
         <div class="article__date">
             <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
         </div>
@@ -62,12 +64,8 @@
             </div>
         </div>
         <hr>
-    </div>
-    {% comment %} <div class="article-block">Теги:
-        {% for tag in article.tags.all %}
-        <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
-        {% endfor %}
-    </div> {% endcomment %}
+    </article>
+
 {% include 'blog/includes/comments.html' %}
 {% endblock %}
 

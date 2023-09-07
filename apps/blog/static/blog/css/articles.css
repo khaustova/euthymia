@@ -11,6 +11,10 @@
     margin: 0 0 10px 0;
 }
 
+.article-block:last-child {
+    margin-bottom: 0;
+}
+
 .article__date {
     align-self: end;
     font-size: 1.2rem;

@@ -1,10 +1,10 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from blog.views import (
-    ArticleView, 
-    ArticleDetailView, 
-    SearchView, 
-    subscribe_form, 
+    ArticleView,
+    ArticleDetailView,
+    SearchView,
+    subscribe_form,
     unsubscribe,
     feedback_form
 )
@@ -17,7 +17,7 @@ urlpatterns = [
     path('article/<slug:slug>/', ArticleDetailView.as_view(), name='article_detail'),
     path('search/', SearchView.as_view(), name='search'),
     path('subscribe/', subscribe_form, name='subscribe'),
-    path('unsubscribe/', unsubscribe, name='unsubscribe'), 
+    path('unsubscribe/', unsubscribe, name='unsubscribe'),
     path('feedback/', feedback_form, name='feedback'),
     path('about/', TemplateView.as_view(template_name="blog/about_site.html"), name='about_site'),
 ]

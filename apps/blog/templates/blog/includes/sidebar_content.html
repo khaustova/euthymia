@@ -24,20 +24,3 @@
         {% endfor %}
     </ul>
 </nav>
-{% comment %} <div class="sidebar-content search">
-    <form action="{% url 'blog:search' %}" method="get" class="search__form">
-        <input type="text" name="query" class="search-field" required=True placeholder="Поиск...">
-        <button type="submit" class="search-button"></button>
-    </form>
-</div> {% endcomment %}
-{% comment %} <div class="sidebar-content tags">
-    <strong><span class="sidebar__title"><span class="material-symbols-outlined navigation-icon middle-icon">label</span> Метки</span></strong>
-    <hr class="sidebar__line">
-    <div class="tags-content">
-        {% get_tags as tags %}
-        {% for tag in tags %}
-        <a href="{{ tag.get_absolute_url }}" class="tags__link">{{ tag }}</a>
-        {% endfor %}
-    </div>
-</div> {% endcomment %}
-{% comment %} {% subscribe_form %} {% endcomment %}

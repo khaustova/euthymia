@@ -17,19 +17,19 @@ class ArticleAdmin(admin.ModelAdmin):
     list_per_page = 50
     date_hierarchy = 'created_date'
     search_fields = ('title',)
-    
-    def save_model(self, request, obj, form, change):
-        super().save_model(request, obj, form, change)
-        if not change:
-            transaction.on_commit(lambda: send_notification.delay(obj.pk))
-    
-    
+
+    # def save_model(self, request, obj, form, change):
+    #     super().save_model(request, obj, form, change)
+    #     if not change:
+    #         transaction.on_commit(lambda: send_notification.delay(obj.pk))
+
+
 @admin.register(Category)
 class CategoryAdmin(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title',)
     search_fields = ('name',)
     mptt_level_indent = 2
-    
+
 
 @admin.register(Comment)
 class CommentAdmin(DraggableMPTTAdmin):
@@ -37,18 +37,17 @@ class CommentAdmin(DraggableMPTTAdmin):
     mptt_level_indent = 2
     list_display_links = ('article',)
     list_filter = ('created_date',)
-    
-    
+
+
 class UserInline(admin.StackedInline):
     model = UserProfile
     can_delete = False
     verbose_name_plural = 'Дополнительная информация'
- 
- 
+
+
 class UserAdmin(UserAdmin):
     inlines = (UserInline, )
- 
- 
+
+
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-    

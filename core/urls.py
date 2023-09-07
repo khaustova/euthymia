@@ -1,24 +1,19 @@
-"""
-URL configuration for core project.
-"""
-
 from django.contrib import admin
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from wsgiref.simple_server import WSGIRequestHandler
 
-
-def page_not_found_handler(request: WSGIRequestHandler, exception=None):
+def page_not_found_handler(request: HttpRequest, exception=None) -> HttpResponse:
     return render(request, 'blog/404.html')
-   
-   
-def server_error_handler(request: WSGIRequestHandler, exception=None):
-    return render(request, 'blog/500.html')   
-   
-   
+
+
+def server_error_handler(request: HttpRequest, exception=None) -> HttpResponse:
+    return render(request, 'blog/500.html')
+
+
 handler404 = page_not_found_handler
 handler500 = server_error_handler
 
