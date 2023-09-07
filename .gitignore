@@ -6,6 +6,11 @@ __pycache__
 db.sqlite3
 media
 
+# Docker #
+docker
+Dockerfile.prod
+docker-compose.prod.yml
+
 # Backup files # 
 *.bak 
 
@@ -99,7 +104,3 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
-
-# Docker #
-docker-compose.prod.yml
-sent_emails
