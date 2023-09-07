@@ -43,7 +43,6 @@ closeMenuButton.addEventListener("click", function() {
   aside.classList.add("hide-menu");
 })
 
-
 // Открытие/закрытие мобильного поиска.
 
 const searchButton = document.getElementById("top-search");

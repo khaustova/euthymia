@@ -56,8 +56,8 @@ def get_search_model() -> dict:
     """
     settings = get_settings()
 
-    if settings['search_model'] is None:
-        return None
+    if settings['search_model']:
+        return
 
     search_model = settings['search_model']
     search_model_params = {}

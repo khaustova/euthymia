@@ -51,4 +51,3 @@ async function chartMetrics(data, chartId) {
     }
   );
 };
-
