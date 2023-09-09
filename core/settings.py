@@ -18,6 +18,8 @@ ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(' ')
 
 LOGIN_REDIRECT_URL = '/'
 
+CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS')
+
 # Application definition
 
 INSTALLED_APPS = [
