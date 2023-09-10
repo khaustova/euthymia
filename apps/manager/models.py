@@ -11,7 +11,7 @@ class EmailSubscription(models.Model):
         unique=True,
         verbose_name='Email'
     )
-    email_hash = models.CharField(blank=True, null=True)
+    email_hash = models.CharField(max_length=256, blank=True, null=True)
     subscription_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата подписки',
