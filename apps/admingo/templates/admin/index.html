@@ -5,8 +5,11 @@
 {% block title %}{{ customization.title }}{% endblock %}
 
 {% block extrahead %}
-<script src="{% static "vendor/chart.js/chart.js" %}"></script>
-<script src="{% static 'admingo/js/metrics.js' %}" defer></script>
+{% get_metrics as metrics %}
+{% if metrics %}
+<script src="{% static "vendor/chart.js/chart.js" %}" defer></script>
+<script src="{% static 'admingo/js/metrics.js' %}" defer></script>  
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -16,8 +19,9 @@
     {% endif %}
     <div class="content_wrapper">
         <div class="content-apps">
+            {% get_metrics as metrics %}
+            {% if metrics %}
             <div class="content-metrics_wrapper">
-                {% get_metrics as metrics %}
                 <div class="content-card content-metrics">
                     <div class="metrics__title">
                         Посетители
@@ -86,6 +90,7 @@
                     </div> 
                 </div>
             </div>
+            {% endif %}
         {% block content-apps %}
         {% for app in apps %}
             <div class="content-card">

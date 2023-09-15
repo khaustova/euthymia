@@ -56,7 +56,7 @@ def get_search_model() -> dict:
     """
     settings = get_settings()
 
-    if settings['search_model']:
+    if not settings['search_model']:
         return
 
     search_model = settings['search_model']
@@ -230,6 +230,9 @@ def get_metrics() -> dict:
     Возвращает количество посителей и просмотров за день, неделю и месяц,
     полученное из Яндекс Метрики.
     """
+    if YANDEX_METRIKA_COUNTER == 'counter':
+        return
+    
     API_URL = 'https://api-metrika.yandex.ru/stat/v1/data/bytime'
     params = {
         'date1': '30daysAgo',
