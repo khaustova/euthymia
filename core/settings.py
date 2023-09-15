@@ -18,7 +18,9 @@ ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(' ')
 
 LOGIN_REDIRECT_URL = '/'
 
-#CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS').split(' ')
+CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS').split(' ')
+
+INTERNAL_IPS = env('INTERNAL_IPS').split(' ')
 
 # Application definition
 
@@ -37,10 +39,9 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'imagekit',
     'mptt',
+    'django_celery_results',
     'blog.apps.BlogConfig',
     'manager.apps.ManagerConfig',
-    'django_elasticsearch_dsl',
-    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -55,10 +56,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-]
-
-INTERNAL_IPS = [
-    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -140,8 +137,6 @@ STORAGES = {
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-CKEDITOR_UPLOAD_PATH = "uploads/"
-
 
 # Default primary key field type
 
@@ -157,59 +152,129 @@ CKEDITOR_CONFIGS = {
         'skin': 'moonocolor',
         'width': '100%',
         'toolbar': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'Preview', '-']
+            {
+                'name': 'document', 
+                'items': [
+                    'Source', 
+                    '-', 
+                    'Save', 
+                    'Preview', 
+                    '-',
+                ]
+            },
+            {
+                'name': 'clipboard', 
+                'items': [
+                    'Paste', 
+                    'PasteText', 
+                    'PasteFromWord', 
+                    '-', 
+                    'Undo', 
+                    'Redo',
+                ]
              },
-            {'name': 'clipboard', 'items': ['Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
-             },
-            {'name': 'editing', 'items': ['Find', 'Replace']
+            {
+                'name': 'editing', 
+                'items': [
+                    'Find', 'Replace',
+                ]
              },
             '/',
-            {'name': 'basicstyles', 'items':  ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
-                                               'Superscript', '-', 'RemoveFormat']
-             },
-            {'name': 'paragraph', 'items':  ['NumberedList', 'BulletedList', '-',
-                                             'Outdent', 'Indent', '-',  'Blockquote',
-                                             '-', 'JustifyLeft', 'JustifyCenter',
-                                             'JustifyRight', 'JustifyBlock']
-             },
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']
-             },
-            {'name': 'insert', 'items': ['Image', 'Flash', 'Table', 'HorizontalRule',
-                                         'Smiley', 'SpecialChar']
-             },
+            {
+                'name': 'basicstyles', 
+                'items':  [
+                    'Bold', 
+                    'Italic', 
+                    'Underline', 
+                    'Strike', 
+                    'Subscript',
+                    'Superscript', 
+                    '-', 
+                    'RemoveFormat',
+                ]
+            },
+            {
+                'name': 'paragraph', 
+                'items':  [
+                    'NumberedList', 
+                    'BulletedList', 
+                    '-',
+                    'Outdent', 
+                    'Indent', 
+                    '-',
+                    'Blockquote',
+                    '-', 
+                    'JustifyLeft', 
+                    'JustifyCenter',
+                    'JustifyRight', 
+                    'JustifyBlock',
+                ]
+            },
+            {
+                'name': 'links', 
+                'items': [
+                    'Link', 
+                    'Unlink', 
+                    'Anchor',
+                ]
+            },
+            {
+                'name': 'insert', 
+                'items': [
+                    'Image', 
+                    'Flash', 
+                    'Table', 
+                    'HorizontalRule',
+                    'Smiley', 
+                    'SpecialChar',
+                ]
+            },
             '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']
-             },
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']
-             },
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']
-             },
+            {
+                'name': 'styles', 
+                'items': [
+                    'Styles', 
+                    'Format', 
+                    'Font', 
+                    'FontSize',
+                ]
+            },
+            {
+                'name': 'colors', 
+                'items': [
+                    'TextColor', 
+                    'BGColor',
+                ]
+            },
+            {
+                'name': 'tools', 
+                'items': [
+                    'Maximize', 'ShowBlocks',
+                ]
+            },
             '/',
-            {'name': 'yourcustomtools', 'items': ['Maximize', 'CodeSnippet']
-             },
-            ],
+            {
+                'name': 'yourcustomtools', 
+                'items': [
+                    'Maximize', 
+                    'CodeSnippet',
+                ]
+            },
+        ],
         'tabSpaces': 4,
         'codeSnippet_theme': 'tomorrow-night-blue',
-        'extraPlugins': ','.join([
-            'codesnippet',
-            'widget',
-            'dialog',
-            ]),
+        'extraPlugins': ','.join(
+            [
+                'codesnippet',
+                'widget',
+                'dialog',
+            ]
+        ),
         'codeSnippet_languages': {
             'python': 'Python',
             },
         }
     }
-
-# Elasticsearch
-
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': 'elasticsearch:9200',
-        'verify_certs': False,
-        'ca_certs': None
-    },
-}
 
 # Email
 
@@ -232,6 +297,11 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_EXTENDED = True
 
+# Analytics
+
+YANDEX_METRIKA_TOKEN = env('YANDEX_METRIKA_TOKEN')
+YANDEX_METRIKA_COUNTER = env('YANDEX_METRIKA_COUNTER')
+
 # Admingo
 
 ADMINGO_CUSTOMIZATION = {
@@ -248,20 +318,40 @@ ADMINGO_CUSTOMIZATION = {
         'manager.sitedescription': 'settings',
         'django_celery_results.taskresult': 'task',
     },
-    'hidden_apps': ['admingo'],
-    'hidden_models': ['auth.group', 'django_celery_results.groupresult'],
-    'apps_order': ['blog', 'blog.article', 'blog.tag', 'blog.category',
-                   'manager', 'manager.feedback', 'manager.emailsubscription', 'manager.sitedescription',
-                   'django_celery_results', 
-                   'auth'],
-    'extra_links': [{'manager': [
-                            {'name': 'Документация', 'admin_url': '/admin/doc/', 'icon': 'description'},
-                            {'name': 'Яндекс Метрика', 'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id=94751613', 'icon': 'monitoring'}
-                        ]}
-                    ],
+    'hidden_apps': [
+        'admingo',
+    ],
+    'hidden_models': [
+        'auth.group', 
+        'django_celery_results.groupresult',
+    ],
+    'apps_order': [
+        'blog', 
+        'blog.article', 
+        'blog.tag', 
+        'blog.category',
+        'manager', 
+        'manager.feedback', 
+        'manager.emailsubscription', 
+        'manager.sitedescription',
+        'django_celery_results', 
+        'auth',
+    ],
+    'extra_links': [
+        {
+            'manager': [
+                {
+                'name': 'Документация', 
+                'admin_url': '/admin/doc/', 
+                'icon': 'description'
+                },
+                {
+                'name': 'Яндекс Метрика', 
+                'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id=' 
+                    + YANDEX_METRIKA_COUNTER, 
+                'icon': 'monitoring'
+                }
+            ]
+        }
+    ],
 }
-
-# Analytics
-
-YANDEX_METRIKA_TOKEN = env('YANDEX_METRIKA_TOKEN')
-YANDEX_METRIKA_COUNTER = env('YANDEX_METRIKA_COUNTER')
