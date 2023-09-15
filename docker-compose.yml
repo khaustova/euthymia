@@ -11,33 +11,22 @@ services:
     env_file:
       - .env.example
     depends_on:
-      - elasticsearch
       - postgres
-
-  elasticsearch:
-    image: elasticsearch:7.8.1
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
-    environment:
-      - discovery.type=single-node
-    ports:
-      - "9200:9200"
 
   postgres:
     image: postgres:15.3
     env_file:
       - .env.example
+    ports:
+      - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  rabbitmq:
-    image: rabbitmq:3.12.2
-    container_name: rabiitmq
-    ports:
-      - 5672:5672
-    hostname: rabbit1
-    env_file:
-      - .env.example
+  redis:
+    image: redis:7.0.5-alpine 
+    restart: unless-stopped
+    expose:
+        - 6379
 
   celery:
     build: .
@@ -49,19 +38,8 @@ services:
       - .env.example
     depends_on:
       - postgres
-      - rabbitmq
+      - redis
       - web
-
-  flower:
-    image: mher/flower:0.9.5
-    command: celery flower --persisten=True
-    env_file:
-      - .env.example
-    ports:
-      - 8888:8888
-    depends_on:
-      - rabbitmq
-    
+      
 volumes:
   pgdata: {}
-  esdata: {}
