@@ -114,7 +114,7 @@ class SearchView(ListView):
     paginate_by = 10
     paginate_orphans = 5
 
-    def get_queryset(self) -> Article or None:
+    def get_queryset(self) -> Article:
         query = self.request.GET.get('query')
         search_vector = SearchVector('title', 'body')
         search_query = SearchQuery(query)

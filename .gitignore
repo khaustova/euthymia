@@ -5,6 +5,8 @@
 __pycache__
 db.sqlite3
 media
+.env.dev
+.env.prod
 
 # Docker #
 docker

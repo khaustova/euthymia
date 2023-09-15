@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional, Union
 from django import template
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
@@ -38,7 +38,7 @@ def get_first_article(category: Category) -> str:
 
 
 @register.simple_tag
-def get_content_links(article: Article) -> list:
+def get_content_links(article: Article) -> dict:
     """
     Возвращает содержание категории в виде словаря, где ключи - подкатегории,
     значения - список статей подкатегории.
@@ -53,7 +53,7 @@ def get_content_links(article: Article) -> list:
 
 
 @register.filter
-def cut_number(text: str) -> SafeText:
+def cut_number(text: str) -> Union[SafeText, str]:
     """
     Обрезает номер в заголовке статьи.
     """
@@ -129,7 +129,7 @@ def get_search_results_count(article: Article) -> int:
 
 
 @register.simple_tag
-def get_site_description() -> SiteDescription:
+def get_site_description() -> Optional[SiteDescription]:
     """
     Возвращает описание сайта.
     """

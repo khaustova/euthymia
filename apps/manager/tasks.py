@@ -14,6 +14,7 @@ def add_email(email: str) -> str:
     Добавляет email в рассылку.
     """
     EmailSubscription.objects.create(email=email)
+    
     return f'Added a new email {email}'
 
 
@@ -23,6 +24,7 @@ def remove_email(email: str) -> str:
     Удаляет email из рассылки.
     """
     EmailSubscription.objects.create(email=email)
+    
     return f'Added a new email {email}'
 
 
@@ -40,18 +42,19 @@ def send_notification(article_pk: int) -> str:
             + article.title
             + '»'
             message = get_template("manager/emails/notification.html").render(
-                {'article': article,
-                 'email': email.email,
-                 'email_hash': email.email_hash
-                 }
-                )
+                {
+                    'article': article,
+                    'email': email.email,
+                    'email_hash': email.email_hash
+                }
+            )
             mail = EmailMessage(
                 subject=subject,
                 body=message,
                 from_email=settings.EMAIL_HOST_USER,
                 to=[email],
                 reply_to=[settings.EMAIL_HOST_USER]
-                )
+            )
             mail.content_subtype = 'html'
             mail.send()
         except SMTPException:
@@ -67,6 +70,7 @@ def add_feedback(name: str, email: str, message: str) -> str:
     Добавляет новый фидбек.
     """
     Feedback.objects.create(name=name, email=email, message=message)
+
     return f'Added a new feedback from {name} {email} {message[:50]}'
 
 
@@ -77,10 +81,11 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
     """
     subject = '[Euthymia] Ответ на сообщение, полученное через обратную связь'
     message = get_template("manager/emails/reply_feedback.html").render(
-        {'name': name,
-         'reply': reply
-         }
-        )
+        {
+            'name': name,
+            'reply': reply
+        }
+    )
     connection = get_connection()
     connection.open()
     mail = EmailMessage(
@@ -89,8 +94,9 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
         from_email=settings.EMAIL_HOST_USER,
         to=[email],
         reply_to=[settings.EMAIL_HOST_USER]
-        )
+    )
     mail.content_subtype = 'html'
     mail.send()
     connection.close()
+    
     return 'Feedback was sent.'

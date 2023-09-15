@@ -34,7 +34,7 @@ class Feedback(models.Model):
     reply_status = models.BooleanField(
         default=False,
         verbose_name='Статус ответа'
-        )
+    )
 
     class Meta:
         verbose_name = 'Обратная связь'
@@ -52,7 +52,7 @@ class SiteDescription(models.Model):
         default='/static/blog/img/admin_avatar.png',
         processors=[ResizeToFill(50, 50)],
         blank=True
-        )
+    )
 
     class Meta:
         verbose_name = 'О сайте'

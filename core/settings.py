@@ -1,6 +1,7 @@
 from pathlib import Path
-from environ import Env
 from sys import path
+from environ import Env
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 path.append(str(BASE_DIR / 'apps'))
@@ -78,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 # Database
 
 DATABASES = {
@@ -153,110 +153,110 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
         'toolbar': [
             {
-                'name': 'document', 
+                'name': 'document',
                 'items': [
-                    'Source', 
-                    '-', 
-                    'Save', 
-                    'Preview', 
+                    'Source',
+                    '-',
+                    'Save',
+                    'Preview',
                     '-',
                 ]
             },
             {
-                'name': 'clipboard', 
+                'name': 'clipboard',
                 'items': [
-                    'Paste', 
-                    'PasteText', 
-                    'PasteFromWord', 
-                    '-', 
-                    'Undo', 
+                    'Paste',
+                    'PasteText',
+                    'PasteFromWord',
+                    '-',
+                    'Undo',
                     'Redo',
                 ]
-             },
+            },
             {
-                'name': 'editing', 
+                'name': 'editing',
                 'items': [
                     'Find', 'Replace',
                 ]
-             },
+            },
             '/',
             {
-                'name': 'basicstyles', 
-                'items':  [
-                    'Bold', 
-                    'Italic', 
-                    'Underline', 
-                    'Strike', 
+                'name': 'basicstyles',
+                'items': [
+                    'Bold',
+                    'Italic',
+                    'Underline',
+                    'Strike',
                     'Subscript',
-                    'Superscript', 
-                    '-', 
+                    'Superscript',
+                    '-',
                     'RemoveFormat',
                 ]
             },
             {
-                'name': 'paragraph', 
-                'items':  [
-                    'NumberedList', 
-                    'BulletedList', 
+                'name': 'paragraph',
+                'items': [
+                    'NumberedList',
+                    'BulletedList',
                     '-',
-                    'Outdent', 
-                    'Indent', 
+                    'Outdent',
+                    'Indent',
                     '-',
                     'Blockquote',
-                    '-', 
-                    'JustifyLeft', 
+                    '-',
+                    'JustifyLeft',
                     'JustifyCenter',
-                    'JustifyRight', 
+                    'JustifyRight',
                     'JustifyBlock',
                 ]
             },
             {
-                'name': 'links', 
+                'name': 'links',
                 'items': [
-                    'Link', 
-                    'Unlink', 
+                    'Link',
+                    'Unlink',
                     'Anchor',
                 ]
             },
             {
-                'name': 'insert', 
+                'name': 'insert',
                 'items': [
-                    'Image', 
-                    'Flash', 
-                    'Table', 
+                    'Image',
+                    'Flash',
+                    'Table',
                     'HorizontalRule',
-                    'Smiley', 
+                    'Smiley',
                     'SpecialChar',
                 ]
             },
             '/',
             {
-                'name': 'styles', 
+                'name': 'styles',
                 'items': [
-                    'Styles', 
-                    'Format', 
-                    'Font', 
+                    'Styles',
+                    'Format',
+                    'Font',
                     'FontSize',
                 ]
             },
             {
-                'name': 'colors', 
+                'name': 'colors',
                 'items': [
-                    'TextColor', 
+                    'TextColor',
                     'BGColor',
                 ]
             },
             {
-                'name': 'tools', 
+                'name': 'tools',
                 'items': [
                     'Maximize', 'ShowBlocks',
                 ]
             },
             '/',
             {
-                'name': 'yourcustomtools', 
+                'name': 'yourcustomtools',
                 'items': [
-                    'Maximize', 
+                    'Maximize',
                     'CodeSnippet',
                 ]
             },
@@ -272,9 +272,9 @@ CKEDITOR_CONFIGS = {
         ),
         'codeSnippet_languages': {
             'python': 'Python',
-            },
-        }
+        },
     }
+}
 
 # Email
 
@@ -322,34 +322,34 @@ ADMINGO_CUSTOMIZATION = {
         'admingo',
     ],
     'hidden_models': [
-        'auth.group', 
+        'auth.group',
         'django_celery_results.groupresult',
     ],
     'apps_order': [
-        'blog', 
-        'blog.article', 
-        'blog.tag', 
+        'blog',
+        'blog.article',
+        'blog.tag',
         'blog.category',
-        'manager', 
-        'manager.feedback', 
-        'manager.emailsubscription', 
+        'manager',
+        'manager.feedback',
+        'manager.emailsubscription',
         'manager.sitedescription',
-        'django_celery_results', 
+        'django_celery_results',
         'auth',
     ],
     'extra_links': [
         {
             'manager': [
                 {
-                'name': 'Документация', 
-                'admin_url': '/admin/doc/', 
-                'icon': 'description'
+                    'name': 'Документация',
+                    'admin_url': '/admin/doc/',
+                    'icon': 'description'
                 },
                 {
-                'name': 'Яндекс Метрика', 
-                'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id=' 
-                    + YANDEX_METRIKA_COUNTER, 
-                'icon': 'monitoring'
+                    'name': 'Яндекс Метрика',
+                    'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id='
+                        + YANDEX_METRIKA_COUNTER,
+                    'icon': 'monitoring'
                 }
             ]
         }

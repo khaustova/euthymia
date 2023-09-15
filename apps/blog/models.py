@@ -21,7 +21,7 @@ class UserProfile(models.Model):
         default='static/blog/img/admin_avatar.png',
         processors=[ResizeToFill(50, 50)],
         blank=True
-        )
+    )
 
     class Meta:
         verbose_name = 'Профиль'
@@ -32,9 +32,7 @@ class UserProfile(models.Model):
 
 
 class Category(MPTTModel):
-    name = models.CharField(
-        max_length=128,
-        verbose_name='Категория')
+    name = models.CharField(max_length=128, verbose_name='Категория')
     parent = TreeForeignKey(
         'self',
         null=True,
@@ -42,7 +40,7 @@ class Category(MPTTModel):
         on_delete=models.CASCADE,
         verbose_name='Родительская категория',
         related_name='children'
-        )
+    )
 
     class Meta:
         verbose_name = 'Категория'
@@ -65,37 +63,37 @@ class Article(models.Model):
         max_length=256,
         default='Краткое содержание',
         verbose_name='Краткое содержание'
-        )
+    )
     body = RichTextUploadingField()
     image = models.ImageField(
         upload_to='uploads/',
         blank=True,
         verbose_name='Изображение',
-        )
+    )
     created_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Время создания',
-        )
+    )
     updated_date = models.DateTimeField(
         auto_now=True,
         verbose_name='Время редактирования',
-        )
+    )
     slug = models.SlugField(unique=True, verbose_name='url')
     category = models.ForeignKey(
         Category,
         on_delete=models.PROTECT,
         verbose_name='Категория',
-        )
+    )
     views = models.PositiveIntegerField(
         verbose_name='Количество просмотров',
         default=0
-        )
+    )
     keywords = models.CharField(
         verbose_name='Ключевые слова',
         max_length=256,
         blank=True,
         help_text='Перечислите ключевые слова через запятую.'
-        )
+    )
     next_article = models.ForeignKey(
         'self',
         blank=True,
@@ -111,7 +109,7 @@ class Article(models.Model):
         on_delete=models.CASCADE,
         related_name='prev_articles',
         verbose_name='Предыдущая статья'
-        ) 
+    ) 
     search_vector = SearchVectorField(null=True, blank=True)
 
     class Meta:
@@ -138,25 +136,25 @@ class Comment(MPTTModel):
         Article,
         on_delete=models.CASCADE,
         verbose_name='Статья'
-        )
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
         verbose_name='Автор'
-        )
+    )
     guest = models.CharField(
         max_length=250,
         blank=True,
         null=True,
         verbose_name='Гость'
-        )
+    )
     email = models.EmailField(
         blank=True,
         null=True,
         verbose_name='Email'
-        )
+    )
     body = models.TextField(max_length=800, verbose_name='Комментарий')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     parent = TreeForeignKey(
@@ -166,7 +164,7 @@ class Comment(MPTTModel):
         on_delete=models.CASCADE,
         verbose_name='Родительский комментарий',
         related_name='children'
-        )
+    )
 
     class MTTMeta:
         order_insertion_by = ('created_date',)

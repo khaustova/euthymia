@@ -2,6 +2,7 @@ import requests
 import json
 
 from copy import deepcopy
+from typing import Optional
 
 from django import template
 from django.apps import apps
@@ -79,7 +80,7 @@ def get_apps(context: template.Context) -> list:
     settings = get_settings()
     sidebar_icons = settings['sidebar_icons']
     apps_order = settings.get('apps_order', [])
-    apps_order = [app.lower() for app in apps_order]  
+    apps_order = [app.lower() for app in apps_order]
     apps = []
 
     for app in available_apps:
@@ -96,21 +97,23 @@ def get_apps(context: template.Context) -> list:
 
         models_reference = list(filter(lambda app: '.' in app, apps_order))
         if models_reference:
-            models = order_items(models,
-                                 models_reference,
-                                 getter=lambda app: app_label
-                                 + '.'
-                                 + app.get('object_name').lower()
-                                 )
+            models = order_items(
+                models,
+                models_reference,
+                getter=lambda app: app_label
+                + '.'
+                + app.get('object_name').lower()
+            )
         app['models'] = models
         apps.append(app)
 
     if apps_order:
         apps_reference = list(filter(lambda app: '.' not in app, apps_order))
-        apps = order_items(apps,
-                           apps_reference,
-                           getter=lambda app: app['app_label'].lower()
-                           )
+        apps = order_items(
+            apps,
+            apps_reference,
+            getter=lambda app: app['app_label'].lower()
+        )
 
     return apps
 
@@ -152,27 +155,53 @@ def action_message_to_list(action: LogEntry) -> list:
         for sub_message in change_message:
             if 'added' in sub_message:
                 if sub_message['added']:
-                    sub_message['added']['name'] = gettext(sub_message['added']['name'])
-                    messages.append({'message': (gettext('Added {name} “{object}”.').format(**sub_message['added']))})
+                    sub_message['added']['name'] = gettext(
+                        sub_message['added']['name']
+                    )
+                    messages.append(
+                        {
+                            'message': (gettext('Added {name} «{object}».').format(**sub_message['added']))
+                        }
+                    )
                 else:
                     messages.append({'message': (gettext('Added.'))})
 
             elif 'changed' in sub_message:
                 sub_message['changed']['fields'] = get_text_list(
-                    [gettext(field_name) for field_name in sub_message['changed']['fields']],
+                    [
+                        gettext(field_name) for field_name in sub_message['changed']['fields']
+                    ], 
                     gettext('and'),
-                    )
+                )
                 if 'name' in sub_message['changed']:
-                    sub_message['changed']['name'] = gettext(sub_message['changed']['name'])
-                    messages.append({'message': (gettext('Changed {fields}.').format(**sub_message['changed']))})
+                    sub_message['changed']['name'] = gettext(
+                        sub_message['changed']['name']
+                    )
+                    messages.append(
+                        {
+                            'message': (gettext('Changed {fields}.').format(**sub_message['changed']))
+                        }
+                    )
                 else:
-                    messages.append({'message': (gettext('Changed {fields}.').format(**sub_message['changed']))})
+                    messages.append(
+                        {
+                            'message': (gettext('Changed {fields}.').format(**sub_message['changed']))
+                        }
+                    )
 
             elif 'deleted' in sub_message:
                 sub_message['deleted']['name'] = gettext(sub_message['deleted']['name'])
-                messages.append({'message': (gettext('Deleted “{object}”.').format(**sub_message['deleted']))})
+                messages.append(
+                    {
+                        'message': (gettext('Deleted «{object}».').format(**sub_message['deleted']))
+                    }
+                )
 
-    return messages if len(messages) else [{'message': (gettext(action.change_message))}]
+    return messages if len(messages) else [
+        {
+            'message': (gettext(action.change_message))
+        }
+    ]
 
 
 @register.filter
@@ -225,7 +254,7 @@ def sort_header(header: dict, forloop: dict) -> str:
 
 
 @register.simple_tag()
-def get_metrics() -> dict:
+def get_metrics() -> Optional[dict]:
     """
     Возвращает количество посителей и просмотров за день, неделю и месяц,
     полученное из Яндекс Метрики.
@@ -241,26 +270,27 @@ def get_metrics() -> dict:
         'group': 'day',
         'filters': "ym:s:isRobot=='No'",
         'id': YANDEX_METRIKA_COUNTER,
-        }
-    req = requests.get(API_URL, params=params, headers={
+    }
+    req = requests.get(
+        API_URL, params=params, headers={
             'Authorization': YANDEX_METRIKA_TOKEN
-            }
-        )
+        }
+    )
     json_data = json.loads(req.text)
 
     results = {}
     results['today'] = {
         'views': int(json_data['totals'][0][-1]),
         'guests': int(json_data['totals'][1][-1])
-        }
+    }
     results['week'] = {
         'views': int(sum(json_data['totals'][0][-7:])),
         'guests': int(sum(json_data['totals'][1][-7:])),
-        }
+    }
     results['month'] = {
         'views': int(sum(json_data['totals'][0])),
         'guests': int(sum(json_data['totals'][1])),
-        }
+    }
 
     return results
 
