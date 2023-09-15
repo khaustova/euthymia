@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.search import SearchVectorField, SearchVector
+from django.contrib.postgres.indexes import GinIndex
 from django.urls import reverse_lazy
 from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.models import MPTTModel, TreeForeignKey
@@ -109,18 +111,26 @@ class Article(models.Model):
         on_delete=models.CASCADE,
         related_name='prev_articles',
         verbose_name='Предыдущая статья'
-        )
+        ) 
+    search_vector = SearchVectorField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
         ordering = ['title']
+        indexes = [
+            GinIndex(fields=['search_vector',]),
+        ]
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse_lazy('blog:article_detail', kwargs={'slug': self.slug})
+    
+    def update_search_vector(self):
+            qs = Article.objects.filter(pk=self.pk)
+            qs.update(search_vector=SearchVector('title', 'body'))
 
 
 class Comment(MPTTModel):

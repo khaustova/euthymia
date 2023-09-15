@@ -1,5 +1,6 @@
 from typing import Any, Callable
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
 from django.core.exceptions import ObjectDoesNotExist
@@ -7,7 +8,6 @@ from manager.tasks import add_email, add_feedback
 from manager.models import EmailSubscription
 from .models import Article, Comment
 from .forms import CommentForm, SubscribeForm, FeedbackForm
-from .search import search
 
 
 def feedback_form(request: HttpRequest) -> HttpResponse:
@@ -109,13 +109,19 @@ class ArticleDetailView(DetailView):
 
 class SearchView(ListView):
     model = Article
+    context_object_name = 'articles'
     template_name = 'blog/search.html'
     paginate_by = 10
     paginate_orphans = 5
-    context_object_name = 'articles'
 
     def get_queryset(self) -> Article or None:
         query = self.request.GET.get('query')
-        if query is not None:
-            return search(query)
-        return
+        search_vector = SearchVector('title', 'body')
+        search_query = SearchQuery(query)
+        return (
+            Article.objects.annotate(
+                search=search_vector, rank=SearchRank(search_vector, search_query)
+            )
+            .filter(search=search_query)
+            .order_by("-rank")
+        )
