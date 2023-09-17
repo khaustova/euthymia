@@ -86,8 +86,8 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
             'reply': reply
         }
     )
-    #connection = get_connection()
-    #connection.open()
+    connection = get_connection()
+    connection.open()
     mail = EmailMessage(
         subject=subject,
         body=message,
@@ -97,6 +97,6 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
     )
     mail.content_subtype = 'html'
     mail.send()
-    #connection.close()
+    connection.close()
     
     return 'Feedback was sent.'
