@@ -34,13 +34,13 @@ def send_notification(article_pk: int) -> str:
     Отправляет уведомление о новой записи на email из рассылки.
     """
     article = Article.objects.get(pk=article_pk)
-    connection = get_connection()
-    connection.open()
+    #connection = get_connection()
+    #connection.open()
     for email in EmailSubscription.objects.all():
         try:
-            subject = '[Euthymia] Опубликована новая запись «'
-            + article.title
-            + '»'
+            subject = '[Euthymia] Опубликована новая запись «' \
+                + article.title \
+                + '»'
             message = get_template("manager/emails/notification.html").render(
                 {
                     'article': article,
@@ -59,7 +59,7 @@ def send_notification(article_pk: int) -> str:
             mail.send()
         except SMTPException:
             continue
-    connection.close()
+    #connection.close()
 
     return f'Notifications about new article {article.title} were sent.'
 
@@ -86,8 +86,8 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
             'reply': reply
         }
     )
-    connection = get_connection()
-    connection.open()
+    #connection = get_connection()
+    #connection.open()
     mail = EmailMessage(
         subject=subject,
         body=message,
@@ -97,6 +97,6 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
     )
     mail.content_subtype = 'html'
     mail.send()
-    connection.close()
+    #connection.close()
     
     return 'Feedback was sent.'
