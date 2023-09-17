@@ -86,17 +86,24 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
             'reply': reply
         }
     )
-    connection = get_connection()
-    connection.open()
+    connection = get_connection(
+        host=settings.EMAIL_HOST,
+        port=settings.EMAIL_PORT,
+        username=settings.EMAIL_HOST_USER,
+        password=settings.EMAIL_HOST_PASSWORD,
+        use_tls=True
+    )
+    #connection.open()
     mail = EmailMessage(
         subject=subject,
         body=message,
         from_email=settings.EMAIL_HOST_USER,
         to=[email],
+        connection=connection,
         reply_to=[settings.EMAIL_HOST_USER]
     )
     mail.content_subtype = 'html'
     mail.send()
-    connection.close()
+    #connection.close()
     
     return 'Feedback was sent.'
