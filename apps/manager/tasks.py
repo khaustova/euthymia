@@ -3,6 +3,8 @@ from django.conf import settings
 from django.core.mail import EmailMessage, get_connection
 from django.utils.safestring import SafeText
 from django.template.loader import get_template
+from time import sleep
+from random import randint
 from celery import shared_task
 from blog.models import Article
 from manager.models import EmailSubscription, Feedback
@@ -59,6 +61,7 @@ def send_notification(article_pk: int) -> str:
             mail.send()
         except SMTPException:
             continue
+        sleep(randint(60, 70))
     connection.close()
 
     return f'Notifications about new article {article.title} were sent.'
