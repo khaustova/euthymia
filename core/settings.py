@@ -9,7 +9,7 @@ path.append(str(BASE_DIR / 'apps'))
 env = Env(
     DEBUG=(bool, False)
 )
-Env.read_env(BASE_DIR / '.env.example')
+Env.read_env(BASE_DIR / '.env.dev')
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -283,9 +283,10 @@ EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = env('EMAIL_PORT')
-
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'default from email'
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
 
 # Celery
 

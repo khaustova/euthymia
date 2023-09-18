@@ -7,7 +7,6 @@ from celery import shared_task
 from blog.models import Article
 from manager.models import EmailSubscription, Feedback
 
-
 @shared_task(name='add_email')
 def add_email(email: str) -> str:
     """
@@ -34,8 +33,8 @@ def send_notification(article_pk: int) -> str:
     Отправляет уведомление о новой записи на email из рассылки.
     """
     article = Article.objects.get(pk=article_pk)
-    #connection = get_connection()
-    #connection.open()
+    connection = get_connection()
+    connection.open()
     for email in EmailSubscription.objects.all():
         try:
             subject = '[Euthymia] Опубликована новая запись «' \
@@ -53,13 +52,14 @@ def send_notification(article_pk: int) -> str:
                 body=message,
                 from_email=settings.EMAIL_HOST_USER,
                 to=[email],
+                connection=connection,
                 reply_to=[settings.EMAIL_HOST_USER]
             )
             mail.content_subtype = 'html'
             mail.send()
         except SMTPException:
             continue
-    #connection.close()
+    connection.close()
 
     return f'Notifications about new article {article.title} were sent.'
 
@@ -86,14 +86,8 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
             'reply': reply
         }
     )
-    connection = get_connection(
-        host=settings.EMAIL_HOST,
-        port=settings.EMAIL_PORT,
-        username=settings.EMAIL_HOST_USER,
-        password=settings.EMAIL_HOST_PASSWORD,
-        use_tls=True
-    )
-    #connection.open()
+    connection = get_connection()
+    connection.open()
     mail = EmailMessage(
         subject=subject,
         body=message,
@@ -104,6 +98,6 @@ def reply_feedback(name: str, email: str, reply: SafeText) -> str:
     )
     mail.content_subtype = 'html'
     mail.send()
-    #connection.close()
+    connection.close()
     
     return 'Feedback was sent.'
