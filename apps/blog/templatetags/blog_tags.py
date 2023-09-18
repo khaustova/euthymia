@@ -2,6 +2,7 @@ from typing import Any, Optional, Union
 from django import template
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
+from django.conf import settings
 from manager.models import SiteDescription
 from ..models import Article, Category
 from ..forms import SubscribeForm, FeedbackForm
@@ -57,6 +58,9 @@ def cut_number(text: str) -> Union[SafeText, str]:
     """
     Обрезает номер в заголовке статьи.
     """
+    if not settings.IS_CUT_NUMBER:
+        return
+    
     text_words = escape(text).split()
 
     if not len(text_words):

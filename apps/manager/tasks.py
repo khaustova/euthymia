@@ -1,6 +1,7 @@
 from smtplib import SMTPException
 from django.conf import settings
 from django.core.mail import EmailMessage, get_connection
+from django.utils.html import escape
 from django.utils.safestring import SafeText
 from django.template.loader import get_template
 from time import sleep
@@ -35,13 +36,21 @@ def send_notification(article_pk: int) -> str:
     Отправляет уведомление о новой записи на email из рассылки.
     """
     article = Article.objects.get(pk=article_pk)
+    
+    if not settings.IS_CUT_NUMBER:
+        title = article.title
+    else:
+        title_words = escape(article.title).split()
+        title = ' '.join([word for word in title_words[1:]])
+        
+    subject = '[Euthymia] Опубликована новая запись «' \
+        + title \
+        + '»'
+        
     connection = get_connection()
     connection.open()
     for email in EmailSubscription.objects.all():
         try:
-            subject = '[Euthymia] Опубликована новая запись «' \
-                + article.title \
-                + '»'
             message = get_template("manager/emails/notification.html").render(
                 {
                     'article': article,

@@ -27,7 +27,7 @@
     {% for category in categories %}
         {% if category.level == 0 %}
         {% get_first_article category as article_url %}
-        <li class="navigation__item"><a href="{{ article_url }}" class="sidebar__link">{{ category.name }}</a></li>
+        <li class="navigation__item"><a href="{{ article_url }}" class="sidebar__link">{{ category.name|cut_number }}</a></li>
         {% endif %}
     {% endfor %}
     </ul>
