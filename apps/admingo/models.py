@@ -13,4 +13,4 @@ class Notification(models.Model):
         verbose_name_plural = 'Уведомления'
 
     def __str__(self):
-        return f'{self.notifications_type}'
+        return f'{self.notifications_message[:128]}'
