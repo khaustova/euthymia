@@ -107,7 +107,8 @@ button:hover {
     background-color: var(--color-hover);
 }
 
-details ul {
+details ul,
+.content-card ul {
     list-style-type: none;
 }
 

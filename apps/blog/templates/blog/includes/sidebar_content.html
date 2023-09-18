@@ -5,7 +5,7 @@
     <strong>
         <span class="sidebar__title">
             {% get_category article as category %}
-            <span class="material-symbols-outlined navigation-icon middle-icon">description</span> {{ category }}</span></strong>
+            <span class="material-symbols-outlined navigation-icon middle-icon">description</span> {{ category|cut_number }}</span></strong>
     <hr class="sidebar__line">
     <ul class="navigation navigation__content">   
         {% get_content_links article as content_links %}
