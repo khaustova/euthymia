@@ -28,7 +28,7 @@ function createGuestCommentForm(author, parentID, commentID = -1) {
     } 
     const commentFormTemplate = `
     <div class="comment">
-    <p class="comment__info ` + formClass + `"><b>Ответить на комментарий:</b><span class="material-symbols-outlined button-icon" onclick="closeCommentForm()">close</span></p>
+    <p class="comment__info ` + formClass + `"><b>Ответить на комментарий:</b><span class="material-symbols-outlined button-icon close-comment-icon" onclick="closeCommentForm()">close</span></p>
     <form method="post" id="newCommentForm" class="comment-form ` + formClass + `">
         <select name="parent" class="comments__parent" id="id_parent">
             <option value="` + parentID + `" selected="` + parentID + `"></option>
@@ -58,7 +58,7 @@ function createAdminCommentForm(author, parentID, commentID = -1) {
     } 
     const commentFormTemplate = `
     <div class="comment">
-    <p class="comment__info ` + formClass + `"><b>Ответить на комментарий:</b><span class="material-symbols-outlined button-icon" onclick="closeCommentForm()">close</span></p>
+    <p class="comment__info ` + formClass + `"><b>Ответить на комментарий:</b><span class="material-symbols-outlined button-icon close-comment-icon" onclick="closeCommentForm()">close</span></p>
     <form method="post" id="newCommentForm" class="comment-form admin-comment-form ` + formClass + `">
         <select name="parent" class="comments__parent" id="id_parent">
             <option value="` + parentID + `" selected="` + parentID + `"></option>

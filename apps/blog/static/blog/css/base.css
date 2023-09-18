@@ -323,7 +323,8 @@ footer {
     font-size: 32px !important;
 }
 
-.read-more-icon {
+.read-more-icon,
+.close-comment-icon {
     font-size: 24px !important;
 }
 
