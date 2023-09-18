@@ -35,12 +35,7 @@
 
 {% block content %}
 {% if articles %}
-    {% for article in articles %}
-    <div class="article article-block">
-        <a href="{{ article.get_absolute_url }}" class="search-results__title">{{ article.title }}</a>
-        {{ article.body|safe|truncatechars:128 }} <a href="{{ article.get_absolute_url }}">читать далее</a></p>
-    </div>
-    {% endfor %}
+{% include 'blog/includes/articles_summary.html' %}
 {% else %}
 <div class="bunny-message">
     <div class="bunny-message__bubble">
