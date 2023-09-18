@@ -59,7 +59,7 @@ class ArticleView(ListView):
     model = Article
     template_name = 'blog/index.html'
     context_object_name = 'articles'
-    paginate_by = 5
+    paginate_by = 10
     paginate_orphans = 5
 
     def get_ordering(self) -> tuple:
