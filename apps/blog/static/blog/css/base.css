@@ -382,3 +382,9 @@ footer {
 .content-error_wrapper {
     background: var(--color-secondary) !important;
 }
+
+/* Share block */
+.share_wrapper {
+    display: flex;
+    justify-content: center;
+}

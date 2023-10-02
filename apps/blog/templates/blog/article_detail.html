@@ -10,6 +10,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script>
+<script src="https://yastatic.net/share2/share.js" defer></script>
 {% endblock %}
 
 {% block description %}
@@ -65,7 +66,17 @@
         </div>
         <hr>
     </article>
-
+    <div class="share_wrapper">
+        <div class="ya-share2" 
+            data-curtain 
+            data-limit="6" 
+            data-more-button-type="short" 
+            data-title="{{ article.title|cut_number }}"
+            data-description="{{ article.summary }}" 
+            data-image="{{ article.image.url }}"
+            data-services="vkontakte,odnoklassniki,telegram">
+        </div>
+    </div>
 {% include 'blog/includes/comments.html' %}
 {% endblock %}
 
