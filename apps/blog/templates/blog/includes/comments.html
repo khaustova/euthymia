@@ -9,10 +9,10 @@
       {{ comment_word }}
     {% endwith %}
   </strong>
-<hr class="navigation__line comments__line">
 </div>
+
 <div class="comment">
-	<form method="post" class="comment-form {% if user.is_authenticated %}admin-comment-form{% endif %}" id="commentForm">
+	<form method="post" class="comment-form parent-comment-form {% if user.is_authenticated %}admin-comment-form{% endif %}" id="commentForm">
     {% csrf_token %} 
     {{ form.parent }} 
     {% if user.is_authenticated %}

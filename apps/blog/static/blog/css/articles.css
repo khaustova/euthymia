@@ -28,7 +28,8 @@
 .article__info {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    align-items: center;
+    margin-top: 15px;
 }
 
 .article__next {
@@ -91,6 +92,10 @@
 .article__wrapper {
     overflow-x: auto;
     padding: 5px;
+}
+
+.article-detail {
+    margin-bottom: 10px;
 }
 
 .article__table {

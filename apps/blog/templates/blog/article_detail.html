@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
   <link href="{% static 'blog/css/comments.css' %}" rel="stylesheet">
 
-  {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script> {% endcomment %}
   <script src="{% static 'vendor/highlight.js/js/highlight.min.js' %}"></script>
   <script src="https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script>
   <script src="https://yastatic.net/share2/share.js" defer></script>
@@ -46,7 +45,7 @@
 {% endblock %}
 
 {% block content %}
-  <article class="article article-block">
+  <article class="article article-block article-detail">
     <div class="article__date">
       <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
     </div>
@@ -58,6 +57,33 @@
           <a href="{{ article.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> Назад</a>
         {% endif %}
       </div>
+      <div class="share_wrapper">
+        <button class="share__button">
+          <span class="share__text"><svg
+            t="1580465783605"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="9773"
+            width="18"
+            height="18">
+              <path
+                d="M767.99994 585.142857q75.995429 0 129.462857 53.394286t53.394286 129.462857-53.394286 129.462857-129.462857 53.394286-129.462857-53.394286-53.394286-129.462857q0-6.875429 1.170286-19.456l-205.677714-102.838857q-52.589714 49.152-124.562286 49.152-75.995429 0-129.462857-53.394286t-53.394286-129.462857 53.394286-129.462857 129.462857-53.394286q71.972571 0 124.562286 49.152l205.677714-102.838857q-1.170286-12.580571-1.170286-19.456 0-75.995429 53.394286-129.462857t129.462857-53.394286 129.462857 53.394286 53.394286 129.462857-53.394286 129.462857-129.462857 53.394286q-71.972571 0-124.562286-49.152l-205.677714 102.838857q1.170286 12.580571 1.170286 19.456t-1.170286 19.456l205.677714 102.838857q52.589714-49.152 124.562286-49.152z"
+                p-id="9774"
+                fill="#04DED3">
+              </path>
+            </svg>
+            &nbsp;Поделиться
+          </span>
+          <span class="ya-share2 share__icon" data-curtain data-limit="6" data-more-button-type="short" 
+            data-title="{{ article.title|cut_number }}"
+            data-description="{{ article.summary }}" 
+            data-image="{{ article.image.url }}"
+            data-services="vkontakte,telegram,whatsapp,odnoklassniki,">
+          </span>
+        </button>
+</div>
       <div class="article__next">
         {% if article.next_article %}
           <a href="{{ article.next_article.get_absolute_url }}" class="article__navigation-button">Дальше <i class="fa fa-angle-right" aria-hidden="true"></i></a>
@@ -66,7 +92,6 @@
     </div>
     <hr>
   </article>
-
 {% include 'blog/includes/comments.html' %}
 {% endblock %}
 
