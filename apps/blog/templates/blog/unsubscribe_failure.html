@@ -4,27 +4,27 @@
 {% block title %} Отписка от уведомлений {% endblock %}
 
 {% block info %}
-<div class="info info_end">
+  <div class="info info_end">
     <div class="search">
-        <div class="search-form" id="search-form">
-            <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
-            <form action="{% url 'blog:search' %}" method="get" class="search__form">
-                <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
-                <button type="submit" class="search-button"></button>
-            </form>
-        </div>
-        <span id="open-search-button">
-            <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
-        </span>
+      <div class="search-form" id="search-form">
+        <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
+        <form action="{% url 'blog:search' %}" method="get" class="search__form">
+          <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
+          <button type="submit" class="search-button"></button>
+        </form>
+      </div>
+      <span id="open-search-button">
+        <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
+      </span>
     </div>
-</div>
+  </div>
 {% endblock %}
 
 {% block content %}
-<div class="bunny-message">
+  <div class="bunny-message">
     <div class="bunny-message__bubble">
-        Упс! Что-то пошло не так! <br>Возможно, Вы уже отписались? 🌸<br>
+      Упс! Что-то пошло не так! <br>Возможно, Вы уже отписались? 🌸<br>
     </div>
     <div><img src="{% static 'blog/img/thanks.png' %}"></div>
-</div>
+  </div>
 {% endblock %}

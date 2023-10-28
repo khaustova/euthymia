@@ -1,12 +1,12 @@
 <div class="sidebar-content subscribe">
-    <form action="{% url 'blog:subscribe' %}" method="post">
-        {% csrf_token %}
-        <div class="form-row">
-            <span class="material-symbols-outlined input-item">email</span>
-            {{ subscribe_form.email }}
-        </div>
-        <div class="form-row">
-            <button type="submit" class="subscribe-button">Подписаться</button>
-        </div>
-    </form>
+  <form action="{% url 'blog:subscribe' %}" method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <span class="material-symbols-outlined input-item">email</span>
+      {{ subscribe_form.email }}
+    </div>
+    <div class="form-row">
+      <button type="submit" class="subscribe-button">Подписаться</button>
+    </div>
+  </form>
 </div>

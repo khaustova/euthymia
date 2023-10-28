@@ -3,95 +3,96 @@
 {% load blog_tags %}
 
 <div class="comments__number">
-    <strong class="navigation__title">&nbsp;<i class="fa-solid fa-comments"></i>
-        {% with count=comments.count %}
-        {% get_comments_word count as comment_word %} {{ comments.count }} {{ comment_word }}</strong>
-        {% endwith %}
-    <hr class="navigation__line comments__line">
+  <strong class="navigation__title">&nbsp;<i class="fa-solid fa-comments"></i>
+    {% with count=comments.count %}
+      {% get_comments_word count as comment_word %} {{ comments.count }} 
+      {{ comment_word }}
+    {% endwith %}
+  </strong>
+<hr class="navigation__line comments__line">
 </div>
-
 <div class="comment">
 	<form method="post" class="comment-form {% if user.is_authenticated %}admin-comment-form{% endif %}" id="commentForm">
-        {% csrf_token %} 
-        {{ form.parent }} 
-        {% if user.is_authenticated %}
-        {{ form.body }} 
-        {% else %}
-        {{ form.body }} 
-        <div class="form-row">
-            <span class="material-symbols-outlined input-item">person</span>
-            {{ form.guest }}
-        </div>
-        <div class="form-row">
-            <span class="material-symbols-outlined input-item">email</span>
-            {{ form.email }}
-        </div>
-        {% endif %}
-        <button type="submit" class="comment-form__post-button">Отправить</button>
+    {% csrf_token %} 
+    {{ form.parent }} 
+    {% if user.is_authenticated %}
+      {{ form.body }} 
+    {% else %}
+      {{ form.body }} 
+      <div class="form-row">
+        <span class="material-symbols-outlined input-item">person</span>
+        {{ form.guest }}
+      </div>
+      <div class="form-row">
+        <span class="material-symbols-outlined input-item">email</span>
+        {{ form.email }}
+      </div>
+    {% endif %}
+    <button type="submit" class="comment-form__post-button">Отправить</button>
 	</form>
 </div>
 
 <div class="comments__tree">
-    {% for node in comments %}
+  {% for node in comments %}
     {% if node.level == 0 %}
     <div class="comments__each" id="{{ node.id }}">
-        <div class="comments__avatar-block">
-            {% if node.author %}
-            <img src="{{ node.author.userprofile.avatar.url }}">
-            {% else %}
-            <img src="{% static 'blog/img/guest_avatar.png' %}">
-            {% endif %}
-        </div>
-        <div class="comments__date">
-            <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ node.created_date }}
-        </div>
-        <div class="comments__name {% if node.guest %}comments__guest-name{% endif %}">
-            {% if node.author %}
-            {{ node.author.username }}
-            {% else %}
-            {{ node.guest }}
-            {% endif %}
-        </div>
-        <div class="comments__body">
-            {{ node.body }}
-        </div>
-        <div class="comments__reply">
-            <a href="javascript:void(0)" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if node.author %}'{{ node.author.username }}'{% else %} '{{ node.guest }}'{% endif %}, {{ node.id }} )">
-                <span class="material-symbols-outlined reply-icon middle-icon">reply</span> Ответить
-            </a>
-        </div>
-    </div>
-        {% with parent_id=node.id %}
-        {% for child in node.children.all %}
-            <div class="comments__each comments__tab" id="{{ child.id }}">
-                <div class="comments__avatar-block">
-                    {% if child.author %}
-                    <img src="{{ child.author.userprofile.avatar.url }}">
-                    {% else %}
-                    <img src="{% static 'blog/img/guest_avatar.png' %}">
-                    {% endif %}
-                </div>
-                <div class="comments__date">
-                    <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ child.created_date }}
-                </div>
-                <div class="comments__name {% if child.guest %}comments__guest-name{% endif %}">
-                    {% if child.author %}
-                    {{ child.author.username }}
-                    {% else %}
-                    {{ child.guest }}
-                    {% endif %}
-                </div>
-                <div class="comments__body">
-                    {{ child.body }}
-                </div>
-                <div class="comments__reply">
-                    <a href="javascript:void(0)" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if child.author %}'{{ child.author.username }}'{% else %}'{{ child.guest }}'{% endif %}, {{ parent_id }}, {{ child.id }} )">
-                        <span class="material-symbols-outlined reply-icon middle-icon">reply</span> Ответить
-                    </a>
-                </div>
-            </div>
-        {% endfor %}
-        {% endwith %}
+      <div class="comments__avatar-block">
+        {% if node.author %}
+          <img src="{{ node.author.userprofile.avatar.url }}">
+        {% else %}
+          <img src="{% static 'blog/img/guest_avatar.png' %}">
         {% endif %}
-    {% endfor %}
+      </div>
+      <div class="comments__date">
+        <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ node.created_date }}
+      </div>
+      <div class="comments__name {% if node.guest %}comments__guest-name{% endif %}">
+        {% if node.author %}
+          {{ node.author.username }}
+        {% else %}
+          {{ node.guest }}
+        {% endif %}
+      </div>
+      <div class="comments__body">
+          {{ node.body }}
+      </div>
+      <div class="comments__reply">
+        <a href="javascript:void(0)" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if node.author %}'{{ node.author.username }}'{% else %} '{{ node.guest }}'{% endif %}, {{ node.id }} )">
+          <span class="material-symbols-outlined reply-icon middle-icon">reply</span> Ответить
+        </a>
+      </div>
+    </div>
+    {% with parent_id=node.id %}
+      {% for child in node.children.all %}
+        <div class="comments__each comments__tab" id="{{ child.id }}">
+          <div class="comments__avatar-block">
+            {% if child.author %}
+              <img src="{{ child.author.userprofile.avatar.url }}">
+            {% else %}
+              <img src="{% static 'blog/img/guest_avatar.png' %}">
+            {% endif %}
+          </div>
+          <div class="comments__date">
+            <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ child.created_date }}
+          </div>
+          <div class="comments__name {% if child.guest %}comments__guest-name{% endif %}">
+            {% if child.author %}
+              {{ child.author.username }}
+            {% else %}
+              {{ child.guest }}
+            {% endif %}
+          </div>
+          <div class="comments__body">
+            {{ child.body }}
+          </div>
+          <div class="comments__reply">
+            <a href="javascript:void(0)" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if child.author %}'{{ child.author.username }}'{% else %}'{{ child.guest }}'{% endif %}, {{ parent_id }}, {{ child.id }} )">
+              <span class="material-symbols-outlined reply-icon middle-icon">reply</span> Ответить
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    {% endwith %}
+    {% endif %}
+  {% endfor %}
 </div>

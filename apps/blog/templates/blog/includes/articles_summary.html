@@ -1,27 +1,27 @@
 {% load blog_tags %}
 
 {% for article in articles %}
-<div class="summary article-block">
+  <div class="summary article-block">
     <div class="summary__image-block">
-        <img src="{{ article.image.url }}" class="summary__image">
+      <img src="{{ article.image.url }}" class="summary__image">
     </div>
     <div class="summary__text">
-        <div class="summary__date">
-            <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
-        </div>
-        <div class="summary__title">
-            <a href="{{ article.get_absolute_url }}">{{ article.title|cut_number }}</a>
-        </div>
-        {{ article.summary|truncatechars:180 }}
-        <a href="{{ article.get_absolute_url }}">
-            <span class="material-symbols-outlined button-icon bottom-icon read-more-icon">
-                read_more
-            </span>
-        </a>
-        <div class="summary__info">
-            <i class="fa fa-eye" aria-hidden="true"></i> {{ article.views }}&nbsp;&nbsp;   
-            <i class="fa fa-comment" aria-hidden="true"></i> {% get_comments_count article as comments_count %} {{ comments_count }}
-        </div>
+      <div class="summary__date">
+        <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
+      </div>
+      <div class="summary__title">
+        <a href="{{ article.get_absolute_url }}">{{ article.title|cut_number }}</a>
+      </div>
+      {{ article.summary|truncatechars:180 }}
+      <a href="{{ article.get_absolute_url }}">
+        <span class="material-symbols-outlined button-icon bottom-icon read-more-icon">
+          read_more
+        </span>
+      </a>
+      <div class="summary__info">
+        <i class="fa fa-eye" aria-hidden="true"></i> {{ article.views }}&nbsp;&nbsp;   
+        <i class="fa fa-comment" aria-hidden="true"></i> {% get_comments_count article as comments_count %} {{ comments_count }}
+      </div>
     </div>
-</div>
+  </div>
 {% endfor %}

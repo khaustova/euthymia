@@ -4,37 +4,37 @@
 {% block title %} Главная страница {% endblock %}
 
 {% block sidebar %}
-{% include 'blog/includes/sidebar_index.html' %}
+  {% include 'blog/includes/sidebar_index.html' %}
 {% endblock %}
 
 {% block info %}
-{% url 'blog:index' as index %}
-<div class="info">
+  {% url 'blog:index' as index %}
+  <div class="info">
     <div class="sort-links">
-        <a href="{{ index }}" class="{% if request.path == index %} active-sort {% endif %}">
-        <span class="material-symbols-outlined sort-icon middle-icon">calendar_month</span> По дате</a>
-        <a href="{{ index }}hot" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
-        <span class="material-symbols-outlined sort-icon middle-icon">local_fire_department</span> По популярности</a>
+      <a href="{{ index }}" class="{% if request.path == index %} active-sort {% endif %}">
+      <span class="material-symbols-outlined sort-icon middle-icon">calendar_month</span> По дате</a>
+      <a href="{{ index }}hot" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
+      <span class="material-symbols-outlined sort-icon middle-icon">local_fire_department</span> По популярности</a>
     </div>
     <div class="search">
-        <div class="search-form" id="search-form">
-            <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
-            <form action="{% url 'blog:search' %}" method="get" class="search__form">
-                <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
-                <button type="submit" class="search-button"></button>
-            </form>
-        </div>
-        <span id="open-search-button">
-            <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
-        </span>
+      <div class="search-form" id="search-form">
+        <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
+        <form action="{% url 'blog:search' %}" method="get" class="search__form">
+          <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
+          <button type="submit" class="search-button"></button>
+        </form>
+      </div>
+      <span id="open-search-button">
+        <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
+      </span>
     </div>
-</div>
+  </div>
 {% endblock %}
 
 {% block content %}
-{% include 'blog/includes/articles_summary.html' %}
+  {% include 'blog/includes/articles_summary.html' %}
 {% endblock %}
 
 {% block pagination %}
-{% include 'blog/includes/pagination.html' %}
+  {% include 'blog/includes/pagination.html' %}
 {% endblock %}

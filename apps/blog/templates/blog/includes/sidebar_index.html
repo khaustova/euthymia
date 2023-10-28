@@ -1,34 +1,39 @@
 {% load static %}
 {% load blog_tags %}
+
 <div class="sidebar-content about">
-    {% get_site_description as site_description %}
-    {% if site_description.site_image %}
+  {% get_site_description as site_description %}
+  {% if site_description.site_image %}
     <img src="{{ site_description.site_image.url }}">
-    {% else %}
+  {% else %}
     <img src="{% static 'blog/img/admin_avatar.png' %}">
-    {% endif %}
-    <div class="tags-content">
-        {{ site_description.site_description|safe  }}
-        <div class="about__links">
-        <a href="https://github.com/khaustiv"><i class="fa-brands fa-github"></i> Github</a>
-        <a href="javascript:void(0)" onclick="openFeedbackModal();"><i class="fa-regular fa-envelope"></i> Обратная связь</a>
-        </div>
+  {% endif %}
+  <div class="tags-content">
+    {{ site_description.site_description|safe  }}
+    <div class="about__links">
+      <a href="https://github.com/khaustiv"><i class="fa-brands fa-github"></i> Github</a>
+      <a href="javascript:void(0)" onclick="openFeedbackModal();"><i class="fa-regular fa-envelope"></i> Обратная связь</a>
     </div>
+  </div>
 </div>
 {% subscribe_form %}
 <nav class="sidebar-content menu">
-    <strong>
-        <span class="sidebar__title">
-        <span class="material-symbols-outlined navigation-icon middle-icon">bookmark</span> Навигация</span>
-    </strong>
-    <hr class="sidebar__line">
-    <ul class="navigation">    
+  <strong>
+    <span class="sidebar__title">
+    <span class="material-symbols-outlined navigation-icon middle-icon">bookmark</span> Навигация</span>
+  </strong>
+  <hr class="sidebar__line">
+  <ul class="navigation">    
     {% get_categories as categories %} 
     {% for category in categories %}
-        {% if category.level == 0 %}
+      {% if category.level == 0 %}
         {% get_first_article category as article_url %}
-        <li class="navigation__item"><a href="{{ article_url }}" class="sidebar__link">{{ category.name|cut_number }}</a></li>
-        {% endif %}
+        <li class="navigation__item">
+          <a href="{{ article_url }}" class="sidebar__link">
+            {{ category.name|cut_number }}
+          </a>
+        </li>
+      {% endif %}
     {% endfor %}
-    </ul>
+  </ul>
 </nav>

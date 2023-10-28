@@ -4,94 +4,100 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block description %}
-    {% endblock %}
-    <title>{% block title %} {% endblock %}</title>
-    <link href="{% static 'blog/css/base.css' %}" rel="stylesheet">
-    <link href="{% static 'blog/css/navigation.css' %}" rel="stylesheet">
-    <link href="{% static 'blog/css/articles.css' %}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'blog/img/icons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'blog/img/icons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'blog/img/icons/favicon-16x16.png' %}">
-    <link rel="manifest" href="{% static 'blog/img/icons/site.webmanifest' %}">
+  {% block description %}{% endblock %}
 
-    {% block extra_head %}{% endblock %}
-    <link href="{% static 'blog/css/responsive.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <title>{% block title %} {% endblock %}</title>
 
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
+  <link href="{% static 'blog/css/base.css' %}" rel="stylesheet">
+  <link href="{% static 'blog/css/navigation.css' %}" rel="stylesheet">
+  <link href="{% static 'blog/css/articles.css' %}" rel="stylesheet">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'blog/img/icons/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'blog/img/icons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'blog/img/icons/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'blog/img/icons/site.webmanifest' %}">
+
+  {% block extra_head %}{% endblock %}
+
+  <link href="{% static 'blog/css/responsive.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
     m[i].l=1*new Date();
     for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
- 
+
     ym(94751613, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true
+      clickmap:true,
+      trackLinks:true,
+      accurateTrackBounce:true
     });
- </script>
- <!-- /Yandex.Metrika counter -->
+  </script>
+  <!-- /Yandex.Metrika counter -->
 </head>
 <body>
-    <noscript><div><img src="https://mc.yandex.ru/watch/94751613" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <div class="wrapper">
-        <header>
-            <div class="logo">
-                <a href="{% url 'blog:index' %}"><img src="{% static 'blog/img/logo.png' %}" class="logo__img"></a>
-            </div>
-            <div class="top-navigation">
-                    <span class="material-symbols-outlined button-icon top-menu-icon" id="open-mobile-search-button" onclick="openSearch()">search</span>
-                    <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openMenu()">menu</span>
-            </div>
-            <div class="mobile-search">
-                <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeSearch()">undo</span>
-                <form action="{% url 'blog:search' %}" method="get" class="search__form" autocomplete="on">
-                    <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
-                    <button type="submit" class="search-button"></button>
-                </form>
-            </div>
-        </header>
-        <aside>
-            {% block sidebar %}{% endblock %}
-        </aside>
-        <main>
-            {% block info %}
-            {% endblock %}
-            <div class="feedback-modal">
-                <div class="feedback-modal__inner">
-                    <div class="feedback__info">
-                        <span class="material-symbols-outlined button-icon middle-icon feedback__close" onclick="closeFeedbackModal()">close</span>
-                        <h2>Обратная связь</h2>
-                        <p class="feedback__text">Если вы хотите связаться со мной, то можете использовать следующую форму обратной связи:</p>
-                    </div>
-                    {% feedback_form %}
-                </div>
-            </div>
-            {% block content %}{% endblock %}
-        </main>
-        <footer>
-            {% block pagination %}{% endblock %}
-            <span>&#169 <a href="{% url 'blog:index' %}">euthymia.ru</a>, 2023. Все права защищены</span>
-        </footer>
-    </div>
+  <noscript><div><img src="https://mc.yandex.ru/watch/94751613" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+  <div class="wrapper">
+    <header>
+      <div class="logo">
+        <a href="{% url 'blog:index' %}"><img src="{% static 'blog/img/logo.png' %}" class="logo__img"></a>
+      </div>
+      <div class="top-navigation">
+        <span class="material-symbols-outlined button-icon top-menu-icon" id="open-mobile-search-button" onclick="openSearch()">search</span>
+        <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openMenu()">menu</span>
+      </div>
+      <div class="mobile-search">
+        <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeSearch()">undo</span>
+        <form action="{% url 'blog:search' %}" method="get" class="search__form" autocomplete="on">
+          <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
+          <button type="submit" class="search-button"></button>
+        </form>
+      </div>
+    </header>
     
-    <button class="back-to-top back-to-top_hide">
-        <span class="material-symbols-outlined back-to-top-icon">
-            arrow_upward
-        </span>
-    </button>
+    <aside>
+      {% block sidebar %}{% endblock %}
+    </aside>
 
-    <script src="{% static 'blog/js/navigation.js' %}" defer></script>
-    <script src="{% static 'blog/js/modal.js' %}" defer></script>
+    <main>
+      {% block info %}{% endblock %}
+      <div class="feedback-modal">
+        <div class="feedback-modal__inner">
+          <div class="feedback__info">
+            <span class="material-symbols-outlined button-icon middle-icon feedback__close" onclick="closeFeedbackModal()">close</span>
+            <h2>Обратная связь</h2>
+            <p class="feedback__text">Если вы хотите связаться со мной, то можете использовать следующую форму обратной связи:</p>
+          </div>
+          {% feedback_form %}
+        </div>
+      </div>
+      {% block content %}{% endblock %}
+    </main>
 
-    {% block extra_scripts %}{% endblock %}
+    <footer>
+      {% block pagination %}{% endblock %}
+      <span>&#169 <a href="{% url 'blog:index' %}">euthymia.ru</a>, 2023. Все права защищены</span>
+    </footer>
+  </div>
+  
+  <button class="back-to-top back-to-top_hide">
+      <span class="material-symbols-outlined back-to-top-icon">
+          arrow_upward
+      </span>
+  </button>
+
+  <script src="{% static 'blog/js/navigation.js' %}" defer></script>
+  <script src="{% static 'blog/js/modal.js' %}" defer></script>
+
+  {% block extra_scripts %}{% endblock %}
 </body>
 </html>

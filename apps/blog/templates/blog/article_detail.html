@@ -5,84 +5,74 @@
 {% block title %} {{ article.title }} {% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
-<link href="{% static 'blog/css/comments.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
+  <link href="{% static 'blog/css/comments.css' %}" rel="stylesheet">
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script>
-<script src="https://yastatic.net/share2/share.js" defer></script>
+  {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script> {% endcomment %}
+  <script src="{% static 'vendor/highlight.js/js/highlight.min.js' %}"></script>
+  <script src="https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script>
+  <script src="https://yastatic.net/share2/share.js" defer></script>
 {% endblock %}
 
 {% block description %}
-<meta name="description" content="{{ article.summary }}">
-<meta name="keywords" content="{{ article.keywords }}">
+  <meta name="description" content="{{ article.summary }}">
+  <meta name="keywords" content="{{ article.keywords }}">
 {% endblock %}
 
 {% block sidebar %}
-{% include 'blog/includes/sidebar_content.html' %}
+  {% include 'blog/includes/sidebar_content.html' %}
 {% endblock %}
-
 
 {% block info %}
 <div class="info">
-    <div class="breadcrumbs">
-        <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная</a>
-        &nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i> 
-        &nbsp;{{ article.title|cut_number }}
+  <div class="breadcrumbs">
+    <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная</a>
+    &nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i> 
+    &nbsp;{{ article.title|cut_number }}
+  </div>
+  <div class="search">
+    <div class="search-form" id="search-form">
+      <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
+      <form action="{% url 'blog:search' %}" method="get" class="search__form">
+        <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
+        <button type="submit" class="search-button"></button>
+      </form>
     </div>
-    <div class="search">
-        <div class="search-form" id="search-form">
-            <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
-            <form action="{% url 'blog:search' %}" method="get" class="search__form">
-                <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
-                <button type="submit" class="search-button"></button>
-            </form>
-        </div>
-        <span id="open-search-button">
-            <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
-        </span>
-    </div>
+    <span id="open-search-button">
+      <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
+    </span>
+  </div>
 </div>
 {% endblock %}
 
 {% block content %}
-    <article class="article article-block">
-        <div class="article__date">
-            <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
-        </div>
-        <h1 class="article__title">{{ article.title|cut_number }}</h1>
-        {{ article.body|safe }}
-        <div class="article__info">
-            <div class="article__prev">
-            {% if article.prev_article %}
-                <a href="{{ article.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> Назад</a>
-            {% endif %}
-            </div>
-            <div class="article__next">
-            {% if article.next_article %}
-                <a href="{{ article.next_article.get_absolute_url }}" class="article__navigation-button">Дальше <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-            {% endif %}
-            </div>
-        </div>
-        <hr>
-    </article>
-    <div class="share_wrapper">
-        <div class="ya-share2" 
-            data-curtain 
-            data-limit="6" 
-            data-more-button-type="short" 
-            data-title="{{ article.title|cut_number }}"
-            data-description="{{ article.summary }}" 
-            data-image="{{ article.image.url }}"
-            data-services="vkontakte,odnoklassniki,telegram">
-        </div>
+  <article class="article article-block">
+    <div class="article__date">
+      <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
     </div>
+    <h1 class="article__title">{{ article.title|cut_number }}</h1>
+    {{ article.body|safe }}
+    <div class="article__info">
+      <div class="article__prev">
+        {% if article.prev_article %}
+          <a href="{{ article.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> Назад</a>
+        {% endif %}
+      </div>
+      <div class="article__next">
+        {% if article.next_article %}
+          <a href="{{ article.next_article.get_absolute_url }}" class="article__navigation-button">Дальше <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        {% endif %}
+      </div>
+    </div>
+    <hr>
+  </article>
+
 {% include 'blog/includes/comments.html' %}
 {% endblock %}
 
 {% block extra_scripts %}
-<script src="{% static 'blog/js/comments.js' %}" defer></script>
-<script>
-  hljs.highlightAll();
-</script>
+  <script src="{% static 'blog/js/comments.js' %}" defer></script>
+  <script>
+    hljs.highlightAll();
+  </script>
 {% endblock %}
