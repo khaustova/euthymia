@@ -6,7 +6,8 @@ from blog.views import (
     SearchView,
     subscribe_form,
     unsubscribe,
-    feedback_form
+    feedback_form,
+    get_subcategory
 )
 
 app_name = 'blog'
@@ -20,4 +21,5 @@ urlpatterns = [
     path('unsubscribe/', unsubscribe, name='unsubscribe'),
     path('feedback/', feedback_form, name='feedback'),
     path('about/', TemplateView.as_view(template_name="blog/about_site.html"), name='about_site'),
+    path('getsubcategory/', get_subcategory, name='get-subcategory'),
 ]
