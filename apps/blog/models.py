@@ -57,6 +57,24 @@ class Category(MPTTModel):
         return Article.objects.filter(category=self)
 
 
+class Subcategory(models.Model):
+    name = models.CharField(max_length=256, verbose_name='Подкатегория')
+    category = models.ForeignKey(
+        'Category',
+        on_delete=models.CASCADE,
+        verbose_name='Категория'
+    )
+    description = RichTextUploadingField()
+    
+    class Meta:
+        verbose_name = 'Подкатегория'
+        verbose_name_plural = 'Подкатегории'
+        ordering = ['name']
+        
+    def __str__(self):
+        return self.name
+
+
 class Article(models.Model):
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     summary = models.TextField(
@@ -65,11 +83,6 @@ class Article(models.Model):
         verbose_name='Краткое содержание'
     )
     body = RichTextUploadingField()
-    image = models.ImageField(
-        upload_to='uploads/',
-        blank=True,
-        verbose_name='Изображение',
-    )
     created_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Время создания',
@@ -82,7 +95,16 @@ class Article(models.Model):
     category = models.ForeignKey(
         Category,
         on_delete=models.PROTECT,
+        null=True,
+        blank=True,
         verbose_name='Категория',
+    )
+    subcategory = models.ForeignKey(
+        Subcategory,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        verbose_name='Подкатегория',
     )
     views = models.PositiveIntegerField(
         verbose_name='Количество просмотров',
@@ -94,22 +116,6 @@ class Article(models.Model):
         blank=True,
         help_text='Перечислите ключевые слова через запятую.'
     )
-    next_article = models.ForeignKey(
-        'self',
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-        related_name='next_articles',
-        verbose_name='Следующая статья'
-    )
-    prev_article = models.ForeignKey(
-        'self',
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-        related_name='prev_articles',
-        verbose_name='Предыдущая статья'
-    ) 
     search_vector = SearchVectorField(null=True, blank=True)
 
     class Meta:
