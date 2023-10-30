@@ -16,11 +16,16 @@ class CategoryFilter(AutocompleteFilter):
 class SubcategoryFilter(AutocompleteFilter):
     title = 'Подкатегория'
     field_name = 'subcategory'
+    
+    
+class ArticleFilter(AutocompleteFilter):
+    title = 'Статья'
+    field_name = 'article'
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    fields = ('title', 'slug', 'summary', 'body', 'category', 'subcategory', 'keywords', 'prev_article', 'next_article')
+    fields = ('title', 'slug', 'summary', 'body', 'category', 'subcategory', 'keywords')
     list_display = ('title', 'category', 'subcategory', 'views', 'updated_date')
     list_display_links = ('title',)
     list_filter = [
@@ -28,7 +33,6 @@ class ArticleAdmin(admin.ModelAdmin):
         SubcategoryFilter,
     ]
     prepopulated_fields = {"slug": ("title",)}
-    autocomplete_fields = ('next_article', 'prev_article',)
     list_per_page = 50
     date_hierarchy = 'created_date'
     search_fields = ('title',)
@@ -60,7 +64,10 @@ class CommentAdmin(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title', 'article', 'email', 'created_date')
     mptt_level_indent = 2
     list_display_links = ('article',)
-    list_filter = ('created_date',)
+    list_filter = [
+        'created_date',
+        ArticleFilter,
+    ]
 
 
 class UserInline(admin.StackedInline):
