@@ -1,4 +1,5 @@
 from typing import Any, Callable
+from json import dumps
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.shortcuts import redirect, render
@@ -6,7 +7,7 @@ from django.views.generic import ListView, DetailView
 from django.core.exceptions import ObjectDoesNotExist
 from manager.tasks import add_email, add_feedback
 from manager.models import EmailSubscription
-from .models import Article, Comment
+from .models import Article, Comment, Category, Subcategory
 from .forms import CommentForm, SubscribeForm, FeedbackForm
 
 
@@ -36,6 +37,17 @@ def subscribe_form(request: HttpRequest) -> HttpResponse:
             email = form.cleaned_data.get('email')
             add_email.delay(email)
     return render(request, 'blog/subscribe_success.html')
+
+
+def get_subcategory(request):
+    """
+    В формате JSON возвращает только те подкатегории, что принадлежат 
+    выбранной категориии. Используется при создании статьи.
+    """
+    id = request.GET.get('id', '')
+    target_category = Category.objects.get(pk=id)
+    result = list(Subcategory.objects.filter(category=target_category).values('id', 'name'))
+    return HttpResponse(dumps(result), content_type='application/json')
 
 
 def unsubscribe(request: HttpRequest) -> HttpResponse:
