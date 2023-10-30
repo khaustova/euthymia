@@ -669,3 +669,11 @@ textarea:focus {
 .django-ckeditor-widget {
     width: calc(100% - 200px);
 }
+
+.related-widget-wrapper select {
+    width: 100%;
+}
+
+.content-filter h3:not(:first-child):not(:nth-child(2)) {
+    margin-top: 15px;
+}

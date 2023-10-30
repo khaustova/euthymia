@@ -2,69 +2,69 @@
 {% load i18n admin_urls %}
 
 {% block field_sets %}
-{% for fieldset in adminform %}
-<fieldset class="module aligned {{ fieldset.classes }}">
-    {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
-    {% if fieldset.description %}
-        <div class="description">{{ fieldset.description|safe }}</div>
-    {% endif %}
-    {% for line in fieldset %}
+  {% for fieldset in adminform %}
+    <fieldset class="module aligned {{ fieldset.classes }}">
+      {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
+      {% if fieldset.description %}
+          <div class="description">{{ fieldset.description|safe }}</div>
+      {% endif %}
+      {% for line in fieldset %}
         <div class="form-row{% if line.fields|length == 1 and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
-            {% for field in line %}
-                <div>
-                    {% if not line.fields|length == 1 and not field.is_readonly %}{{ field.errors }}{% endif %}
-                        <div class="flex-container{% if not line.fields|length == 1 %} fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}{% elif field.is_checkbox %} checkbox-row{% endif %}">
-                            {{ field.label_tag }}
-                            {% if field.is_readonly %}
-                                <div class="readonly">{{ field.contents }}</div>
-                            {% else %}
-                                {% if field.field.name == "reply" %}
-                                    {% if reply.reply %}
-                                        {{ reply.reply }}
-                                    {% else %}
-                                        {{ field.field }}
-                                    {% endif %}
-                                {% else %}
-                                {{ field.field }}
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                        {% if field.errors %}
-                            <div class="error-block">
-                                {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
-                            </div>
-                        {% endif %}
-                        {% if line.errors %}
-                            <div class="error-block">
-                                {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
-                            </div>
-                        {% endif %}
-                        {% if field.field.help_text %}
-                            <div class="help"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>
-                                <div>{{ field.field.help_text|safe }}</div>
-                            </div>
-                        {% endif %}
+          {% for field in line %}
+            <div>
+              {% if not line.fields|length == 1 and not field.is_readonly %}{{ field.errors }}{% endif %}
+              <div class="flex-container{% if not line.fields|length == 1 %} fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}{% elif field.is_checkbox %} checkbox-row{% endif %}">
+                {{ field.label_tag }}
+                {% if field.is_readonly %}
+                    <div class="readonly">{{ field.contents }}</div>
+                {% else %}
+                  {% if field.field.name == "reply" %}
+                    {% if reply.reply %}
+                      {{ reply.reply }}
+                    {% else %}
+                      {{ field.field }}
+                    {% endif %}
+                  {% else %}
+                    {{ field.field }}
+                  {% endif %}
+                {% endif %}
+              </div>
+              {% if field.errors %}
+                <div class="error-block">
+                  {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
                 </div>
-            {% endfor %}
-            {% if not line.fields|length == 1 %}</div>{% endif %}
+              {% endif %}
+              {% if line.errors %}
+                <div class="error-block">
+                  {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
+                </div>
+              {% endif %}
+              {% if field.field.help_text %}
+                <div class="help"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>
+                  <div>{{ field.field.help_text|safe }}</div>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          {% if not line.fields|length == 1 %}</div>{% endif %}
         </div>
-    {% endfor %}
-</fieldset>
-{% endfor %}
+      {% endfor %}
+    </fieldset>
+  {% endfor %}
 {% endblock %}
 
 {% block submit_buttons_bottom %}
-    <div class="content-submit-form">
-        <div class="submit-row">
-            {% block submit-row %}
-            {% if not reply.reply %}
-            <button type="submit" class="save-button" name="_save">
-                Ответить
-            </button>
-            {% endif %}
-            {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
-            <a href="{% add_preserved_filters delete_url %}" class="deletelink">{% translate "Delete" %}</a>
-            {% endblock %}
-        </div>        
-    </div>
+  <div class="content-submit-form">
+    <div class="submit-row">
+      {% block submit-row %}
+        {% if not reply.reply %}
+          <button type="submit" class="save-button" name="_save">
+            Ответить
+          </button>
+        {% endif %}
+        {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+        <a href="{% add_preserved_filters delete_url %}" class="deletelink">{% translate "Delete" %}</a>
+      {% endblock %}
+    </div>        
+  </div>
 {% endblock %}
