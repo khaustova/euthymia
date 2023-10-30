@@ -1,24 +1,42 @@
+from admin_auto_filters.filters import AutocompleteFilter
 from django.db import transaction
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from mptt.admin import DraggableMPTTAdmin
 from manager.tasks import send_notification
-from .models import Article, Category, Comment, UserProfile
+from .models import Article, Category, Comment, UserProfile, Subcategory
+
+
+class CategoryFilter(AutocompleteFilter):
+    title = 'Категория'
+    field_name = 'category'
+
+
+class SubcategoryFilter(AutocompleteFilter):
+    title = 'Подкатегория'
+    field_name = 'subcategory'
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'views', 'updated_date')
+    fields = ('title', 'slug', 'summary', 'body', 'category', 'subcategory', 'keywords', 'prev_article', 'next_article')
+    list_display = ('title', 'category', 'subcategory', 'views', 'updated_date')
     list_display_links = ('title',)
-    list_filter = ('category',)
+    list_filter = [
+        CategoryFilter,
+        SubcategoryFilter,
+    ]
     prepopulated_fields = {"slug": ("title",)}
-    autocomplete_fields = ('next_article', 'prev_article', 'category')
+    autocomplete_fields = ('next_article', 'prev_article',)
     list_per_page = 50
     date_hierarchy = 'created_date'
     search_fields = ('title',)
 
+    change_form_template = 'admingo/change_form_article.html'
+
     def save_model(self, request, obj, form, change):
+        obj.category = Category.objects.get(name=obj.subcategory.category)
         super().save_model(request, obj, form, change)
         if not change:
             transaction.on_commit(lambda: send_notification.delay(obj.pk))
@@ -29,6 +47,12 @@ class CategoryAdmin(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title',)
     search_fields = ('name',)
     mptt_level_indent = 2
+    
+    
+@admin.register(Subcategory)
+class SubcategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category',)
+    search_fields = ('name',)
 
 
 @admin.register(Comment)

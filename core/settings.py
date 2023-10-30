@@ -15,7 +15,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(' ')
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(' ')
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -26,7 +26,7 @@ INTERNAL_IPS = env('INTERNAL_IPS').split(' ')
 # Application definition
 
 INSTALLED_APPS = [
-    'admingo.apps.AdmingoConfig',
+    'admingo',
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'ckeditor',
     'ckeditor_uploader',
+    'admin_auto_filters',
     'imagekit',
     'mptt',
     'django_celery_results',
-    'blog.apps.BlogConfig',
-    'manager.apps.ManagerConfig',
+    'blog',
+    'manager',
 ]
 
 MIDDLEWARE = [
