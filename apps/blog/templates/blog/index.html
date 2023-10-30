@@ -17,6 +17,16 @@
       <span class="material-symbols-outlined sort-icon middle-icon">local_fire_department</span> По популярности</a>
     </div>
     <div class="search">
+      <div class="search_wrapper" id="search-form">
+        <form action="{% url 'blog:search' %}" method="get" class="searchs__form">
+          <input type="search" name="query" class="search__input" required=True placeholder="Поиск...">
+          <button type="submit" class="search__button">
+            <span class="material-symbols-outlined">search</span>
+          </button>
+        </form>
+      </div>
+    </div>
+    {% comment %} <div class="search">
       <div class="search-form" id="search-form">
         <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
         <form action="{% url 'blog:search' %}" method="get" class="search__form">
@@ -27,7 +37,7 @@
       <span id="open-search-button">
         <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
       </span>
-    </div>
+    </div> {% endcomment %}
   </div>
 {% endblock %}
 

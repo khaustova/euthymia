@@ -4,25 +4,30 @@
 <nav class="sidebar-content menu">
   <strong>
     <span class="sidebar__title">
-      {% get_category article as category %}
       <span class="material-symbols-outlined navigation-icon middle-icon">description</span> 
-      {{ category|cut_number }}
+      {{ article.category }}
     </span>
   </strong>
   <hr class="sidebar__line">
   <ul class="navigation navigation__content">   
     {% get_content_links article as content_links %}
     {% for subcategory, articles in content_links.items %}
-      <span class="content__title">{{ subcategory|upper|cut_number }}</span>
-      {% for content_article in articles %}
-        <li class="navigation__item content__item">
-          {% if content_article.get_absolute_url == article.get_absolute_url %}
-            {{ content_article.title|cut_number }}
-          {% else %}
-            <a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title|cut_number }}</a>
-          {% endif %}
-        </li>
-      {% endfor %}
+      <div class="content__title {% if article.subcategory == subcategory %}active{% endif %}">
+        <div>{{ subcategory }}</div><div class="plusminus"></div>
+      </div>
+      <li class="content__links {% if article.subcategory == subcategory %}show{% endif %}">
+        {% for content_article in articles %}
+          <ul class="content__list">
+            <li class="content__item">
+              {% if content_article.get_absolute_url == article.get_absolute_url %}
+                {{ content_article.title }}
+              {% else %}
+                <a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title }}</a>
+              {% endif %}
+            </li>
+          </ul>
+        {% endfor %}
+      </li>
     {% endfor %}
   </ul>
 </nav>

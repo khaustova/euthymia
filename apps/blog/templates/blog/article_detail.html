@@ -46,15 +46,24 @@
 
 {% block content %}
   <article class="article article-block article-detail">
-    <div class="article__date">
-      <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
+    <div class="summary__title">
+      <h1 class="article__title">{{ article.title|cut_number }}</h1>
     </div>
-    <h1 class="article__title">{{ article.title|cut_number }}</h1>
+    <div class="summary__about">
+      <div class="article__date">
+        <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
+      </div>
+      <div class="summary__info article__info">
+        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{ article.views }}
+      </div>
+    </div>
+    <hr class="summary__line">
     {{ article.body|safe }}
     <div class="article__info">
       <div class="article__prev">
-        {% if article.prev_article %}
-          <a href="{{ article.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> Назад</a>
+        {% get_next_and_prev_article article as articles %}
+        {% if articles.prev_article %}
+          <a href="{{ articles.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> Назад</a>
         {% endif %}
       </div>
       <div class="share_wrapper">
@@ -83,10 +92,11 @@
             data-services="vkontakte,telegram,whatsapp,odnoklassniki,">
           </span>
         </button>
-</div>
+      </div>
       <div class="article__next">
-        {% if article.next_article %}
-          <a href="{{ article.next_article.get_absolute_url }}" class="article__navigation-button">Дальше <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        {% get_next_and_prev_article article as articles %}
+        {% if articles.next_article %}
+          <a href="{{ articles.next_article.get_absolute_url }}" class="article__navigation-button">Дальше <i class="fa fa-angle-right" aria-hidden="true"></i></a>
         {% endif %}
       </div>
     </div>

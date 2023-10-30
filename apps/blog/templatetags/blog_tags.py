@@ -4,7 +4,7 @@ from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
 from django.conf import settings
 from manager.models import SiteDescription
-from ..models import Article, Category
+from ..models import Article, Category, Subcategory
 from ..forms import SubscribeForm, FeedbackForm
 from ..utils import get_word
 
@@ -20,22 +20,35 @@ def get_categories() -> Category:
 
 
 @register.simple_tag
-def get_category(article: Article) -> str:
-    """
-    Возвращает название категории для статьи.
-    """
-    return article.category.get_root()
-
-
-@register.simple_tag
-def get_first_article(category: Category) -> str:
+def get_first_category_article(category: Category) -> str:
     """
     Возвращает первую статью в категории.
     """
-    subcategories = [cat.name for cat in category.get_children()]
-    article = Article.objects.filter(category__name__in=subcategories).first()
-    article_url = article.get_absolute_url()
-    return article_url
+    article = Article.objects.filter(category__name=category.name).first()
+    
+    return article.get_absolute_url()
+
+
+@register.simple_tag
+def get_next_and_prev_article(article: Article) -> str:
+    """
+    Возвращает следующую и предыдущую статьи.
+    """
+    subcategory_articles = Article.objects.filter(category=article.category)
+    articles = [article['title'] for article in list(subcategory_articles.values('title'))]
+    
+    next_article, prev_article = None, None
+    
+    next_article_index = articles.index(article.title) + 1
+    prev_article_index = articles.index(article.title) - 1
+    
+    if next_article_index < len(articles):
+        next_article = subcategory_articles.get(title=articles[next_article_index])
+        
+    if prev_article_index > -1:
+        prev_article = subcategory_articles.get(title=articles[prev_article_index])
+
+    return {'next_article': next_article, 'prev_article': prev_article}
 
 
 @register.simple_tag
@@ -44,11 +57,14 @@ def get_content_links(article: Article) -> dict:
     Возвращает содержание категории в виде словаря, где ключи - подкатегории,
     значения - список статей подкатегории.
     """
-    subcategory = article.category
-    content_links = {}
-    subcategories = [cat.name for cat in subcategory.get_siblings(include_self=True)]
+    subcategory = article.subcategory
+    subcategories = Subcategory.objects.filter(category=article.category)
+
+    content_links = {} 
     for subcategory in subcategories:
-        content_links[subcategory] = Article.objects.filter(category__name=subcategory)
+        content_links[subcategory] = Article.objects.filter(
+            subcategory__name=subcategory
+        )
 
     return content_links
 
