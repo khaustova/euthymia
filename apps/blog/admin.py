@@ -25,17 +25,35 @@ class ArticleFilter(AutocompleteFilter):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    fields = ('title', 'slug', 'summary', 'body', 'category', 'subcategory', 'keywords')
-    list_display = ('title', 'category', 'subcategory', 'views', 'updated_date')
+    fields = (
+        'title', 
+        'slug', 
+        'summary', 
+        'body', 
+        'category', 
+        'subcategory', 
+        'keywords'
+    )
+    list_display = (
+        'title', 
+        'category', 
+        'subcategory', 
+        'views', 
+        'updated_date'
+    )
     list_display_links = ('title',)
     list_filter = [
         CategoryFilter,
         SubcategoryFilter,
     ]
-    prepopulated_fields = {"slug": ("title",)}
+    prepopulated_fields = {
+        "slug": ("title",)
+    }
     list_per_page = 50
     date_hierarchy = 'created_date'
-    search_fields = ('title',)
+    search_fields = (
+        'title',
+    )
 
     change_form_template = 'admingo/change_form_article.html'
 
@@ -57,13 +75,24 @@ class CategoryAdmin(DraggableMPTTAdmin):
 class SubcategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'category',)
     search_fields = ('name',)
+    list_filter = [
+        CategoryFilter,
+    ]
 
 
 @admin.register(Comment)
 class CommentAdmin(DraggableMPTTAdmin):
-    list_display = ('tree_actions', 'indented_title', 'article', 'email', 'created_date')
+    list_display = (
+        'tree_actions', 
+        'indented_title', 
+        'article', 
+        'email', 
+        'created_date'
+    )
     mptt_level_indent = 2
-    list_display_links = ('article',)
+    list_display_links = (
+        'article',
+    )
     list_filter = [
         'created_date',
         ArticleFilter,
