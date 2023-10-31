@@ -1,5 +1,21 @@
 'use strict'; 
 
+// Показать/скрыть содержание подкатегории
+
+let subcategories = document.getElementsByClassName('content__title');
+
+for (let i = 0; i < subcategories.length; i++) {
+    subcategories[i].addEventListener('click', function() {
+        this.classList.toggle('active');
+        let linksArticles = this.nextElementSibling;
+        if (linksArticles.classList.contains('show')) {
+            linksArticles.classList.remove('show');
+        } else {
+            linksArticles.classList.add('show');
+        }
+  });
+} 
+
 // Открытие/закрытие верхнего меню в мобильной версии
 
 const topNavigation = document.getElementsByClassName('top-navigation')[0];
