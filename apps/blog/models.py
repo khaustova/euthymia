@@ -64,7 +64,6 @@ class Subcategory(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Категория'
     )
-    description = RichTextUploadingField()
     
     class Meta:
         verbose_name = 'Подкатегория'
@@ -77,11 +76,7 @@ class Subcategory(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=150, verbose_name='Заголовок')
-    summary = models.TextField(
-        max_length=256,
-        default='Краткое содержание',
-        verbose_name='Краткое содержание'
-    )
+    summary = RichTextUploadingField()
     body = RichTextUploadingField()
     created_date = models.DateTimeField(
         auto_now_add=True,
