@@ -1,14 +1,109 @@
-from typing import Any, Callable
+from akismet import Akismet
 from json import dumps
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from typing import Any, Callable
+
+from django.conf import settings
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
-from django.core.exceptions import ObjectDoesNotExist
+
 from manager.tasks import add_email, add_feedback
 from manager.models import EmailSubscription
+
 from .models import Article, Comment, Category, Subcategory
 from .forms import CommentForm, SubscribeForm, FeedbackForm
+
+
+class ArticleView(ListView):
+    model = Article
+    template_name = 'blog/index.html'
+    context_object_name = 'articles'
+    paginate_by = 10
+    paginate_orphans = 5
+
+    def get_ordering(self) -> tuple:
+        sort = self.kwargs.get('sort')
+        if sort == 'views':
+            return ('-views', '-created_date')
+        return ('-created_date',)
+
+
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'blog/article_detail.html'
+    context_object_name = 'article'
+
+    def get_context_data(self, **kwargs: Any) -> dict:
+        context = super().get_context_data()
+        context['comments'] = Comment.objects.filter(article=self.get_object())
+        context['comments_number'] = context['comments'].count()
+        context['form'] = CommentForm()
+        return context
+
+    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseRedirect:
+        if self.request.method == 'POST':
+            comment_form = CommentForm(self.request.POST)
+            if comment_form.is_valid():     
+                new_comment = comment_form.save(commit=False)
+                if self.request.user.is_authenticated:
+                    new_comment.author = self.request.user
+                    new_comment.email = self.request.user.email
+                else:
+                    guest = comment_form.cleaned_data.get('guest')
+                    if guest:
+                        new_comment.guest = comment_form.cleaned_data.get('guest')
+                    else:
+                        new_comment.guest = 'Безымянный'
+                    new_comment.email = comment_form.cleaned_data.get('email')
+                    
+                if settings.IS_USE_AKISMET:
+                    akismet_api = Akismet(
+                        key=settings.AKISMET_API_KEY, 
+                        blog_url=settings.AKISMET_BLOG_URL
+                    )
+                    is_spam = akismet_api.comment_check(
+                        user_ip=request.META['REMOTE_ADDR'],
+                        user_agent=request.META['HTTP_USER_AGENT'],
+                        comment_type='comment',
+                        comment_author=new_comment.author,
+                        comment_author_email=new_comment.email,
+                        comment_content=comment_form.cleaned_data.get('body'),
+                    )   
+                    
+                    if is_spam:
+                        return HttpResponseForbidden('Упс! Недостаточно прав!')
+                  
+                new_comment.article = self.get_object()
+                new_comment.save()
+            return redirect(self.request.path_info)
+
+    def dispatch(self, request: HttpRequest, slug: str, *args: Any, **kwargs: Any) -> Callable:
+        obj = self.get_object()
+        obj.views += 1
+        obj.save()
+        return super().dispatch(request, *args, **kwargs)
+
+
+class SearchView(ListView):
+    model = Article
+    context_object_name = 'articles'
+    template_name = 'blog/search.html'
+    paginate_by = 10
+    paginate_orphans = 5
+
+    def get_queryset(self) -> Article:
+        query = self.request.GET.get('query')
+        search_vector = SearchVector('title', 'body')
+        search_query = SearchQuery(query)
+        return (
+            Article.objects.annotate(
+                search=search_vector, rank=SearchRank(search_vector, search_query)
+            )
+            .filter(search=search_query)
+            .order_by("-rank")
+        )
 
 
 def feedback_form(request: HttpRequest) -> HttpResponse:
@@ -65,75 +160,3 @@ def unsubscribe(request: HttpRequest) -> HttpResponse:
         return render(request, 'blog/unsubscribe_success.html')
     except ObjectDoesNotExist:
         return render(request, 'blog/unsubscribe_failure.html')
-
-
-class ArticleView(ListView):
-    model = Article
-    template_name = 'blog/index.html'
-    context_object_name = 'articles'
-    paginate_by = 10
-    paginate_orphans = 5
-
-    def get_ordering(self) -> tuple:
-        sort = self.kwargs.get('sort')
-        if sort == 'views':
-            return ('-views', '-created_date')
-        return ('-created_date',)
-
-
-class ArticleDetailView(DetailView):
-    model = Article
-    template_name = 'blog/article_detail.html'
-    context_object_name = 'article'
-
-    def get_context_data(self, **kwargs: Any) -> dict:
-        context = super().get_context_data()
-        context['comments'] = Comment.objects.filter(article=self.get_object())
-        context['comments_number'] = context['comments'].count()
-        context['form'] = CommentForm()
-        return context
-
-    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseRedirect:
-        if self.request.method == 'POST':
-            comment_form = CommentForm(self.request.POST)
-            if comment_form.is_valid():
-                new_comment = comment_form.save(commit=False)
-                if self.request.user.is_authenticated:
-                    new_comment.author = self.request.user
-                    new_comment.email = self.request.user.email
-                else:
-                    guest = comment_form.cleaned_data.get('guest')
-                    if guest:
-                        new_comment.guest = comment_form.cleaned_data.get('guest')
-                    else:
-                        new_comment.guest = 'Безымянный'
-                    new_comment.email = comment_form.cleaned_data.get('email')
-                new_comment.article = self.get_object()
-                new_comment.save()
-            return redirect(self.request.path_info)
-
-    def dispatch(self, request: HttpRequest, slug: str, *args: Any, **kwargs: Any) -> Callable:
-        obj = self.get_object()
-        obj.views += 1
-        obj.save()
-        return super().dispatch(request, *args, **kwargs)
-
-
-class SearchView(ListView):
-    model = Article
-    context_object_name = 'articles'
-    template_name = 'blog/search.html'
-    paginate_by = 10
-    paginate_orphans = 5
-
-    def get_queryset(self) -> Article:
-        query = self.request.GET.get('query')
-        search_vector = SearchVector('title', 'body')
-        search_query = SearchQuery(query)
-        return (
-            Article.objects.annotate(
-                search=search_vector, rank=SearchRank(search_vector, search_query)
-            )
-            .filter(search=search_query)
-            .order_by("-rank")
-        )

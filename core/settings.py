@@ -305,10 +305,6 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 YANDEX_METRIKA_TOKEN = env('YANDEX_METRIKA_TOKEN')
 YANDEX_METRIKA_COUNTER = env('YANDEX_METRIKA_COUNTER')
 
-# Обрезается ли номер в заголовке статьи
-
-IS_CUT_NUMBER = False
-
 # Admingo
 
 ADMINGO_CUSTOMIZATION = {
@@ -362,3 +358,13 @@ ADMINGO_CUSTOMIZATION = {
         }
     ],
 }
+
+# Обрезается ли номер в заголовке статьи
+
+IS_CUT_NUMBER = True
+
+# Защита от спама с помощью Akismet 
+
+IS_USE_AKISMET = False
+AKISMET_API_KEY = env('AKISMET_API_KEY')
+AKISMET_BLOG_URL = env('AKISMET_BLOG_URL')
