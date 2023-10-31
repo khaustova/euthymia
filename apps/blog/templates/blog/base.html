@@ -51,16 +51,19 @@
       <div class="logo">
         <a href="{% url 'blog:index' %}"><img src="{% static 'blog/img/logo.png' %}" class="logo__img"></a>
       </div>
-      <div class="top-navigation">
-        <span class="material-symbols-outlined button-icon top-menu-icon" id="open-mobile-search-button" onclick="openSearch()">search</span>
-        <span class="material-symbols-outlined button-icon top-menu-icon" onclick="openMenu()">menu</span>
-      </div>
-      <div class="mobile-search">
-        <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeSearch()">undo</span>
-        <form action="{% url 'blog:search' %}" method="get" class="search__form" autocomplete="on">
-          <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
-          <button type="submit" class="search-button"></button>
+      <div class="mobile-search_wrapper">
+        <span class="material-symbols-outlined button-icon top-icon" id="mobile-search_close" onclick="closeSearch()">undo</span>
+        <form action="{% url 'blog:search' %}" method="get" class="mobile-search__form" autocomplete="on">
+          <input type="search" name="query" class="mobile-search__input" required=True placeholder="Поиск...">
+          <button type="submit" class="mobile-search__button">
+            <span class="material-symbols-outlined button-icon top-menu-icon">search</span>
+          </button>
         </form>
+      </div>
+      <div class="top-navigation">
+        <span class="material-symbols-outlined button-icon top-menu-icon" id="mobile-search_open" onclick="openSearch()">search</span>
+        <span class="material-symbols-outlined button-icon top-menu-icon" id="menuOpen" onclick="openMenu()">menu</span>
+        <span class="material-symbols-outlined button-icon top-icon" id="menuClose" onclick="closeMenu()">close</span>
       </div>
     </header>
     

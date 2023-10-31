@@ -18,18 +18,16 @@
         По Вашему запросу {{ find_word }} {{ articles|length }} {{ results_word }}:
       </div>
     {% endif %}
-    <div class="search">
-      <div class="search-form" id="search-form">
-        <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
-        <form action="{% url 'blog:search' %}" method="get" class="search__form">
-          <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
-          <button type="submit" class="search-button"></button>
-        </form>
+    <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
+      <div class="search_wrapper">
+        <div class="search__button">
+          <span class="material-symbols-outlined button-icon search__button-icon top-menu-icon">search</span>
+        </div>
+        <div class="search__input_wrapper">
+          <input type="search" name="query" class="search__input" placeholder="Поиск...">
+        </div>
       </div>
-      <span id="open-search-button">
-        <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
-      </span>
-    </div>
+    </form>
   </div>
 {% endblock %}
 
@@ -40,9 +38,11 @@
     <div class="bunny-message">
       <div class="bunny-message__bubble">
         По Вашему запрос ничего не найдено! 😢<br>Попробуйте поискать ещё раз.<br>
-        <form action="{% url 'blog:search' %}" method="get" class="search__form search-nothing__form">
-          <input type="search" name="query" class="input-search search-nothing-input" required=True placeholder="Поиск...">
-          <button type="submit" class="search-button search-nothing-button"></button>
+        <form action="{% url 'blog:search' %}" method="get" class="mobile-search__form" autocomplete="on">
+          <input type="search" name="query" class="mobile-search__input nothing-found__input" required=True placeholder="Поиск...">
+          <button type="submit" class="mobile-search__button nothing-found__button">
+            <span class="material-symbols-outlined button-icon top-menu-icon">search</span>
+          </button>
         </form><br>
         <a href="{{ request.META.HTTP_REFERER }}">Назад</a>
       </div>

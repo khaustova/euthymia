@@ -29,18 +29,16 @@
     &nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i> 
     &nbsp;{{ article.title|cut_number }}
   </div>
-  <div class="search">
-    <div class="search-form" id="search-form">
-      <span class="material-symbols-outlined button-icon top-icon" id="close-search" onclick="closeTopSearch()">undo</span>
-      <form action="{% url 'blog:search' %}" method="get" class="search__form">
-        <input type="search" name="query" class="input-search" required=True placeholder="Поиск...">
-        <button type="submit" class="search-button"></button>
-      </form>
+  <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
+    <div class="search_wrapper">
+      <div class="search__button">
+        <span class="material-symbols-outlined button-icon search__button-icon top-menu-icon">search</span>
+      </div>
+      <div class="search__input_wrapper">
+        <input type="search" name="query" class="search__input" placeholder="Поиск...">
+      </div>
     </div>
-    <span id="open-search-button">
-      <span class="material-symbols-outlined open-search-button button-icon top-menu-icon" onclick="openTopSearch()">search</span>
-    </span>
-  </div>
+  </form>
 </div>
 {% endblock %}
 
@@ -59,11 +57,11 @@
     </div>
     <hr class="summary__line">
     {{ article.body|safe }}
-    <div class="article__info">
+    <div class="article__bottom">
       <div class="article__prev">
         {% get_next_and_prev_article article as articles %}
         {% if articles.prev_article %}
-          <a href="{{ articles.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> Назад</a>
+          <a href="{{ articles.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> <span class="article__navigation">Назад</span></a>
         {% endif %}
       </div>
       <div class="share_wrapper">
@@ -96,7 +94,7 @@
       <div class="article__next">
         {% get_next_and_prev_article article as articles %}
         {% if articles.next_article %}
-          <a href="{{ articles.next_article.get_absolute_url }}" class="article__navigation-button">Дальше <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+          <a href="{{ articles.next_article.get_absolute_url }}" class="article__navigation-button"><span class="article__navigation">Дальше</span> <i class="fa fa-angle-right" aria-hidden="true"></i></a>
         {% endif %}
       </div>
     </div>

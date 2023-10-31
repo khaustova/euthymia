@@ -26,7 +26,7 @@ def get_first_category_article(category: Category) -> str:
     """
     article = Article.objects.filter(category__name=category.name).first()
     
-    return article.get_absolute_url()
+    return article.get_absolute_url() if article else ''
 
 
 @register.simple_tag
