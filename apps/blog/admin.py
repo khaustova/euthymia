@@ -65,10 +65,9 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(DraggableMPTTAdmin):
-    list_display = ('tree_actions', 'indented_title',)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
     search_fields = ('name',)
-    mptt_level_indent = 2
     
     
 @admin.register(Subcategory)

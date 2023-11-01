@@ -29,7 +29,7 @@
       {% get_first_category_article category as article_url %}
       <li class="navigation__item category__item">
         <a href="{{ article_url }}" class="sidebar__link">
-          {{ category.name }}
+          {{ category.name|cut_number }}
         </a>
       </li>
     {% endfor %}

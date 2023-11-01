@@ -16,7 +16,7 @@
         </div>
       </div>
       <hr class="summary__line">
-      {{ article.summary }}
+      {{ article.summary|safe }}
       <div class="read-more_wrapper">
         <a href="{{ article.get_absolute_url }}" class="read-more">
         Читать далее

@@ -1,15 +1,5 @@
 'use strict'; 
 
-// Показать кнопки "Поделиться"
-
-const shareText = document.getElementsByClassName('share__text')[0]
-const shareButtons = document.getElementsByClassName('share__buttons')[0]
-
-shareText.addEventListener('click', function() {
-    shareText.classList.add('hide')
-    shareButtons.classList.add('show')
-})
-
 // Показать/скрыть содержание подкатегории
 
 let subcategories = document.getElementsByClassName('content__title');

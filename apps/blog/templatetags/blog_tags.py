@@ -72,16 +72,19 @@ def get_content_links(article: Article) -> dict:
 @register.filter
 def cut_number(text: str) -> Union[SafeText, str]:
     """
-    Обрезает номер в заголовке статьи.
+    Обрезает первое слово в переданном тексте, если оно является числом.
     """
     if not settings.IS_CUT_NUMBER:
         return
     
     text_words = escape(text).split()
-
+    
     if not len(text_words):
         return ''
-
+    
+    if not text_words[0].isdigit():
+        return text
+    
     text = ' '.join([word for word in text_words[1:]])
 
     return mark_safe(text)

@@ -93,3 +93,13 @@ function createForm(author, parentID, commentID, template) {
 function closeCommentForm () {
     document.getElementsByClassName('comment')[1].remove();
 }
+
+// Показ кнопок социальных сетей для функции "Поделиться"
+
+const shareText = document.getElementsByClassName('share__text')[0]
+const shareButtons = document.getElementsByClassName('share__buttons')[0]
+
+shareText.addEventListener('click', function() {
+    shareText.classList.add('hide')
+    shareButtons.classList.add('show')
+})

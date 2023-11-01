@@ -31,16 +31,8 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-class Category(MPTTModel):
-    name = models.CharField(max_length=128, verbose_name='Категория')
-    parent = TreeForeignKey(
-        'self',
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-        verbose_name='Родительская категория',
-        related_name='children'
-    )
+class Category(models.Model):
+    name = models.CharField(max_length=256, verbose_name='Категория')
 
     class Meta:
         verbose_name = 'Категория'
@@ -49,12 +41,6 @@ class Category(MPTTModel):
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse_lazy('blog:category', kwargs={'slug': self.slug})
-
-    def get_article_list(self):
-        return Article.objects.filter(category=self)
 
 
 class Subcategory(models.Model):
