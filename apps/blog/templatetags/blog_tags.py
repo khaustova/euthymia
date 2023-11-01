@@ -82,7 +82,7 @@ def cut_number(text: str) -> Union[SafeText, str]:
     if not len(text_words):
         return ''
     
-    if not text_words[0].isdigit():
+    if not text_words[0][0].isdigit():
         return text
     
     text = ' '.join([word for word in text_words[1:]])
