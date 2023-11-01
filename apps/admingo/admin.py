@@ -14,7 +14,7 @@ def make_read(modeladmin, request: HttpRequest, queryset: Notification):
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ('notifications_message', 'read')
+    list_display = ('created_date', 'notifications_message', 'read')
     list_per_page = 50
     actions = [make_read]
 

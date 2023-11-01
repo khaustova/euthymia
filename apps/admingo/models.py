@@ -2,6 +2,10 @@ from django.db import models
 
 
 class Notification(models.Model):
+    created_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Время',
+    )
     notifications_message = models.CharField(
         max_length=512,
         verbose_name='Уведомление'

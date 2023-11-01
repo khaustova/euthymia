@@ -961,12 +961,16 @@ h4.doc__title {
     margin-bottom: 8px;
 }
 
+.notification__col {
+    width: 200px;
+}
+
 .table tbody tr.notification_read {
     background: var(--color-secondary);
 }
 
 .table tbody tr.notification_unread {
-    background: var(--color-accent);
+    background: #2b4744;
     color: #ebebeb;
 }
 

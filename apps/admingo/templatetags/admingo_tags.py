@@ -300,9 +300,9 @@ def get_notifications_message(list: list) -> SafeText:
     """
     Вовзращает сообщение из уведомления.
     """
-    message = list[-2]
+    message = list[2]
     soup = BeautifulSoup(message, 'lxml')
-    notification = soup.find('a')
+    notification = soup.find('td')
 
     return format_html(notification.text)
 

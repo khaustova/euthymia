@@ -21,33 +21,21 @@
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    {{ block.super }}
+  {{ block.super }}
 
-    <script type="text/javascript">
-        $(function(){
-        // inspect html to check id of category select dropdown.
-        $(document).on('change', "select#id_category", function(){
-            $.getJSON("/getsubcategory/",{id: $(this).val()}, function(j){
-                 var options = '<option value="" disabled selected>---------</option>';
-                 console.log(j);
-                 for (var i = 0; i < j.length; i++) {
-                     options += '<option value="' + j[i].id + '">' + j[i].name+ '</option>';
-                 }
-                 // inspect html to check id of subcategory select dropdown.
-                 $("select#id_subcategory").html(options);
-             });
-         });
-     });
-    </script>
+  <script type="text/javascript">
+    $(function() {
+      $(document).on('change', "select#id_category", function() {
+        $.getJSON("/getsubcategory/",{id: $(this).val()}, function(j) {
+          let options = '<option value="" disabled selected>---------</option>';
+          for (let i = 0; i < j.length; i++) {
+            options += '<option value="' + j[i].id + '">' + j[i].name+ '</option>';
+          }
+          $("select#id_subcategory").html(options);
+          });
+        });
+      });
+  </script>
 {% endblock %}
-
-{%block extrabody%}
-{% comment %} <script>
-    $(document).ready(function() {
-        $('select#id_subcategory').select2();
-    });
-</script> {% endcomment %}
-
-{%endblock%}

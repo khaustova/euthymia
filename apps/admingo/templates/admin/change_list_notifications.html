@@ -2,62 +2,61 @@
 
 {% if result_hidden_fields %}
   <div class="hiddenfields">
-  {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+    {% for item in result_hidden_fields %}{{ item }}{% endfor %}
   </div>
 {% endif %}
 
 {% if results %}
-        <table id="result_list" class="table notifications__results">
-          <col style="width: 3%">
-            <thead>
-                <tr>
-                    {% for header in result_headers %}
-                    <th class="{% sort_header header forloop %}" tabindex="0" rowspan="1" colspan="1">
-                        <div class="text">
-                            {% if header.sortable %}
-                                <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
-                            {% else %}
-                                <span>{{ header.text|capfirst }}</span>
-                            {% endif %}
-                            {% if header.sorted %}
-                                <a href="{{ header.url_remove }}">
-                                  <span class="material-symbols-outlined icon-sorted">
-                                    close
-                                  </span>
-                                </a>
-                                {% if header.ascending %}
-                                <span class="material-symbols-outlined icon-sorted">
-                                  arrow_upward
-                                </span>
-                                {% else %}
-                                <span class="material-symbols-outlined icon-sorted">
-                                  arrow_downward
-                                </span>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                    </th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for result in results %}
-                {% get_notifications_status result as notifications_status %}
-                <tr role="row" class="{% if notifications_status == True %}notification_read {% else %} notification_unread{% endif %}">
-                    {% for item in result %}
-                    {% if forloop.first %}
-                    {{ item }}   
-                    {% else %} 
-                      {% if not forloop.last %}
-                        <td>{% get_notifications_message result %}</td>     
-                      {% endif %} 
-                      {% if forloop.last %}
-                        {{ item }}    
-                      {% endif %}       
-                     {% endif %}
-                    {% endfor %}
-                </tr>
+  <table id="result_list" class="table notifications__results">
+    <col style="width: 3%">
+      <thead>
+        <tr>
+          {% for header in result_headers %}
+            <th class="{% sort_header header forloop %} {% if forloop.counter == 2 %}notification__col{% endif %}" tabindex="0" rowspan="1" colspan="1">
+              <div class="text">
+                {% if header.sortable %}
+                  <a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>
+                {% else %}
+                  <span>{{ header.text|capfirst }}</span>
+                {% endif %}
+                {% if header.sorted %}
+                  <a href="{{ header.url_remove }}">
+                    <span class="material-symbols-outlined icon-sorted">
+                      close
+                    </span>
+                  </a>
+                  {% if header.ascending %}
+                    <span class="material-symbols-outlined icon-sorted">
+                      arrow_upward
+                    </span>
+                  {% else %}
+                    <span class="material-symbols-outlined icon-sorted">
+                      arrow_downward
+                    </span>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in results %}
+          {% get_notifications_status result as notifications_status %}
+          <tr role="row" class="{% if notifications_status == True %}notification_read {% else %} notification_unread{% endif %}">
+            {% for item in result %}
+              {% if forloop.first %}
+                {{ item }}   
+              {% else %} 
+                {% if forloop.counter == 3 %}
+                  <td>{% get_notifications_message result %}</td>     
+                {% else %}
+                  {{ item }}    
+                {% endif %}       
+              {% endif %}
             {% endfor %}
-            </tbody>
-        </table>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
 {% endif %}
