@@ -9,19 +9,12 @@
     --color-navigation: #B1DCDE ;
   }
 
-/* @font-face {
-    font-family: "Archive";
-    src: url("/static/blog/fonts/Archive-Regular.otf") format("opentype");
-    font-style: normal;
-    font-weight: normal;
-}
-
 @font-face {
     font-family: "Allura";
     src: url("/static/blog/fonts/Allura-Regular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
-} */
+}
 
 /* Basic */
 
@@ -131,6 +124,53 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.responsive-block {
+    overflow-x: auto;
+    padding: 5px;
+}
+
+table {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 5px solid var(--color-primary);
+	border-top: 5px solid var(--color-primary);
+	border-bottom: 3px solid var(--color-primary);
+	border-collapse: collapse; 
+	outline: 3px solid var(--color-accent);
+	font-size: 15px;
+	background: var(--color-primary) !important;
+    overflow-x: auto;
+}
+
+table th {
+	font-weight: bold;
+	padding: 7px;
+    color: var(--color-primary);
+	background: var(--color-accent);
+	border: none;
+	text-align: left;
+	font-size: 15px;
+	border-top: 3px solid var(--color-primary);
+	border-bottom: 3px solid var(--color-accent);
+}
+
+table td {
+	padding: 7px;
+	border: none;
+	border-top: 3px solid var(--color-primary);
+	border-bottom: 3px solid var(--color-primary);
+	font-size: 15px;
+}
+
+table tbody tr:nth-child(even){
+	background: var(--color-primary) !important;
 }
 
 .logo {
@@ -384,4 +424,3 @@ footer {
 .content-error_wrapper {
     background: var(--color-secondary) !important;
 }
-

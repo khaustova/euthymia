@@ -106,60 +106,13 @@
     font-size: 2.4rem;
 }
 
-/* Article detail */
-
-.article__wrapper {
-    overflow-x: auto;
-    padding: 5px;
-}
-
-.article-detail {
-    margin-bottom: 10px;
-}
-
-.article__table {
-	width: 100%;
-	margin-bottom: 20px;
-	border: 5px solid var(--color-primary);
-	border-top: 5px solid var(--color-primary);
-	border-bottom: 3px solid var(--color-primary);
-	border-collapse: collapse; 
-	outline: 3px solid var(--color-accent);
-	font-size: 15px;
-	background: var(--color-primary) !important;
-    overflow-x: auto;
-}
-
-.article__table th {
-	font-weight: bold;
-	padding: 7px;
-    color: var(--color-primary);
-	background: var(--color-accent);
-	border: none;
-	text-align: left;
-	font-size: 15px;
-	border-top: 3px solid var(--color-primary);
-	border-bottom: 3px solid var(--color-accent);
-}
-
-.article__table td {
-	padding: 7px;
-	border: none;
-	border-top: 3px solid var(--color-primary);
-	border-bottom: 3px solid var(--color-primary);
-	font-size: 15px;
-}
-
-.article__table tbody tr:nth-child(even){
-	background: var(--color-primary) !important;
-}
-
 /* Share buttons */
 
 .share_wrapper {
     display: flex;
     justify-content: center;
     align-self: center;
+    height: 24px;
 }
 
 .share__svg {
@@ -183,109 +136,6 @@
 .ya-share2__badge, .ya-share2__mobile-popup-badge {
     border-radius: 10% !important;
 }
-
-/* .share__button {
-    position: relative;
-    font-family: Roboto, sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1;
-    color: var(--color-accent);
-    border: 1px solid var(--color-accent);
-    background: none;
-    outline: none;
-    overflow: hidden;
-    cursor: pointer;
-    width: 120px;
-    height: 40px;
-    border: none;
-    padding: 0 5px;
-    transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.share__button::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.share__button .share__text,
-.share__button .ya-share2__containern {
-    display: inline-flex;
-    vertical-align: middle;
-    transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.share__button .share__text {
-    transition-delay: 0.05s;
-}
-
-.share__button .ya-share2__container {
-    margin-left: 8px;
-    transition-delay: 0.1s;
-}
-
-.share__button .ya-share2__list {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    transform: translateY(-50%);
-}
-
-.share__button .ya-share2__list li {
-    flex: 1;
-}
-
-.share__button .ya-share2__list li a {
-    display: inline-flex;
-    vertical-align: middle;
-    transform: translateY(55px);
-    transition: 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.share__button .ya-share2__list li a:hover {
-    opacity: 0.5;
-}
-
-.share__button:hover::before {
-    transform: scale(1.2);
-    border: none;
-}
-
-.share__button:hover .share__text,
-.share__button:hover .share__icon {
-    transform: translateY(-55px);
-}
-
-.share__button:hover .ya-share2__list li a {
-    transform: translateY(0);
-}
-
-.share__button:hover .ya-share2__list li:nth-child(1) a {
-    transition-delay: 0.15s;
-}
-
-.share__button:hover .ya-share2__list li:nth-child(2) a {
-    transition-delay: 0.2s;
-}
-
-.share__button:hover .ya-share2__list li:nth-child(3) a {
-    transition-delay: 0.25s;
-}
-
-.share__button:hover .ya-share2__list li:nth-child(4) a {
-    transition-delay: 0.3s;
-} */
 
 /* Read more */
 
