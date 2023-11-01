@@ -52,7 +52,7 @@
         <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
       </div>
       <div class="summary__info article__info">
-        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{ article.views }}
+        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{ article.views }}&nbsp;&nbsp;
       </div>
     </div>
     <hr class="summary__line">
@@ -65,10 +65,9 @@
         {% endif %}
       </div>
       <div class="share_wrapper">
-        <button class="share__button">
           <span class="share__text"><svg
             t="1580465783605"
-            class="icon"
+            class="icon share__svg"
             viewBox="0 0 1024 1024"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -83,13 +82,12 @@
             </svg>
             &nbsp;Поделиться
           </span>
-          <span class="ya-share2 share__icon" data-curtain data-limit="6" data-more-button-type="short" 
+          <span class="ya-share2 share__buttons share__icon" data-curtain data-limit="6" data-more-button-type="short" 
             data-title="{{ article.title|cut_number }}"
             data-description="{{ article.summary }}" 
             data-image="{{ article.image.url }}"
             data-services="vkontakte,telegram,whatsapp,odnoklassniki,">
           </span>
-        </button>
       </div>
       <div class="article__next">
         {% get_next_and_prev_article article as articles %}

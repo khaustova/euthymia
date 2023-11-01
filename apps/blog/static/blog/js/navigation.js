@@ -1,5 +1,15 @@
 'use strict'; 
 
+// Показать кнопки "Поделиться"
+
+const shareText = document.getElementsByClassName('share__text')[0]
+const shareButtons = document.getElementsByClassName('share__buttons')[0]
+
+shareText.addEventListener('click', function() {
+    shareText.classList.add('hide')
+    shareButtons.classList.add('show')
+})
+
 // Показать/скрыть содержание подкатегории
 
 let subcategories = document.getElementsByClassName('content__title');
@@ -19,41 +29,21 @@ for (let i = 0; i < subcategories.length; i++) {
 // Открытие/закрытие верхнего меню в мобильной версии
 
 const topNavigation = document.getElementsByClassName('top-navigation')[0];
+const menu = document.getElementsByClassName('menu')[0];
 const openMenuButton = document.getElementById('menuOpen')
 const closeMenuButton = document.getElementById('menuClose')
-const topNavigationTemplate = `<span class="material-symbols-outlined button-icon top-menu-icon" id="mobile-search_open" onclick="openSearch()">search</span>
-<span class="material-symbols-outlined button-icon top-menu-icon" onclick="openMenu()">menu</span>`;
-const menu = document.getElementsByClassName('menu')[0];
 
 function openMenu() {
     menu.classList.add('show');
     openMenuButton.style.display = 'none'
     closeMenuButton.style.display = 'inline'
-    //topNavigation.innerHTML = `<span class="material-symbols-outlined button-icon top-menu-icon" id="mobile-search_open" onclick="openSearch()">search</span>
-    //<span class="material-symbols-outlined button-icon top-icon" onclick="closeMenu()">close</span>`;
 }
 
 function closeMenu() {
     menu.classList.remove('show');
     openMenuButton.style.display = 'inline'
     closeMenuButton.style.display = 'none'
-    //topNavigation.innerHTML = topNavigationTemplate;
 }
-
-// Открытие/закрытие поиска в десктопной версии
-
-// const openSearchButton = document.getElementById("open-search-button")
-// const searchForm = document.getElementById("search-form")
-
-// function openTopSearch() {
-//     searchForm.style.display = "flex";
-//     openSearchButton.classList.add('hide')
-// }
-
-// function closeTopSearch() {
-//     searchForm.style.display = "none";
-//     openSearchButton.classList.remove('hide');
-// }
 
 // Открытие/закрытие поиска в мобильной версии
 

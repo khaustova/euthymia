@@ -34,7 +34,7 @@
 
 .article__bottom {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, auto);
     align-content: center;
     margin-top: 15px;
 }
@@ -162,7 +162,29 @@
     align-self: center;
 }
 
-.share__button {
+.share__svg {
+    vertical-align: middle;
+}
+
+.share__text {
+    color: var(--color-accent);
+    cursor: pointer;
+}
+
+.share__buttons {
+    display: none;
+}
+
+.ya-share2__container_mobile.ya-share2__container_size_m .ya-share2__icon {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.ya-share2__badge, .ya-share2__mobile-popup-badge {
+    border-radius: 10% !important;
+}
+
+/* .share__button {
     position: relative;
     font-family: Roboto, sans-serif;
     font-weight: 500;
@@ -263,7 +285,7 @@
 
 .share__button:hover .ya-share2__list li:nth-child(4) a {
     transition-delay: 0.3s;
-}
+} */
 
 /* Read more */
 
