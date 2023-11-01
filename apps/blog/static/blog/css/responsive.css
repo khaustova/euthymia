@@ -169,6 +169,10 @@
     .article__navigation {
         display: none;
     }
+
+    .article__bottom {
+        grid-template-columns: repeat(3, auto);
+    }
 }
 
 .show {
