@@ -162,4 +162,4 @@ class Comment(MPTTModel):
         ordering = ['created_date']
 
     def __str__(self):
-        return f'Комментарий {self.body[:60]}'
+        return f'{self.body[:256]}'
