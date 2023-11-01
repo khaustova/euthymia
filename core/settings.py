@@ -269,11 +269,32 @@ CKEDITOR_CONFIGS = {
                 'codesnippet',
                 'widget',
                 'dialog',
+                'stylescombo'
             ]
         ),
         'codeSnippet_languages': {
             'python': 'Python',
         },
+        'stylesSet': [
+            {
+                'name': 'Строчный код', 
+                'element': 'code'
+            },
+            {
+                'name': 'Монолитный элемент', 
+                'element': 'span', 
+                'attributes': {
+                    'style': 'white-space: nowrap;'
+                }
+            },
+            {
+                'name': 'Адаптивный блок', 
+                'element': 'div', 
+                'attributes': {
+                    'class': 'responsive-block'
+                }
+            }
+        ],
     }
 }
 
