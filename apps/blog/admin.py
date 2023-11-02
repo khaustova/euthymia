@@ -86,6 +86,7 @@ class CommentAdmin(DraggableMPTTAdmin):
         'indented_title', 
         'article', 
         'email', 
+        'comment_ip',
         'created_date'
     )
     mptt_level_indent = 2

@@ -1,6 +1,7 @@
 from akismet import Akismet
 from json import dumps
 from typing import Any, Callable
+from ipware import get_client_ip
 
 from django.conf import settings
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
@@ -76,6 +77,15 @@ class ArticleDetailView(DetailView):
                         return HttpResponseForbidden('Упс! Недостаточно прав!')
                   
                 new_comment.article = self.get_object()
+                client_ip, is_routable = get_client_ip(request)
+                if client_ip is None:
+                    new_comment.comment_ip = 'Unable'
+                else:
+                    # We got the client's IP address
+                    if is_routable:
+                        new_comment.comment_ip = client_ip
+                    else:
+                        new_comment.comment_ip = 'Private'
                 new_comment.save()
             return redirect(self.request.path_info)
 

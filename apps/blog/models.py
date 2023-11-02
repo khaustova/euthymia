@@ -142,6 +142,7 @@ class Comment(MPTTModel):
         null=True,
         verbose_name='Email'
     )
+    comment_ip = models.CharField(max_length=256, verbose_name='IP-адрес')
     body = models.TextField(max_length=800, verbose_name='Комментарий')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     parent = TreeForeignKey(
