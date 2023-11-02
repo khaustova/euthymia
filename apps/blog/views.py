@@ -59,14 +59,23 @@ class ArticleDetailView(DetailView):
                         new_comment.guest = 'Безымянный'
                     new_comment.email = comment_form.cleaned_data.get('email')
                     
+                client_ip, is_routable = get_client_ip(request)
+                if client_ip is None:
+                    new_comment.comment_ip = 'Unable'
+                else:
+                    if is_routable:
+                        new_comment.comment_ip = client_ip
+                    else:
+                        new_comment.comment_ip = 'Private'
+                    
                 if settings.IS_USE_AKISMET:
                     akismet_api = Akismet(
                         key=settings.AKISMET_API_KEY, 
                         blog_url=settings.AKISMET_BLOG_URL
                     )
                     is_spam = akismet_api.comment_check(
-                        user_ip=request.META['REMOTE_ADDR'],
-                        user_agent=request.META['HTTP_USER_AGENT'],
+                        user_ip=new_comment.comment_ip,
+                        user_agent=request.META.get('HTTP_USER_AGENT'),
                         comment_type='comment',
                         comment_author=new_comment.author,
                         comment_author_email=new_comment.email,
@@ -74,18 +83,9 @@ class ArticleDetailView(DetailView):
                     )   
                     
                     if is_spam:
-                        return HttpResponseForbidden('Упс! Недостаточно прав!')
-                  
+                        return HttpResponseForbidden('Упс! Недостаточно прав!')                 
+                        
                 new_comment.article = self.get_object()
-                client_ip, is_routable = get_client_ip(request)
-                if client_ip is None:
-                    new_comment.comment_ip = 'Unable'
-                else:
-                    # We got the client's IP address
-                    if is_routable:
-                        new_comment.comment_ip = client_ip
-                    else:
-                        new_comment.comment_ip = 'Private'
                 new_comment.save()
             return redirect(self.request.path_info)
 
@@ -127,7 +127,16 @@ def feedback_form(request: HttpRequest) -> HttpResponse:
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
             message = form.cleaned_data.get('message')
-            add_feedback.delay(name, email, message)
+            client_ip, is_routable = get_client_ip(request)
+            if client_ip is None:
+                feedback_ip = 'Unable'
+            else:
+                if is_routable:
+                    feedback_ip = client_ip
+                else:
+                    feedback_ip = 'Private'
+            
+            add_feedback.delay(name, email, feedback_ip, message)
     return render(request, 'blog/feedback_success.html')
 
 

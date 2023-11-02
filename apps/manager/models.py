@@ -28,6 +28,7 @@ class EmailSubscription(models.Model):
 class Feedback(models.Model):
     name = models.CharField(max_length=256, verbose_name='Имя')
     email = models.EmailField(max_length=256, verbose_name='Email')
+    feedback_ip = models.CharField(max_length=256, verbose_name='IP-адрес')
     message = models.TextField(verbose_name='Сообщение')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
     reply = RichTextUploadingField()

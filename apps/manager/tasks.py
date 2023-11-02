@@ -77,13 +77,18 @@ def send_notification(article_pk: int) -> str:
 
 
 @shared_task(name='add_feedback')
-def add_feedback(name: str, email: str, message: str) -> str:
+def add_feedback(name: str, email: str, feedback_ip: str, message: str) -> str:
     """
     Добавляет новый фидбек.
     """
-    Feedback.objects.create(name=name, email=email, message=message)
+    Feedback.objects.create(
+        name=name,
+        email=email, 
+        feedback_ip=feedback_ip, 
+        message=message
+    )
 
-    return f'Added a new feedback from {name} {email} {message[:50]}'
+    return f'Added a new feedback from {name}.'
 
 
 @shared_task(name='reply_feedback')

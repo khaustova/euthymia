@@ -29,7 +29,7 @@ class EmailSubscriptionAdmin(admin.ModelAdmin):
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'message'[:256], 'created_date', 'reply_status')
+    list_display = ('name', 'email', 'message'[:256], 'feedback_ip', 'created_date', 'reply_status')
     readonly_fields = ('name', 'email', 'message', 'created_date')
     list_filter = ('reply_status',)
     fields = ('name', 'email', 'message'[:256], 'reply')
