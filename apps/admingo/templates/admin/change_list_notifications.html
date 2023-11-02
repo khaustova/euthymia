@@ -45,15 +45,13 @@
           {% get_notifications_status result as notifications_status %}
           <tr role="row" class="{% if notifications_status == True %}notification_read {% else %} notification_unread{% endif %}">
             {% for item in result %}
-              {% if forloop.first %}
-                {{ item }}   
-              {% else %} 
-                {% if forloop.counter == 3 %}
-                  <td>{% get_notifications_message result %}</td>     
-                {% else %}
-                  {{ item }}    
-                {% endif %}       
-              {% endif %}
+              {% if forloop.counter == 2 %}
+                <td>{% get_notifications_date result %}</td> 
+              {% elif forloop.counter == 3 %}
+                <td>{% get_notifications_message result %}</td>     
+              {% else %}
+                {{ item }} 
+              {% endif %}       
             {% endfor %}
           </tr>
         {% endfor %}

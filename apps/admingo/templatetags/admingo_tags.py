@@ -298,13 +298,26 @@ def get_metrics() -> Optional[dict]:
 @register.simple_tag
 def get_notifications_message(list: list) -> SafeText:
     """
-    Вовзращает сообщение из уведомления.
+    Вовзращает сообщение уведомления из html.
     """
     message = list[2]
     soup = BeautifulSoup(message, 'lxml')
     notification = soup.find('td')
 
     return format_html(notification.text)
+
+
+
+@register.simple_tag
+def get_notifications_date(list: list) -> SafeText:
+    """
+    Вовзращает дату уведомления из html.
+    """
+    message = list[1]
+    soup = BeautifulSoup(message, 'lxml')
+    date = soup.find('a')
+
+    return format_html(date.text)
 
 
 @register.simple_tag
