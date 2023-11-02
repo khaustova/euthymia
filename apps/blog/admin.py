@@ -58,7 +58,6 @@ class ArticleAdmin(admin.ModelAdmin):
     change_form_template = 'admingo/change_form_article.html'
 
     def save_model(self, request, obj, form, change):
-        obj.category = Category.objects.get(name=obj.subcategory.category)
         super().save_model(request, obj, form, change)
         if not change:
             transaction.on_commit(lambda: send_notification.delay(obj.pk))

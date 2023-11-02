@@ -57,16 +57,21 @@ def get_content_links(article: Article) -> dict:
     Возвращает содержание категории в виде словаря, где ключи - подкатегории,
     значения - список статей подкатегории.
     """
-    subcategory = article.subcategory
-    subcategories = Subcategory.objects.filter(category=article.category)
-
     content_links = {} 
-    for subcategory in subcategories:
-        content_links[subcategory] = Article.objects.filter(
-            subcategory__name=subcategory
-        )
+    
+    if article.subcategory:
+        subcategories = Subcategory.objects.filter(category=article.category)
+        for subcategory in subcategories:
+            content_links[subcategory] = Article.objects.filter(
+                subcategory__name=subcategory
+            )
+        return content_links
+    else:
+        content_links = Article.objects.filter(category__name=article.category)
 
     return content_links
+    
+    
 
 
 @register.filter

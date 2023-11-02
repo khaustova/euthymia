@@ -9,25 +9,38 @@
     </span>
   </strong>
   <hr class="sidebar__line">
-  <ul class="navigation navigation__content">   
+  <ul class="navigation navigation__content"> 
     {% get_content_links article as content_links %}
-    {% for subcategory, articles in content_links.items %}
-      <div class="content__title {% if article.subcategory == subcategory %}active{% endif %}">
-        <div>{{ subcategory }}</div><div class="plusminus"></div>
-      </div>
-      <li class="content__links {% if article.subcategory == subcategory %}show{% endif %}">
-        {% for content_article in articles %}
-          <ul class="content__list">
-            <li class="content__item">
-              {% if content_article.get_absolute_url == article.get_absolute_url %}
-                {{ content_article.title }}
-              {% else %}
-                <a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title }}</a>
-              {% endif %}
-            </li>
-          </ul>
-        {% endfor %}
+    {% if article.subcategory %}  
+      {% for subcategory, articles in content_links.items %}
+        <div class="content__title {% if article.subcategory == subcategory %}active{% endif %}">
+          <div>{{ subcategory }}</div><div class="plusminus"></div>
+        </div>
+        <li class="content__links {% if article.subcategory == subcategory %}show{% endif %}">
+          {% for content_article in articles %}
+            <ul class="content__list">
+              <li class="content__item">
+                {% if content_article.get_absolute_url == article.get_absolute_url %}
+                  {{ content_article.title }}
+                {% else %}
+                  <a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title }}</a>
+                {% endif %}
+              </li>
+            </ul>
+          {% endfor %}
+        </li>
+      {% endfor %}
+    {% else %}
+      {% for category_article in content_links %}
+      <li class="content__item">
+        {% if category_article.get_absolute_url == article.get_absolute_url %}
+          {{ category_article.title }}
+        {% else %}
+          <a href="{{ category_article.get_absolute_url }}" class="sidebar__link">{{ category_article.title }}</a>
+        {% endif %}
       </li>
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
+
   </ul>
 </nav>
