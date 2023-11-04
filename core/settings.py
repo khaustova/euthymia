@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'admin_auto_filters',
-    'imagekit',
     'mptt',
     'django_celery_results',
     'blog',
@@ -293,6 +292,13 @@ CKEDITOR_CONFIGS = {
                 'attributes': {
                     'class': 'responsive-block'
                 }
+            },
+            {
+                'name': 'Разделитель', 
+                'element': 'div', 
+                'attributes': {
+                    'class': 'separator'
+                }
             }
         ],
     }
@@ -339,7 +345,7 @@ ADMINGO_CUSTOMIZATION = {
         'blog.comment': 'chat_bubble',
         'manager.feedback': 'rate_review',
         'manager.emailsubscription': 'email',
-        'manager.sitedescription': 'settings',
+        'manager.sitesettings': 'settings',
         'django_celery_results.taskresult': 'task',
     },
     'hidden_apps': [
@@ -358,7 +364,7 @@ ADMINGO_CUSTOMIZATION = {
         'manager',
         'manager.feedback',
         'manager.emailsubscription',
-        'manager.sitedescription',
+        'manager.sitesettings',
         'django_celery_results',
         'auth',
     ],

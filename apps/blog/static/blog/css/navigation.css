@@ -185,13 +185,21 @@
 }
 
 .about-content {
-    margin: 10px 10px 5px 10px;
+    line-height: 2.4rem;
 }
 
 .about__links {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
+}
+
+.about-block {
+    background:var(--color-primary);
+    opacity: 0.9;
+    border-radius: 10px;
+    padding: 18px 18px 25px 23px;
+    margin: 0 0 10px 0;
 }
 
 /* Subscribe */

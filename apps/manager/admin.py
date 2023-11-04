@@ -3,11 +3,11 @@ from django.http import HttpRequest
 from django.contrib import admin
 from django.db import transaction
 from django.contrib.auth.hashers import make_password
-from .models import EmailSubscription, Feedback, SiteDescription
+from .models import EmailSubscription, Feedback, SiteSettings
 from .tasks import reply_feedback
 
 
-@admin.register(SiteDescription)
+@admin.register(SiteSettings)
 class SiteDescriptionAdmin(admin.ModelAdmin):
     list_display = ('site_description'[:256],)
 

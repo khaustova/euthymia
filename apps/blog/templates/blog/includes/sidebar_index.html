@@ -2,16 +2,14 @@
 {% load blog_tags %}
 
 <div class="sidebar-content about">
-  {% get_site_description as site_description %}
-  {% if site_description.site_image %}
-    <img src="{{ site_description.site_image.url }}">
-  {% else %}
-    <img src="{% static 'blog/img/admin_avatar.png' %}">
+  {% get_site_settings as site_settings %}
+  {% if site_settings.site_image %}
+    <img src="{{ site_settings.site_image.url }}">
   {% endif %}
-  <div class="tags-content">
-    {{ site_description.site_description|safe  }}
+  <div class="about-content">
+    {{ site_settings.site_description|safe  }}
     <div class="about__links">
-      <a href="https://github.com/khaustiv"><i class="fa-brands fa-github"></i> Github</a>
+      <a href="{% url 'blog:about' %}"><i class="fa-regular fa-address-card"></i> Об авторе</a>
       <a href="javascript:void(0)" onclick="openFeedbackModal();"><i class="fa-regular fa-envelope"></i> Обратная связь</a>
     </div>
   </div>

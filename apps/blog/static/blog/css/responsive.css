@@ -173,6 +173,10 @@
     .article__bottom {
         grid-template-columns: repeat(3, auto);
     }
+
+    .timeline_wrapper {
+        flex-direction: column;
+    }
 }
 
 .show {

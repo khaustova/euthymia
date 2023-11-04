@@ -1,6 +1,4 @@
 from django.db import models
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
@@ -45,19 +43,19 @@ class Feedback(models.Model):
         return f'{self.name}: {self.message[:50]}'
 
 
-class SiteDescription(models.Model):
+class SiteSettings(models.Model):
     site_description = RichTextUploadingField()
-    site_image = ProcessedImageField(
+    about_me = RichTextUploadingField()
+    contacts = RichTextUploadingField()
+    site_image = models.ImageField(
         upload_to='uploads/',
         verbose_name='Аватар',
-        default='/static/blog/img/admin_avatar.png',
-        processors=[ResizeToFill(50, 50)],
         blank=True
     )
 
     class Meta:
-        verbose_name = 'О сайте'
-        verbose_name_plural = 'О сайте'
+        verbose_name = 'Настройки'
+        verbose_name_plural = 'Настройки'
 
     def __str__(self):
         return 'Описание сайта'

@@ -5,8 +5,6 @@ from django.contrib.postgres.indexes import GinIndex
 from django.urls import reverse_lazy
 from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.models import MPTTModel, TreeForeignKey
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
 
 
 class UserProfile(models.Model):
@@ -15,11 +13,9 @@ class UserProfile(models.Model):
     аватара.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = ProcessedImageField(
+    avatar = models.ImageField(
         upload_to='avatars/',
         verbose_name='Аватар',
-        default='static/blog/img/admin_avatar.png',
-        processors=[ResizeToFill(50, 50)],
         blank=True
     )
 

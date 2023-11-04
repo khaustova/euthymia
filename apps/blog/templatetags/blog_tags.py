@@ -3,7 +3,7 @@ from django import template
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
 from django.conf import settings
-from manager.models import SiteDescription
+from manager.models import SiteSettings
 from ..models import Article, Category, Subcategory
 from ..forms import SubscribeForm, FeedbackForm
 from ..utils import get_word
@@ -157,8 +157,8 @@ def get_search_results_count(article: Article) -> int:
 
 
 @register.simple_tag
-def get_site_description() -> Optional[SiteDescription]:
+def get_site_settings() -> Optional[SiteSettings]:
     """
     Возвращает описание сайта.
     """
-    return SiteDescription.objects.all().first()
+    return SiteSettings.objects.all().first()

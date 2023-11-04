@@ -1,0 +1,110 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load blog_tags %}
+
+{% block title %} Об авторе {% endblock %}
+
+{% block sidebar %}
+  {% include 'blog/includes/sidebar_index.html' %}
+{% endblock %}
+
+{% block info %}
+<div class="info">
+  <div class="breadcrumbs">
+    <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная</a>
+    &nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i> 
+    &nbsp;Об авторе
+  </div>
+  <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
+    <div class="search_wrapper">
+      <div class="search__button">
+        <span class="material-symbols-outlined button-icon search__button-icon top-menu-icon">search</span>
+      </div>
+      <div class="search__input_wrapper">
+        <input type="search" name="query" class="search__input" placeholder="Поиск...">
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block content %}
+  <article class="about-block">
+    <div class="separator separator__about">
+      <span class="material-symbols-outlined middle-icon">
+        person
+      </span>&nbsp;Об авторе
+    </div>
+    {% get_site_settings as site_settings %}
+    {% if site_settings.about_me %}
+      {{ site_settings.about_me|safe }}
+    {% else %}
+      <p class="about-me">
+        Приветственный текст.
+      </p>
+    {% endif %}
+    <div class="timeline_wrapper">
+      <div class="timeline__education">
+        <div class="separator">
+          <span class="material-symbols-outlined middle-icon">
+            school
+          </span>&nbsp;Образование
+        </div>
+        <ul class="sessions">
+          <li>
+            <p class="time__description"><strong>Прикладная информатика, технология бизнес-анализа</strong> <i>(магистратура, в процессе)</i><br>
+              Тольяттинский государственный университет</p>
+            <div class="time">дек. 2022 - июль 2025</div>
+          </li>
+          <li>
+            <p class="time__description"><strong>Прикладная информатика, корпоративные информационные системы</strong> <i>(бакалавриат с отличием)</i><br>
+              Московский университет имени С.Ю. Витте</p>
+            <div class="time">сен. 2020 - янв. 2023</div>
+          </li>
+          <li>
+            <p class="time__description"><strong>Химическая технология, технология неорганических веществ</strong> <i>(бакалавриат с отличием)</i><br>
+              Череповецкий государственный университет</p>
+            <div class="time">сен. 2016 - июль. 2020</div>
+          </li>
+        </ul>
+      </div>
+      <div class="timeline__exp">
+        <div class="separator">
+          <span class="material-symbols-outlined middle-icon">
+            business_center
+          </span>&nbsp;Работа
+        </div>
+        <ul class="sessions">
+          <li>
+            <p class="time__description"><strong>Репетитор</strong><br>
+              Индивидуальные занятия с учащимися средней школы по математике, информатике, физике и химии</p>
+            <div class="time">сен. 2013 - настоящее время</div>
+          </li>
+          <li>
+            <p class="time__description"><strong>Учитель математики и информатики</strong><br>
+              Средняя общеобразовательная школа №16, 20</p>
+            <div class="time">сен. 2020 - янв. 2022</div>
+          </li>
+          <li>
+            <p class="time__description"><strong>Няня</strong><br>
+              Работа в семье с тремя детьми дошкольного возраста</p>
+            <div class="time">май 2013 - янв. 2016</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="separator">
+      <span class="material-symbols-outlined middle-icon">
+        contact_page
+      </span>&nbsp;Контакты
+    </div>
+    {% if site_settings.contacts %}
+    {{ site_settings.contacts|safe }}
+    {% else %}
+      <p class="about-me">
+        Контакты.
+      </p>
+    {% endif %}
+  </article>
+
+{% endblock %}

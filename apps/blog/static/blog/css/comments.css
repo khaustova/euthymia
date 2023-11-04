@@ -101,7 +101,7 @@
     color: var(--color-accent);
     grid-column: 2;
     grid-row: 1;
-    margin-left: 5px;
+    margin-left: 10px;
     font-weight: bold;
 }
 
@@ -112,7 +112,7 @@
 .comments__body {
     grid-column: 2/4;
     grid-row: 2;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .comments__reply {
