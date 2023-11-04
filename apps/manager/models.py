@@ -44,12 +44,24 @@ class Feedback(models.Model):
 
 
 class SiteSettings(models.Model):
-    site_description = RichTextUploadingField()
-    about_me = RichTextUploadingField()
-    contacts = RichTextUploadingField()
+    site_description = RichTextUploadingField(
+        blank=True, 
+        null=True, 
+        verbose_name='Описание сайта'
+    )
+    about_me = RichTextUploadingField(
+        blank=True, 
+        null=True, 
+        verbose_name='Об авторе (описание)'
+    )
+    contacts = RichTextUploadingField(
+        blank=True, 
+        null=True, 
+        verbose_name='Об авторе (контакты)'
+    )
     site_image = models.ImageField(
         upload_to='uploads/',
-        verbose_name='Аватар',
+        verbose_name='Фотография на главной странице',
         blank=True
     )
 

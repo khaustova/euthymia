@@ -44,8 +44,13 @@
 
 {% block content %}
   <article class="article article-block article-detail">
-    <div class="summary__title">
-      <h1 class="article__title">{{ article.title|cut_number }}</h1>
+    <div class="article__title_wrapper">
+      <h1 class="article__title">{{ article.title|cut_number }}</h1> 
+      {% if user.is_authenticated %}
+        <div class="article_edit_wrapper">
+          <a href="{{ article.get_admin_url }}" class="object_edit"><i class="fas fa-edit"></i></a>
+        </div>
+      {% endif %}
     </div>
     <div class="summary__about">
       <div class="article__date">

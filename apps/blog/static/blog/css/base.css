@@ -187,6 +187,10 @@ blockquote {
     margin-top: 5px;
 }
 
+.hljs {
+    overflow-block: auto !important;
+}
+
 /* Layots */
 
 .wrapper {
@@ -524,4 +528,17 @@ ul.sessions, li.sessions {
 
 .separator__about {
     margin-top: 0;
+}
+
+/* Change object */
+
+.article_edit_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.object_edit {
+    font-size: 1.4rem !important;
+    color: var(--color-text) !important;
+    padding-bottom: 5px;
 }

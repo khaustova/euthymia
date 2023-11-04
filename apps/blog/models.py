@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.search import SearchVectorField, SearchVector
 from django.contrib.postgres.indexes import GinIndex
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -58,8 +58,8 @@ class Subcategory(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=150, verbose_name='Заголовок')
-    summary = RichTextUploadingField()
-    body = RichTextUploadingField()
+    summary = RichTextUploadingField(verbose_name='Краткое содержание')
+    body = RichTextUploadingField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Время создания',
@@ -109,6 +109,9 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('blog:article_detail', kwargs={'slug': self.slug})
     
+    def get_admin_url(self):
+        return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=(self.id,))
+    
     def update_search_vector(self):
             qs = Article.objects.filter(pk=self.pk)
             qs.update(search_vector=SearchVector('title', 'body'))
@@ -157,6 +160,9 @@ class Comment(MPTTModel):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ['created_date']
-
+        
     def __str__(self):
         return f'{self.body[:256]}'
+        
+    def get_admin_url(self):
+        return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=(self.id,))

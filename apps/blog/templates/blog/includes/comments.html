@@ -52,6 +52,9 @@
         {% else %}
           {{ node.guest }}
         {% endif %}
+        {% if user.is_authenticated %}
+          &nbsp;<a href="{{ node.get_admin_url }}" class="object_edit"><i class="fas fa-edit"></i></a>
+        {% endif %}
       </div>
       <div class="comments__body">
           {{ node.body }}
