@@ -9,7 +9,7 @@ from .tasks import reply_feedback
 
 @admin.register(SiteSettings)
 class SiteDescriptionAdmin(admin.ModelAdmin):
-    list_display = ('site_description'[:256],)
+    list_display = ('about_me'[:256], 'contacts')
 
 
 @admin.register(EmailSubscription)

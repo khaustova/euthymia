@@ -44,11 +44,6 @@ class Feedback(models.Model):
 
 
 class SiteSettings(models.Model):
-    site_description = RichTextUploadingField(
-        blank=True, 
-        null=True, 
-        verbose_name='Описание сайта'
-    )
     about_me = RichTextUploadingField(
         blank=True, 
         null=True, 
