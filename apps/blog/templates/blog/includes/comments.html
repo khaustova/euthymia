@@ -38,7 +38,11 @@
     <div class="comments__each" id="{{ node.id }}">
       <div class="comments__avatar-block">
         {% if node.author %}
-          <img src="{{ node.author.userprofile.avatar.url }}">
+          {% if node.author.userprofile.avatar.url %}
+            <img src="{{ node.author.userprofile.avatar.url }}">
+          {% else %}
+            <img src="{% static 'blog/img/admin_avatar.png' %}">
+          {% endif %}
         {% else %}
           <img src="{% static 'blog/img/guest_avatar.png' %}">
         {% endif %}
@@ -70,7 +74,11 @@
         <div class="comments__each comments__tab" id="{{ child.id }}">
           <div class="comments__avatar-block">
             {% if child.author %}
-              <img src="{{ child.author.userprofile.avatar.url }}">
+              {% if child.author.userprofile.avatar.url %}
+                <img src="{{ child.author.userprofile.avatar.url }}">
+              {% else %}
+                <img src="{% static 'blog/img/admin_avatar.png' %}">
+              {% endif %}
             {% else %}
               <img src="{% static 'blog/img/guest_avatar.png' %}">
             {% endif %}

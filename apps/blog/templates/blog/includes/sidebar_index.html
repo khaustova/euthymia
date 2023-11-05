@@ -1,20 +1,6 @@
 {% load static %}
 {% load blog_tags %}
 
-<div class="sidebar-content about">
-  {% get_site_settings as site_settings %}
-  {% if site_settings.site_image %}
-    <img src="{{ site_settings.site_image.url }}">
-  {% endif %}
-  <div class="about-content">
-    {{ site_settings.site_description|safe  }}
-    <div class="about__links">
-      <a href="{% url 'blog:about' %}"><i class="fa-regular fa-address-card"></i> Об авторе</a>
-      <a href="javascript:void(0)" onclick="openFeedbackModal();"><i class="fa-regular fa-envelope"></i> Обратная связь</a>
-    </div>
-  </div>
-</div>
-{% subscribe_form %}
 <nav class="sidebar-content menu menu_index">
   <strong>
     <span class="sidebar__title">
@@ -31,5 +17,9 @@
         </a>
       </li>
     {% endfor %}
+    <li class="navigation__item category__item">
+      <a href="{% url 'blog:about' %}" class="sidebar__link">Об авторе</a>
+    </li>
   </ul>
 </nav>
+{% subscribe_form %}

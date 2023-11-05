@@ -30,23 +30,20 @@
 
 {% block content %}
   <article class="about-block">
-    <div class="separator separator__about">
-      <span class="material-symbols-outlined middle-icon">
-        person
-      </span>&nbsp;Об авторе
-    </div>
+    <h1>Добро пожаловать в блог с образовательными материалами по программированию!
+    </h1>
     {% get_site_settings as site_settings %}
     {% if site_settings.about_me %}
       {{ site_settings.about_me|safe }}
     {% else %}
       <p class="about-me">
-        Приветственный текст.
+        Рада всех приветствовать в своём блоге! Меня зовут Хаустова Ирина, и я репетитор по математическим и естесственным наукам уже более 10 лет.
       </p>
     {% endif %}
     <div class="timeline_wrapper">
       <div class="timeline__education">
         <div class="separator">
-          <span class="material-symbols-outlined middle-icon">
+          <span class="material-symbols-outlined middle-icon gray-element">
             school
           </span>&nbsp;Образование
         </div>
@@ -70,7 +67,7 @@
       </div>
       <div class="timeline__exp">
         <div class="separator">
-          <span class="material-symbols-outlined middle-icon">
+          <span class="material-symbols-outlined middle-icon gray-element">
             business_center
           </span>&nbsp;Работа
         </div>
@@ -89,7 +86,7 @@
       </div>
     </div>
     <div class="separator">
-      <span class="material-symbols-outlined middle-icon">
+      <span class="material-symbols-outlined middle-icon gray-element">
         contact_page
       </span>&nbsp;Контакты
     </div>
@@ -97,7 +94,8 @@
     {{ site_settings.contacts|safe }}
     {% else %}
       <p class="about-me">
-        Контакты.
+        Если вы хотите связаться со мной, то можете использовать следующую <a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">форму обратной связи</a> или 
+        написать мне на почту irinakhaus@gmail.com.
       </p>
     {% endif %}
   </article>
