@@ -11,9 +11,9 @@
   {% url 'blog:index' as index %}
   <div class="info">
     <div class="sort-links">
-      <a href="{{ index }}" class="{% if request.path == index %} active-sort {% endif %}">
+      <a href="{% url 'blog:index' %}" class="{% if request.path == index %} active-sort {% endif %}">
       <span class="material-symbols-outlined sort-icon middle-icon">calendar_month</span> По дате</a>
-      <a href="{{ index }}hot" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
+      <a href="{% url 'blog:hot_index' %}" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
       <span class="material-symbols-outlined sort-icon middle-icon">local_fire_department</span> По популярности</a>
     </div>
     <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
