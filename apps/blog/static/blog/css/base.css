@@ -16,6 +16,45 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: 'Cherry Cream Soda';
+    src: url('/static/blog/fonts/CherryCreamSoda-Regular.eot');
+    src: url('/static/blog/fonts/CherryCreamSoda-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/static/blog/fonts/CherryCreamSoda-Regular.woff2') format('woff2'),
+        url('/static/blog/fonts/CherryCreamSoda-Regular.woff') format('woff'),
+        url('/static/blog/fonts/CherryCreamSoda-Regular.ttf') format('truetype'),
+        url('/static/blog/fonts/CherryCreamSoda-Regular.svg#CherryCreamSoda-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'a_Intro';
+    src: url('/static/blog/fonts/Intro.eot');
+    src: url('/static/blog/fonts/Intro.eot?#iefix') format('embedded-opentype'),
+        url('/static/blog/fonts/Intro.woff2') format('woff2'),
+        url('/static/blog/fonts/Intro.woff') format('woff'),
+        url('/static/blog/fonts/Intro.ttf') format('truetype'),
+        url('/static/blog/fonts/Intro.svg#Intro') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'a_Arsenal';
+    src: url('/static/blog/fonts/Arsenal-Regular.eot');
+    src: url('/static/blog/fonts/Arsenal-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/static/blog/fonts/Arsenal-Regular.woff2') format('woff2'),
+        url('/static/blog/fonts/Arsenal-Regular.woff') format('woff'),
+        url('/static/blog/fonts/Arsenal-Regular.ttf') format('truetype'),
+        url('/static/blog/fonts/Arsenal-Regular.svg#Arsenal-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Basic */
 
 * {
@@ -179,14 +218,6 @@ blockquote {
     padding: 0.5em 10px;
 }
 
-.logo {
-    text-align: center;
-}
-
-.logo__img {
-    margin-top: 5px;
-}
-
 .hljs {
     overflow-block: auto !important;
 }
@@ -241,6 +272,59 @@ footer {
     margin-bottom: 5px;
     text-align: center;
     align-self: end;
+}
+
+/* Logo */
+
+.logo {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.logo_wrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    right: 30px;
+}
+
+.logo__main {
+    font-family: 'Cherry Cream Soda';
+    font-size: 2.7rem;
+    transform: scale(-1, 1);
+    margin-top: 4px;
+}
+
+.logo__logo {
+    font-family: 'a_Intro';
+    font-size: 2rem;
+    margin-top: 10px;
+}
+
+.logo__about {
+    font-family: 'a_Arsenal';
+    position: relative;
+    bottom: 16px;
+    left: 22px;
+    font-size: 1.3rem;
+}
+
+.logo__about,
+.logo__about:visited,
+.logo__about:hover,
+.logo__about:active {
+    color: var(--color-navigation) !important;
+}
+
+.logo__main,
+.logo__main:visited,
+.logo__main:hover,
+.logo__main:active,
+.logo__logo,
+.logo__logo:visited,
+.logo__logo:hover,
+.logo__logo:active {
+    color: var(--color-accent) !important;
 }
 
 /* Pagination */
