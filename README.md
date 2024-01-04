@@ -1,4 +1,4 @@
-### 1. О приложении ###
+### 1. О блоге ###
 
 :small_blue_diamond: Собственный настраиваемый шаблон панели администратора  
 :small_blue_diamond: Создание и редактирование статей с помощью визуального редактора CKeditor     
@@ -10,13 +10,13 @@
 :small_blue_diamond: Форма обратной связи  
 :small_blue_diamond: Ответ на сообщения обратной связи из панели администратора 
 
-
 ### 2. Основные технологии ###
 :small_orange_diamond: Python 3.11.4  
 :small_orange_diamond: Django 4.2.2  
 :small_orange_diamond: PostgreSQL 15.3  
 :small_orange_diamond: Сelery 5.3.1  
 :small_orange_diamond: Redis 7.0.5  
+
 ### 3. Запуск ###
 1. Клонировать репозиторий:
 ```
