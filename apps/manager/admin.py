@@ -1,8 +1,9 @@
 import re
 from django.http import HttpRequest
-from django.contrib import admin
 from django.db import transaction
+from django.contrib import admin
 from django.contrib.auth.hashers import make_password
+from django.shortcuts import reverse, redirect
 from .models import EmailSubscription, Feedback, SiteSettings
 from .tasks import reply_feedback
 
@@ -10,6 +11,13 @@ from .tasks import reply_feedback
 @admin.register(SiteSettings)
 class SiteDescriptionAdmin(admin.ModelAdmin):
     list_display = ('about_me'[:256], 'contacts')
+    
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        first_obj = self.model.objects.first()
+        if first_obj is not None:
+            return redirect(reverse('admin:manager_sitesettings_change', args=(first_obj.pk,)))
+        return redirect(reverse('admin:manager_sitesettings_add'))
 
 
 @admin.register(EmailSubscription)
@@ -34,7 +42,7 @@ class FeedbackAdmin(admin.ModelAdmin):
     list_filter = ('reply_status',)
     fields = ('name', 'email', 'message'[:256], 'reply')
 
-    change_form_template = 'admingo/feedback_reply_form.html'
+    change_form_template = 'dashboard/feedback_reply_form.html'
 
     def change_view(self, request: HttpRequest, object_id: int, form_url='', extra_context=None):
         extra_context = extra_context or {}
