@@ -9,7 +9,7 @@ path.append(str(BASE_DIR / 'apps'))
 env = Env(
     DEBUG=(bool, False)
 )
-Env.read_env(BASE_DIR / '.env.example')
+Env.read_env(BASE_DIR / '.env')
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -26,7 +26,7 @@ INTERNAL_IPS = env('INTERNAL_IPS').split(' ')
 # Application definition
 
 INSTALLED_APPS = [
-    'admingo',
+    'dashboard',
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -332,9 +332,9 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 YANDEX_METRIKA_TOKEN = env('YANDEX_METRIKA_TOKEN')
 YANDEX_METRIKA_COUNTER = env('YANDEX_METRIKA_COUNTER')
 
-# Admingo
+# Dashboard
 
-ADMINGO_CUSTOMIZATION = {
+DASHBOARD_CUSTOMIZATION = {
     'search_model': 'blog.article',
     'sidebar_icons': {
         'auth.user': 'person',
@@ -349,7 +349,7 @@ ADMINGO_CUSTOMIZATION = {
         'django_celery_results.taskresult': 'task',
     },
     'hidden_apps': [
-        'admingo',
+        'dashboard',
     ],
     'hidden_models': [
         'auth.group',
