@@ -55,7 +55,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'title',
     )
 
-    change_form_template = 'admingo/change_form_article.html'
+    change_form_template = 'dashboard/change_form_article.html'
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
