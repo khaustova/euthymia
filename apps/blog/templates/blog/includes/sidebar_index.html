@@ -18,8 +18,12 @@
       </li>
     {% endfor %}
     <li class="navigation__item category__item">
-      <a href="{% url 'blog:about' %}" class="sidebar__link">Об авторе</a>
+      <a href="{% url 'blog:about' %}" class="sidebar__link">О сайте</a>
     </li>
   </ul>
 </nav>
-{% subscribe_form %}
+{% get_site_settings as site_settings %}
+{% if site_settings.is_subscribe %}
+  {% subscribe_form %}
+{% endif %}
+

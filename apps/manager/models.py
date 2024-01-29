@@ -59,10 +59,13 @@ class SiteSettings(models.Model):
         verbose_name='Фотография на главной странице',
         blank=True
     )
+    is_subscribe = models.BooleanField(
+        verbose_name = 'Возможность подписки'
+    )
 
     class Meta:
         verbose_name = 'Настройки'
         verbose_name_plural = 'Настройки'
 
     def __str__(self):
-        return 'Описание сайта'
+        return 'Настройки сайта'

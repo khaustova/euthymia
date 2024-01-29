@@ -10,8 +10,7 @@ from .tasks import reply_feedback
 
 @admin.register(SiteSettings)
 class SiteDescriptionAdmin(admin.ModelAdmin):
-    list_display = ('about_me'[:256], 'contacts')
-    
+
     def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}
         first_obj = self.model.objects.first()
