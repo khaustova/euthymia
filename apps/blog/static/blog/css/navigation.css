@@ -112,9 +112,10 @@
     display: none;
 }
 
-.content__list {
+ul.content__list {
     list-style-type: none;
     margin-bottom: 4px;
+    margin-left: 0;
 }
 
 .plusminus {

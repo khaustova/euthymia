@@ -6,7 +6,8 @@
     --color-sidebar-block: #1F2833;
     --color-sidebar: #04DED3;
     --color-hover: rgba(243, 246, 253, 0.87);
-    --color-navigation: #B1DCDE ;
+    --color-navigation: #B1DCDE;
+    --color-table-background: #a8e3df;
   }
 
 @font-face {
@@ -73,10 +74,14 @@ html {
 body {
     background-color: var(--color-secondary);
     color: var(--color-text);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-family: 'Rubik', sans-serif;
     line-height: 1.6;
+}
+
+p {
+    margin: 0.7rem 0;
 }
 
 a, a:link, a:visited  {
@@ -91,8 +96,12 @@ a:hover  {
 
 h1, h2 {
     color: var(--color-accent);
-    font-size: 1.8rem;
     text-align: center;
+}
+
+h2 {
+    margin: 0.5rem 0;
+    font-size: 1.9rem;
 }
 
 .form-row {
@@ -173,49 +182,44 @@ img {
 .responsive-block {
     overflow-x: auto;
     padding: 5px;
+    margin: 1em 0;
 }
 
 table {
 	width: 100%;
-	margin-bottom: 20px;
-	border: 5px solid var(--color-primary);
-	border-top: 5px solid var(--color-primary);
-	border-bottom: 3px solid var(--color-primary);
+	border: 8px solid var(--color-table-background);
+	border-top: 5px solid var(--color-table-background);
 	border-collapse: collapse; 
-	outline: 3px solid var(--color-accent);
-	font-size: 15px;
-	background: var(--color-primary) !important;
-    overflow-x: auto;
+
 }
 
 table th {
 	font-weight: bold;
-	padding: 7px;
     color: var(--color-primary);
-	background: var(--color-accent);
+	padding: 5px;
+	background: var(--color-table-background);
 	border: none;
-	text-align: left;
-	font-size: 15px;
-	border-top: 3px solid var(--color-primary);
-	border-bottom: 3px solid var(--color-accent);
+	border-bottom: 5px solid var(--color-table-background);
+
 }
 
 table td {
-	padding: 7px;
-	border: none;
-	border-top: 3px solid var(--color-primary);
-	border-bottom: 3px solid var(--color-primary);
-	font-size: 15px;
+	padding: 5px 10px;
+	border: 2px solid  var(--color-table-background);
 }
 
-table tbody tr:nth-child(even){
-	background: var(--color-primary) !important;
+table caption {
+    color: #b1b1b1;
 }
 
 blockquote {
     border-left: 7px solid var(--color-accent);
     margin: 5px 10px 5px;
-    padding: 0.5em 10px;
+    padding: 0.5rem 10px;
+}
+
+ul {
+    margin-left: 4rem;
 }
 
 .hljs {
