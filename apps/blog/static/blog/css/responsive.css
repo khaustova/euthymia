@@ -178,6 +178,10 @@
     .timeline_wrapper {
         flex-direction: column;
     }
+
+    .back-to-top {
+        display: none;
+    }
 }
 
 .show {

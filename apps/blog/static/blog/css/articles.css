@@ -79,7 +79,6 @@
     border: none;
 	border-top: 1px solid var(--color-secondary);
     margin: 7px 0;
-    margin-bottom: 1em;
 }
 
 .summary__date, .summary__info {
