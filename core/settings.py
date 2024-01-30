@@ -151,6 +151,7 @@ CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moonocolor',
         'width': '100%',
+        'contentsCss': '/static/dashboard/css/editor.css',
         'toolbar': [
             {
                 'name': 'document',
@@ -299,7 +300,36 @@ CKEDITOR_CONFIGS = {
                 'attributes': {
                     'class': 'separator'
                 }
-            }
+            },
+            {
+                'name': 'Дополнительная информация', 
+                'element': 'p', 
+                'attributes': {
+                    'class': 'extra-info'
+                }
+            },
+            {
+                'name': 'Внимание!', 
+                'element': 'div', 
+                'attributes': {
+                    'class': 'warning-info'
+                }
+            },
+            {
+                'name': 'Описание', 
+                'element': 'span', 
+                'attributes': {
+                    'class': 'description'
+                }
+            },    
+            {
+                'name': 'Figure', 
+                'element': 'figure', 
+            },  
+            {
+                'name': 'Figcaption', 
+                'element': 'figcaption', 
+            },         
         ],
     }
 }

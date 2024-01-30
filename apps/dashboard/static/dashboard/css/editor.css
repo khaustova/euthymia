@@ -1,0 +1,29 @@
+.extra-info {
+    background: url('/static/blog/img/mark_bg.png') repeat;
+    color: var(--color-primary);
+    padding: 10px;
+    margin: 10px;
+    font-weight: 600;
+    border: 5px double var(--color-primary);
+}
+
+.warning-info {
+    padding: 3px;
+    margin: 3px;
+    color: #881414;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+/* Separator */
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--color-accent);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 10px 0 5px;
+}
