@@ -22,7 +22,8 @@
 ```
 git clone https://github.com/khaustova/euthymia.git
 ```
-2. Запустить проект с помощью докера:
+2. Переименовать файл env.example в env и при необходимости внести в него изменения.
+3. Запустить проект с помощью докера:
 ```
 docker-compose up --build
 ```
