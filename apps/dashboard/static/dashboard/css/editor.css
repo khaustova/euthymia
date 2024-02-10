@@ -27,3 +27,12 @@
     font-weight: 600;
     margin: 10px 0 5px;
 }
+
+/* Code in text */
+
+.code {
+    padding: 0 2px;
+    background-color: #8fbbb8;
+    color: var(--color-primary);
+    border-radius: 2px;
+}

@@ -321,7 +321,14 @@ CKEDITOR_CONFIGS = {
                 'attributes': {
                     'class': 'description'
                 }
-            },    
+            },
+            {
+                'name': 'Код в тексте',
+                'element': 'span',
+                'attributes': {
+                    'class': 'code'
+                }
+            }, 
             {
                 'name': 'Figure', 
                 'element': 'figure', 

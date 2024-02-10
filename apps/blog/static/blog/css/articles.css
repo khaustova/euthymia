@@ -162,3 +162,10 @@
     padding: 7px 10px; 
     margin: 10px 0;
 }
+
+.code {
+    padding: 0 2px;
+    background-color: #8fbbb8;
+    color: var(--color-primary);
+    border-radius: 2px;
+}
