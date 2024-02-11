@@ -9,7 +9,7 @@
     --color-sidebar: #04DED3;
     --color-hover: rgba(243, 246, 253, 0.87);
     --color-navigation: #B1DCDE;
-    --color-table-background: #c8edeb;
+    --color-table-background: #c1dcd9;
 }
 
 @font-face {
@@ -181,7 +181,7 @@ figure {
     display: flex;
     flex-flow: column;
     padding: 5px;
-    margin: auto;
+    margin: 1rem auto;
     font-size: 0;
 }
 
@@ -195,22 +195,23 @@ figcaption {
     background-color: var(--color-primary);
     color: var(--color-text);
     font: smaller sans-serif;
-    padding: 3px;
+    padding: 5px;
+    margin-top: 5px;
     text-align: center;
     font-size: 1.6rem;
 }
 
 table {
 	width: 100%;
-	border: 8px solid var(--color-table-background);
+	border: 4px solid var(--color-table-background);
 	border-top: 5px solid var(--color-table-background);
 	border-collapse: collapse; 
-
+    background-color: #1e1f20;
 }
 
 table th {
 	font-weight: bold;
-    color: var(--color-primary);
+    color: black;
 	padding: 5px;
 	background: var(--color-table-background);
 	border: none;
@@ -220,7 +221,7 @@ table th {
 
 table td {
 	padding: 5px 10px;
-	border: 2px solid  var(--color-table-background);
+
 }
 
 table caption {
@@ -239,6 +240,16 @@ ul {
 
 .hljs {
     overflow-block: auto !important;
+    margin: 0 !important;
+}
+
+code, pre {
+    overflow-x: auto;
+    max-width: 825px;
+}
+
+pre {
+    margin-bottom: 1rem;
 }
 
 /* Layots */
@@ -629,15 +640,15 @@ ul.sessions, li.sessions {
 .responsive-block {
     overflow-x: auto;
     padding: 5px;
-    margin: 1em 0;
+    margin: 0.4em 0;
 }
 
 .extra-info {
-    background: url('/static/blog/img/mark_bg.png') repeat;
-    color: var(--color-primary);
+    /* background: url('/static/blog/img/mark_bg.png') repeat; */
+    background-color: #d3efeb;
+    color: black;
     padding: 10px;
     margin: 10px;
-    font-weight: 600;
     border: 5px double var(--color-primary);
 }
 

@@ -1,9 +1,15 @@
+body {
+    font-size: 1.2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: 'Rubik', sans-serif;
+    line-height: 1.6;
+}
+
 .extra-info {
     background: url('/static/blog/img/mark_bg.png') repeat;
     color: var(--color-primary);
     padding: 10px;
     margin: 10px;
-    font-weight: 600;
     border: 5px double var(--color-primary);
 }
 

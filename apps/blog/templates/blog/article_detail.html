@@ -2,7 +2,7 @@
 {% load static %}
 {% load blog_tags %}
 
-{% block title %} {{ article.title }} {% endblock %}
+{% block title %} {{ article.title|cut_number }} {% endblock %}
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">

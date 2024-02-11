@@ -165,9 +165,9 @@
 
 .code {
     padding: 0 2px;
-    background-color: #8fbbb8;
+    background-color: #B1DCDE;
     color: var(--color-primary);
-    border-radius: 2px;
+    border-radius: 1px;
 }
 
 /* Spoiler */

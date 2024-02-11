@@ -228,6 +228,7 @@ CKEDITOR_CONFIGS = {
                     'HorizontalRule',
                     'Smiley',
                     'SpecialChar',
+                    'CodeSnippet',
                     'Spoiler',
                 ]
             },
@@ -254,14 +255,6 @@ CKEDITOR_CONFIGS = {
                     'Maximize', 'ShowBlocks',
                 ]
             },
-            '/',
-            {
-                'name': 'yourcustomtools',
-                'items': [
-                    'Maximize',
-                    'CodeSnippet',
-                ]
-            },
         ],
         'tabSpaces': 4,
         'codeSnippet_theme': 'tomorrow-night-blue',
@@ -276,19 +269,9 @@ CKEDITOR_CONFIGS = {
         ),
         'codeSnippet_languages': {
             'python': 'Python',
+            'C': 'C',
         },
         'stylesSet': [
-            {
-                'name': 'Строчный код', 
-                'element': 'code'
-            },
-            {
-                'name': 'Монолитный элемент', 
-                'element': 'span', 
-                'attributes': {
-                    'style': 'white-space: nowrap;'
-                }
-            },
             {
                 'name': 'Адаптивный блок', 
                 'element': 'div', 
@@ -315,13 +298,6 @@ CKEDITOR_CONFIGS = {
                 'element': 'div', 
                 'attributes': {
                     'class': 'warning-info'
-                }
-            },
-            {
-                'name': 'Описание', 
-                'element': 'span', 
-                'attributes': {
-                    'class': 'description'
                 }
             },
             {
