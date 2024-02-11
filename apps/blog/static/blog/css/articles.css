@@ -169,3 +169,41 @@
     color: var(--color-primary);
     border-radius: 2px;
 }
+
+/* Spoiler */
+div.spoiler {
+	padding: 5px;
+	line-height: 1.6;
+}
+
+div.spoiler div.spoiler-title {
+	color: var(--color-text);
+	font-weight: bold;
+	padding: 4px 7px;
+	background: #182123;
+    border-radius: 3px;
+	cursor: pointer;
+}
+
+div.spoiler div.spoiler-title div.spoiler-toggle {
+	display: inline-block;
+	height: 11px;
+	line-height: 14px;
+	margin-left: 4px;
+	margin-right: 6px;
+	cursor: pointer;
+}
+
+div.spoiler div.spoiler-title div.hide-icon:after {
+	content: '\2796'
+}
+
+div.spoiler div.spoiler-title div.show-icon:after {
+    content: '\2795';
+    
+}
+
+div.spoiler div.spoiler-content {
+	background-color: var(--color-primary);
+	padding: 4px 10px;
+}

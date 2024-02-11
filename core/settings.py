@@ -228,6 +228,7 @@ CKEDITOR_CONFIGS = {
                     'HorizontalRule',
                     'Smiley',
                     'SpecialChar',
+                    'Spoiler',
                 ]
             },
             '/',
@@ -269,7 +270,8 @@ CKEDITOR_CONFIGS = {
                 'codesnippet',
                 'widget',
                 'dialog',
-                'stylescombo'
+                'stylescombo',
+                'spoiler'
             ]
         ),
         'codeSnippet_languages': {
@@ -336,7 +338,7 @@ CKEDITOR_CONFIGS = {
             {
                 'name': 'Figcaption', 
                 'element': 'figcaption', 
-            },         
+            },   
         ],
     }
 }
