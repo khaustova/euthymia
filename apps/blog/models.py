@@ -83,6 +83,7 @@ class Article(models.Model):
         blank=True,
         verbose_name='Подкатегория',
     )
+    is_draft = models.BooleanField(default=True, verbose_name='Черновик')
     views = models.PositiveIntegerField(
         verbose_name='Количество просмотров',
         default=0

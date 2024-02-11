@@ -23,7 +23,10 @@ class ArticleView(ListView):
     context_object_name = 'articles'
     paginate_by = 10
     paginate_orphans = 5
-
+    
+    def get_queryset(self):
+        return Article.objects.filter(is_draft=False)
+    
     def get_ordering(self) -> tuple:
         sort = self.kwargs.get('sort')
         if sort == 'views':
@@ -111,7 +114,7 @@ class SearchView(ListView):
             Article.objects.annotate(
                 search=search_vector, rank=SearchRank(search_vector, search_query)
             )
-            .filter(search=search_query)
+            .filter(search=search_query, is_draft=False)
             .order_by("-rank")
         )
 

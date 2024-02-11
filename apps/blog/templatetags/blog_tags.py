@@ -24,7 +24,7 @@ def get_first_category_article(category: Category) -> str:
     """
     Возвращает первую статью в категории.
     """
-    article = Article.objects.filter(category__name=category.name).first()
+    article = Article.objects.filter(category__name=category.name, is_draft=False).first()
     
     return article.get_absolute_url() if article else ''
 
@@ -34,7 +34,7 @@ def get_next_and_prev_article(article: Article) -> str:
     """
     Возвращает следующую и предыдущую статьи.
     """
-    subcategory_articles = Article.objects.filter(category=article.category)
+    subcategory_articles = Article.objects.filter(category=article.category, is_draft=False)
     articles = [article['title'] for article in list(subcategory_articles.values('title'))]
     
     next_article, prev_article = None, None
@@ -63,11 +63,15 @@ def get_content_links(article: Article) -> dict:
         subcategories = Subcategory.objects.filter(category=article.category)
         for subcategory in subcategories:
             content_links[subcategory] = Article.objects.filter(
-                subcategory__name=subcategory
+                subcategory__name=subcategory,
+                is_draft=False,
             )
         return content_links
     else:
-        content_links = Article.objects.filter(category__name=article.category)
+        content_links = Article.objects.filter(
+            category__name=article.category, 
+            is_draft=False
+        )
 
     return content_links
     

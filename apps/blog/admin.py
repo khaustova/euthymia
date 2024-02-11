@@ -31,8 +31,9 @@ class ArticleAdmin(admin.ModelAdmin):
         'summary', 
         'body', 
         'category', 
-        'subcategory', 
-        'keywords'
+        'subcategory',
+        'is_draft',
+        'keywords',
     )
     list_display = (
         'title', 
