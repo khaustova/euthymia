@@ -25,14 +25,11 @@ class ArticleView(ListView):
     paginate_orphans = 5
     
     def get_queryset(self):
-        return Article.objects.filter(is_draft=False)
-    
-    def get_ordering(self) -> tuple:
         sort = self.kwargs.get('sort')
         if sort == 'views':
-            return ('-views', '-created_date')
-        return ('-created_date',)
-
+            return Article.objects.filter(is_draft=False).order_by('-views', 'created_date')
+        return Article.objects.filter(is_draft=False).order_by('-created_date')
+    
 
 class ArticleDetailView(DetailView):
     model = Article
