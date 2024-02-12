@@ -29,7 +29,8 @@ class UserProfile(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=256, verbose_name='Категория')
-
+    slug = models.SlugField(unique=True, verbose_name='url')
+    
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
@@ -37,7 +38,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 
 class Subcategory(models.Model):
     name = models.CharField(max_length=256, verbose_name='Подкатегория')
@@ -108,7 +109,7 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse_lazy('blog:article_detail', kwargs={'slug': self.slug})
+        return reverse_lazy('blog:article_detail', kwargs={'slug': self.slug, 'category': self.category.slug})
     
     def get_admin_url(self):
         return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=(self.id,))
