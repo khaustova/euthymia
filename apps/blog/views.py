@@ -23,13 +23,13 @@ class ArticleView(ListView):
     context_object_name = 'articles'
     paginate_by = 10
     paginate_orphans = 5
-    
+
     def get_queryset(self):
         sort = self.kwargs.get('sort')
         if sort == 'views':
             return Article.objects.filter(is_draft=False).order_by('-views', 'created_date')
         return Article.objects.filter(is_draft=False).order_by('-created_date')
-    
+
 
 class ArticleDetailView(DetailView):
     model = Article
@@ -58,7 +58,7 @@ class ArticleDetailView(DetailView):
                     else:
                         new_comment.guest = 'Безымянный'
                     new_comment.email = comment_form.cleaned_data.get('email')
-                    
+
                 client_ip, is_routable = get_client_ip(request)
                 if client_ip is None:
                     new_comment.comment_ip = 'Unable'
@@ -67,7 +67,7 @@ class ArticleDetailView(DetailView):
                         new_comment.comment_ip = client_ip
                     else:
                         new_comment.comment_ip = 'Private'
-                    
+
                 if settings.IS_USE_AKISMET:
                     akismet_api = Akismet(
                         key=settings.AKISMET_API_KEY, 
@@ -80,11 +80,11 @@ class ArticleDetailView(DetailView):
                         comment_author=new_comment.author,
                         comment_author_email=new_comment.email,
                         comment_content=comment_form.cleaned_data.get('body'),
-                    )   
-                    
+                    )
+
                     if is_spam:
                         return HttpResponseForbidden('Упс! Недостаточно прав!')                 
-                        
+
                 new_comment.article = self.get_object()
                 new_comment.save()
             return redirect(self.request.path_info)
@@ -135,7 +135,7 @@ def feedback_form(request: HttpRequest) -> HttpResponse:
                     feedback_ip = client_ip
                 else:
                     feedback_ip = 'Private'
-            
+
             add_feedback.delay(name, email, feedback_ip, message)
     return render(request, 'blog/feedback_success.html')
 

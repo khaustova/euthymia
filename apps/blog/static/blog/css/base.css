@@ -177,11 +177,11 @@ button[type="submit"]:hover {
 }
 
 figure {
-    border: thin #c8edeb solid;
+    /* border: thin #c8edeb solid; */
     display: flex;
     flex-flow: column;
     padding: 5px;
-    margin: 1rem auto;
+    margin: 1rem auto 0.1rem auto;
     font-size: 0;
 }
 
@@ -189,13 +189,14 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
+    margin: 0 auto;
 }
   
 figcaption {
     background-color: var(--color-primary);
-    color: var(--color-text);
+    color: #b1b1b1;
     font: smaller sans-serif;
-    padding: 5px;
+    padding-top: 10px;
     margin-top: 5px;
     text-align: center;
     font-size: 1.6rem;
