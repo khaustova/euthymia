@@ -18,11 +18,11 @@ handler404 = page_not_found_handler
 handler500 = server_error_handler
 
 urlpatterns = [
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('blog.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 
