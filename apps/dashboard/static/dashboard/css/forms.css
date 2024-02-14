@@ -681,7 +681,7 @@ textarea:focus {
 textarea.cke_source {
     font-size: 1.8rem !important;
     font-family: 'Rubik', sans-serif !important;
-    line-height: 1.7 !important;
+    line-height: 1.2 !important;
     background-color: #292929 !important;
     color: #d5d5d5 !important;
 }
