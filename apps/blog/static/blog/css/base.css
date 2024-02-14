@@ -249,13 +249,10 @@ ul, ol {
     margin: 0 !important;
 }
 
-code, pre {
-    overflow-x: auto;
-    max-width: 825px;
-}
-
 pre {
     margin-bottom: 1rem;
+    white-space: pre-wrap;
+    overflow-x: auto;
 }
 
 /* Layots */

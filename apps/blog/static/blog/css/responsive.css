@@ -17,10 +17,6 @@
     .bunny-message {
         flex-direction: column;
     }
-
-    code, pre {
-        max-width: 540px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -142,10 +138,6 @@
     
     #close-search {
         font-size: 32px !important;
-    }
-
-    code, pre {
-        max-width: 100%;
     }
 
     .summary__text {
