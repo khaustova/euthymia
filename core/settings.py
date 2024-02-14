@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 path.append(str(BASE_DIR / 'apps'))
 
 env = Env(
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
 )
 Env.read_env(BASE_DIR / '.env')
 
@@ -82,13 +82,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 
 DATABASES = {
-    "default": {
-        "ENGINE": env("POSTGRES_ENGINE"),
-        "NAME": env("POSTGRES_DB"),
-        "USER": env("POSTGRES_USER"),
-        "PASSWORD": env("POSTGRES_PASSWORD"),
-        "HOST": env("POSTGRES_HOST"),
-        "PORT": env("POSTGRES_PORT"),
+    'default': {
+        'ENGINE': env('POSTGRES_ENGINE'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
     }
 }
 
@@ -141,6 +141,35 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Logs
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)-12s %(message)s'
+        },
+    },
+    'handlers': {
+        'logit': {
+            'level': env('LOG_LEVEL'),
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': str(BASE_DIR / 'django.log'),
+            'maxBytes': 15728640,  # 1024 * 1024 * 15B = 15MB
+            'backupCount': 10,
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django.server': {
+            'handlers': ['logit'],
+            'level': env('LOG_LEVEL'),
+            'propagate': True,
+        },
+    },
+}
 
 # CKEDITOR config
 
