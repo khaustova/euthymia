@@ -50,7 +50,7 @@ class ArticleAdmin(admin.ModelAdmin):
         SubcategoryFilter,
     ]
     prepopulated_fields = {
-        "slug": ("title",)
+       'slug': ('title',)
     }
     list_per_page = 50
     date_hierarchy = 'created_date'
@@ -70,6 +70,9 @@ class ArticleAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+    prepopulated_fields = {
+        'slug': ('name',)
+    }
     
     
 @admin.register(Subcategory)
