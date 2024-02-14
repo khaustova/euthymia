@@ -344,7 +344,7 @@ CKEDITOR_CONFIGS = {
             {
                 'name': 'Figcaption', 
                 'element': 'figcaption', 
-            },   
+            },
         ],
     }
 }

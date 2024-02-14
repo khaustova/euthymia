@@ -191,6 +191,11 @@ img {
     display: block;
     margin: 0 auto;
 }
+
+img.white-scheme {
+    border-radius: 15px;
+    border: 10px double white;
+}
   
 figcaption {
     background-color: var(--color-primary);
@@ -235,7 +240,7 @@ blockquote {
     padding: 0.5rem 10px;
 }
 
-ul {
+ul, ol {
     margin-left: 4rem;
 }
 
