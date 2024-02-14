@@ -299,6 +299,7 @@ CKEDITOR_CONFIGS = {
         'codeSnippet_languages': {
             'python': 'Python',
             'C': 'C',
+            'bash': 'Bash'
         },
         'stylesSet': [
             {
