@@ -57,7 +57,12 @@ class Subcategory(models.Model):
         return self.name
 
 
-class Article(models.Model):
+class Status(models.TextChoices):
+        DRAFT = 'draft', 'Черновик'
+        PUBLISHED = 'published', 'Опубликовано' 
+
+
+class Article(models.Model):  
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     summary = RichTextUploadingField(verbose_name='Краткое содержание')
     body = RichTextUploadingField(verbose_name='Текст статьи')
@@ -84,7 +89,12 @@ class Article(models.Model):
         blank=True,
         verbose_name='Подкатегория',
     )
-    is_draft = models.BooleanField(default=True, verbose_name='Черновик')
+    status = models.CharField(
+        max_length=64,
+        choices=Status.choices,
+        default=Status.DRAFT,
+        verbose_name='Статус'
+    )
     views = models.PositiveIntegerField(
         verbose_name='Количество просмотров',
         default=0

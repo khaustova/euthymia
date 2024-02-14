@@ -13,7 +13,7 @@ from django.views.generic import ListView, DetailView
 from manager.tasks import add_email, add_feedback
 from manager.models import EmailSubscription
 
-from .models import Article, Comment, Category, Subcategory
+from .models import Article, Comment, Category, Subcategory, Status
 from .forms import CommentForm, SubscribeForm, FeedbackForm
 
 
@@ -27,8 +27,8 @@ class ArticleView(ListView):
     def get_queryset(self):
         sort = self.kwargs.get('sort')
         if sort == 'views':
-            return Article.objects.filter(is_draft=False).order_by('-views', 'created_date')
-        return Article.objects.filter(is_draft=False).order_by('-created_date')
+            return Article.objects.filter(status=Status.PUBLISHED).order_by('-views', 'created_date')
+        return Article.objects.filter(status=Status.PUBLISHED).order_by('-created_date')
 
 
 class ArticleDetailView(DetailView):
@@ -111,7 +111,7 @@ class SearchView(ListView):
             Article.objects.annotate(
                 search=search_vector, rank=SearchRank(search_vector, search_query)
             )
-            .filter(search=search_query, is_draft=False)
+            .filter(search=search_query, status=Status.PUBLISHED)
             .order_by("-rank")
         )
 

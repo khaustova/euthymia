@@ -33,7 +33,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'category', 
         'subcategory',
         'keywords',
-        'is_draft',
+        'status',
     )
     list_display = (
         'title', 
@@ -41,11 +41,11 @@ class ArticleAdmin(admin.ModelAdmin):
         'subcategory', 
         'views', 
         'updated_date',
-        'is_draft',
+        'status',
     )
     list_display_links = ('title',)
     list_filter = [
-        'is_draft',
+        'status',
         CategoryFilter,
         SubcategoryFilter,
     ]
