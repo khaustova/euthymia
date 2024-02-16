@@ -83,7 +83,7 @@ class ArticleDetailView(DetailView):
                     )
 
                     if is_spam:
-                        return HttpResponseForbidden('Упс! Недостаточно прав!')                 
+                        return HttpResponseForbidden('Упс! Доступ запрещён!')                 
 
                 new_comment.article = self.get_object()
                 new_comment.save()

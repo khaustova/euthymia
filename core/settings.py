@@ -439,6 +439,6 @@ IS_CUT_NUMBER = True
 
 # Защита от спама с помощью Akismet 
 
-IS_USE_AKISMET = False
+IS_USE_AKISMET = env('IS_USE_AKISMET')
 AKISMET_API_KEY = env('AKISMET_API_KEY')
 AKISMET_BLOG_URL = env('AKISMET_BLOG_URL')
