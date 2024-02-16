@@ -64,7 +64,7 @@ class Status(models.TextChoices):
 
 class Article(models.Model):  
     title = models.CharField(max_length=150, verbose_name='Заголовок')
-    summary = RichTextUploadingField(verbose_name='Краткое содержание')
+    summary = models.TextField(verbose_name='Краткое содержание')
     body = RichTextUploadingField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(
         auto_now_add=True,
