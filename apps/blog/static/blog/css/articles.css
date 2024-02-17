@@ -180,7 +180,16 @@ div.spoiler div.spoiler-title {
 	color: var(--color-text);
 	font-weight: bold;
 	padding: 4px 7px;
-	background: #182123;
+	background: #333;
+    border-radius: 3px;
+	cursor: pointer;
+}
+
+div.spoiler div.spoiler-title {
+	color: var(--color-text);
+	font-weight: bold;
+	padding: 4px 7px;
+	background: #333;
     border-radius: 3px;
 	cursor: pointer;
 }
@@ -206,4 +215,6 @@ div.spoiler div.spoiler-title div.show-icon:after {
 div.spoiler div.spoiler-content {
 	background-color: var(--color-primary);
 	padding: 4px 10px;
+    border: 1px solid #333;
+    border-radius: 0 0 3px 3px;
 }
