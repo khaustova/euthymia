@@ -11,8 +11,12 @@
           <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
         </div>
         <div class="summary__info">
-          <i class="fa fa-eye" aria-hidden="true"></i> {{ article.views }}&nbsp;&nbsp;   
-          <i class="fa fa-comment" aria-hidden="true"></i> {% get_comments_count article as comments_count %} {{ comments_count }}
+          <span class="material-symbols-outlined info-icon middle-icon">
+            visibility
+          </span> {{ article.views }}&nbsp;&nbsp;   
+          <span class="material-symbols-outlined info-icon middle-icon">
+            chat
+            </span> {% get_comments_count article as comments_count %} {{ comments_count }}
         </div>
       </div>
       <hr class="summary__line">

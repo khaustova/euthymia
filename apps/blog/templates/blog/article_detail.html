@@ -27,8 +27,10 @@
 <div class="info">
   <div class="breadcrumbs">
     <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная</a>
-    &nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i> 
-    &nbsp;{{ article.title|cut_number }}
+    &nbsp;<span class="material-symbols-outlined middle-icon arrow-icon">
+      arrow_back_ios
+      </span> 
+    {{ article.title|cut_number }}
   </div>
   <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
     <div class="search_wrapper">
@@ -49,7 +51,9 @@
       <h1 class="article__title">{{ article.title|cut_number }}</h1> 
       {% if user.is_authenticated %}
         <div class="article_edit_wrapper">
-          <a href="{{ article.get_admin_url }}" class="object_edit"><i class="fas fa-edit"></i></a>
+          <a href="{{ article.get_admin_url }}" class="object_edit"><span class="material-symbols-outlined">
+            edit
+            </span></a>
         </div>
       {% endif %}
     </div>
@@ -58,7 +62,9 @@
         <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
       </div>
       <div class="summary__info article__info">
-        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{ article.views }}&nbsp;&nbsp;
+        <span class="material-symbols-outlined info-icon">
+          visibility
+          </span>&nbsp;{{ article.views }}&nbsp;&nbsp;
       </div>
     </div>
     <hr class="summary__line">
@@ -67,7 +73,11 @@
       <div class="article__prev">
         {% get_next_and_prev_article article as articles %}
         {% if articles.prev_article %}
-          <a href="{{ articles.prev_article.get_absolute_url }}" class="article__navigation-button"><i class="fa fa-angle-left" aria-hidden="true"></i> <span class="article__navigation">Назад</span></a>
+          <a href="{{ articles.prev_article.get_absolute_url }}" class="article__navigation-button">
+            <span class="material-symbols-outlined next-icon prev-icon">
+              arrow_back_ios
+            </span> <span class="article__navigation">Назад</span>
+          </a>
         {% endif %}
       </div>
       <div class="share_wrapper">
@@ -98,7 +108,11 @@
       <div class="article__next">
         {% get_next_and_prev_article article as articles %}
         {% if articles.next_article %}
-          <a href="{{ articles.next_article.get_absolute_url }}" class="article__navigation-button"><span class="article__navigation">Дальше</span> <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+          <a href="{{ articles.next_article.get_absolute_url }}" class="article__navigation-button">
+            <span class="article__navigation">Дальше</span> <span class="material-symbols-outlined next-icon">
+              arrow_forward_ios
+            </span>
+          </a>
         {% endif %}
       </div>
     </div>

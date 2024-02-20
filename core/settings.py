@@ -311,6 +311,13 @@ CKEDITOR_CONFIGS = {
                 }
             },
             {
+                'name': 'Примеры данных', 
+                'element': 'div', 
+                'attributes': {
+                    'class': 'responsive-data-block'
+                }
+            },
+            {
                 'name': 'Разделитель', 
                 'element': 'div', 
                 'attributes': {

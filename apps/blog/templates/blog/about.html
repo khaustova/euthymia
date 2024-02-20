@@ -12,8 +12,10 @@
 <div class="info">
   <div class="breadcrumbs">
     <a href="{% url 'blog:index' %}" class="article__link"><span class="material-symbols-outlined home-icon middle-icon">home</span> Главная</a>
-    &nbsp;<i class="fa fa-angle-left" aria-hidden="true"></i> 
-    &nbsp;Об авторе
+    &nbsp;<span class="material-symbols-outlined middle-icon arrow-icon">
+      arrow_back_ios
+      </span>
+    Об авторе
   </div>
   <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
     <div class="search_wrapper">
