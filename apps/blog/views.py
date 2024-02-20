@@ -27,7 +27,9 @@ class ArticleView(ListView):
     def get_queryset(self):
         sort = self.kwargs.get('sort')
         if sort == 'views':
-            return Article.objects.filter(status=Status.PUBLISHED).order_by('-views', 'created_date')
+            return Article.objects.filter(
+                status=Status.PUBLISHED
+            ).order_by('-views', 'created_date')
         return Article.objects.filter(status=Status.PUBLISHED).order_by('-created_date')
 
 
@@ -43,7 +45,12 @@ class ArticleDetailView(DetailView):
         context['form'] = CommentForm()
         return context
 
-    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponseRedirect:
+    def post(
+        self, 
+        request: HttpRequest, 
+        *args: Any, 
+        **kwargs: Any
+    ) -> HttpResponseRedirect:
         if self.request.method == 'POST':
             comment_form = CommentForm(self.request.POST)
             if comment_form.is_valid():     
@@ -89,7 +96,13 @@ class ArticleDetailView(DetailView):
                 new_comment.save()
             return redirect(self.request.path_info)
 
-    def dispatch(self, request: HttpRequest, slug: str, *args: Any, **kwargs: Any) -> Callable:
+    def dispatch(
+        self, 
+        request: HttpRequest, 
+        slug: str, 
+        *args: Any, 
+        **kwargs: Any
+    ) -> Callable:
         obj = self.get_object()
         obj.views += 1
         obj.save()
@@ -160,7 +173,9 @@ def get_subcategory(request):
     """
     id = request.GET.get('id', '')
     target_category = Category.objects.get(pk=id)
-    result = list(Subcategory.objects.filter(category=target_category).values('id', 'name'))
+    result = list(Subcategory.objects.filter(
+        category=target_category).values('id', 'name')
+    )
     return HttpResponse(dumps(result), content_type='application/json')
 
 
