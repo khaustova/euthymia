@@ -2,7 +2,7 @@
 {% load static %}
 {% load blog_tags %}
 
-{% block title %} {{ article.title|cut_number }} {% endblock %}
+{% block title %}{{ article.title|cut_number }}{% endblock %}
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
@@ -15,8 +15,9 @@
 {% endblock %}
 
 {% block description %}
-  <meta name="description" content="{{ article.summary }}">
-  <meta name="keywords" content="{{ article.keywords }}">
+  {% if article.description %}
+    <meta name="description" content="{{ article.description }}">
+  {% endif %}
 {% endblock %}
 
 {% block sidebar %}

@@ -32,7 +32,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'body', 
         'category', 
         'subcategory',
-        'keywords',
+        'description',
         'status',
     )
     list_display = (

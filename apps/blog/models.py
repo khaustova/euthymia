@@ -99,11 +99,9 @@ class Article(models.Model):
         verbose_name='Количество просмотров',
         default=0
     )
-    keywords = models.CharField(
-        verbose_name='Ключевые слова',
-        max_length=256,
+    description = models.TextField(
+        verbose_name='Мета-описание',
         blank=True,
-        help_text='Перечислите ключевые слова через запятую.'
     )
     search_vector = SearchVectorField(null=True, blank=True)
 
