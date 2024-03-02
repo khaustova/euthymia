@@ -4,7 +4,6 @@ from environ import Env
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-path.append(str(BASE_DIR / 'apps'))
 
 env = Env(
     DEBUG=(bool, False),
@@ -26,7 +25,7 @@ INTERNAL_IPS = env('INTERNAL_IPS').split(' ')
 # Application definition
 
 INSTALLED_APPS = [
-    'dashboard',
+    'apps.dashboard.apps.DashboardConfig',
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,15 +34,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'debug_toolbar',
     'ckeditor',
     'ckeditor_uploader',
     'admin_auto_filters',
     'mptt',
     'django_celery_results',
-    'blog',
-    'manager',
+    'apps.blog.apps.BlogConfig',
+    'apps.manager.apps.ManagerConfig',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -300,7 +303,8 @@ CKEDITOR_CONFIGS = {
             'python': 'Python',
             'C': 'C',
             'bash': 'Bash',
-            'xml': 'XML'
+            'xml': 'XML',
+            'javascript': 'JavaScript'
         },
         'stylesSet': [
             {
