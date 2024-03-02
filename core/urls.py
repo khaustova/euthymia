@@ -1,7 +1,8 @@
 from django.contrib import admin
+from django.views.generic.base import TemplateView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.urls import path, re_path, include
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
@@ -30,8 +31,16 @@ urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('', include('apps.blog.urls')),
+    path(
+        'sitemap.xml', 
+        sitemap, {'sitemaps': sitemaps}, 
+        name='django.contrib.sitemaps.views.sitemap'
+    ),
+    path(
+        'robots.txt',
+        TemplateView.as_view(template_name='blog/robots.txt', content_type='text/plain'),
+    ),
 ]
 
 if bool(settings.DEBUG):
