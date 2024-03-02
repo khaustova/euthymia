@@ -1,7 +1,19 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 
-{% block title %}Главная страница{% endblock %}
+{% block description %}
+  <meta name="description" content="euthymia.ru - сайт репетитора по математике и информатике, на котором публикуются различные образовательные материалы по программированию. 
+  Надеюсь, здесь вы найдёте что-нибудь полезное и интересное для себя.">
+{% endblock %}
+
+{% block title %}Эвтюмия - сайт о программировании 
+  {% if 'hot' in request.path %}
+    | Популярное
+  {% endif %}
+  {% if request.GET.page %}
+     [Страница {{ request.GET.page }}]
+  {% endif %}
+{% endblock %}
 
 {% block sidebar %}
   {% include 'blog/includes/sidebar_index.html' %}

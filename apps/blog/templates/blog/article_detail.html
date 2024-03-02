@@ -2,6 +2,12 @@
 {% load static %}
 {% load blog_tags %}
 
+{% block description %}
+  {% if article.description %}
+    <meta name="description" content="{{ article.description }}">
+  {% endif %}
+{% endblock %}
+
 {% block title %}{{ article.title|cut_number }}{% endblock %}
 
 {% block extra_head %}
@@ -12,12 +18,6 @@
   <script src="{% static 'vendor/highlight.js/js/highlight.min.js' %}"></script>
   <script src="https://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script>
   <script src="https://yastatic.net/share2/share.js" defer></script>
-{% endblock %}
-
-{% block description %}
-  {% if article.description %}
-    <meta name="description" content="{{ article.description }}">
-  {% endif %}
 {% endblock %}
 
 {% block sidebar %}
