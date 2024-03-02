@@ -3,7 +3,7 @@ from django import template
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
 from django.conf import settings
-from manager.models import SiteSettings
+from apps.manager.models import SiteSettings
 from ..models import Article, Category, Subcategory, Status
 from ..forms import SubscribeForm, FeedbackForm
 from ..utils import get_word

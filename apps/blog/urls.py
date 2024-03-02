@@ -1,6 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from blog.views import (
+from apps.blog.views import (
     ArticleView,
     ArticleDetailView,
     SearchView,

@@ -1,8 +1,8 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from manager.models import Feedback
-from blog.models import Comment
-from dashboard.models import Notification
+from apps.manager.models import Feedback
+from apps.blog.models import Comment
+from apps.dashboard.models import Notification
 from typing import Any
 
 

@@ -10,8 +10,8 @@ from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, HttpRe
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
 
-from manager.tasks import add_email, add_feedback
-from manager.models import EmailSubscription
+from apps.manager.tasks import add_email, add_feedback
+from apps.manager.models import EmailSubscription
 
 from .models import Article, Comment, Category, Subcategory, Status
 from .forms import CommentForm, SubscribeForm, FeedbackForm

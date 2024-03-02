@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from mptt.forms import TreeNodeChoiceField
-from manager.models import Feedback, EmailSubscription
+from apps.manager.models import Feedback, EmailSubscription
 from .models import Comment
 
 

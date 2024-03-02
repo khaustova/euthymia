@@ -7,8 +7,8 @@ from django.template.loader import get_template
 from time import sleep
 from random import randint
 from celery import shared_task
-from blog.models import Article
-from manager.models import EmailSubscription, Feedback
+from apps.blog.models import Article
+from apps.manager.models import EmailSubscription, Feedback
 
 @shared_task(name='add_email')
 def add_email(email: str) -> str:

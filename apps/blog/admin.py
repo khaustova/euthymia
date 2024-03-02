@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from mptt.admin import DraggableMPTTAdmin
-from manager.tasks import send_notification
+from apps.manager.tasks import send_notification
 from .models import Article, Category, Comment, UserProfile, Subcategory
 
 
