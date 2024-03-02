@@ -407,6 +407,7 @@ DASHBOARD_CUSTOMIZATION = {
     },
     'hidden_apps': [
         'dashboard',
+        'sites',
     ],
     'hidden_models': [
         'auth.group',
@@ -438,7 +439,12 @@ DASHBOARD_CUSTOMIZATION = {
                     'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id='
                         + YANDEX_METRIKA_COUNTER,
                     'icon': 'monitoring'
-                }
+                },
+                {
+                    'name': 'Сайты',
+                    'admin_url': '/admin/sites/site/',
+                    'icon': 'web'
+                },
             ]
         }
     ],
