@@ -1,3 +1,5 @@
+// Скрывает/показывает содержимое под спойлером
+
 $(function() {
 	$('div.spoiler-title').click(function() {
 		$(this)
