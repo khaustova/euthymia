@@ -131,8 +131,10 @@ class SearchView(ListView):
 
 def feedback_form(request: HttpRequest) -> HttpResponse:
     """
-    Получает заполненную форму обратной связи и передаёт данные из неё в зада-
-    чу, отвечающую за добавление их в базу данных.
+    Получает заполненную форму обратной связи и передаёт данные из неё в задачу, 
+    отвечающую за добавление их в базу данных.
+    Если включена проверка на спам с помощью Akismet, то проверяет данные перед
+    их сохранением.
     """
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
@@ -140,6 +142,7 @@ def feedback_form(request: HttpRequest) -> HttpResponse:
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
             message = form.cleaned_data.get('message')
+            
             client_ip, is_routable = get_client_ip(request)
             if client_ip is None:
                 feedback_ip = 'Unable'
@@ -149,7 +152,25 @@ def feedback_form(request: HttpRequest) -> HttpResponse:
                 else:
                     feedback_ip = 'Private'
 
-            add_feedback.delay(name, email, feedback_ip, message)
+            if settings.IS_USE_AKISMET:
+                akismet_api = Akismet(
+                    key=settings.AKISMET_API_KEY, 
+                    blog_url=settings.AKISMET_BLOG_URL
+                )
+                is_spam = akismet_api.comment_check(
+                    user_ip=feedback_ip,
+                    user_agent=request.META.get('HTTP_USER_AGENT'),
+                    comment_type='comment',
+                    comment_author=name,
+                    comment_author_email=email,
+                    comment_content=message,
+                )
+
+                if is_spam:
+                    return HttpResponseForbidden('Упс! Доступ запрещён!')
+
+            add_feedback.delay(name, email, feedback_ip, message) 
+
     return render(request, 'blog/feedback_success.html')
 
 
@@ -163,6 +184,7 @@ def subscribe_form(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             email = form.cleaned_data.get('email')
             add_email.delay(email)
+
     return render(request, 'blog/subscribe_success.html')
 
 
@@ -176,6 +198,7 @@ def get_subcategory(request):
     result = list(Subcategory.objects.filter(
         category=target_category).values('id', 'name')
     )
+
     return HttpResponse(dumps(result), content_type='application/json')
 
 
@@ -192,5 +215,6 @@ def unsubscribe(request: HttpRequest) -> HttpResponse:
             )
         sub_email.delete()
         return render(request, 'blog/unsubscribe_success.html')
+
     except ObjectDoesNotExist:
         return render(request, 'blog/unsubscribe_failure.html')

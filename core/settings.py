@@ -1,5 +1,4 @@
 from pathlib import Path
-from sys import path
 from environ import Env
 
 
@@ -7,6 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = Env(
     DEBUG=(bool, False),
+    IS_USE_AKISMET=(bool, False)
 )
 Env.read_env(BASE_DIR / '.env')
 
