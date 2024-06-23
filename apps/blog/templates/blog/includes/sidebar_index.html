@@ -17,9 +17,9 @@
         </a>
       </li>
     {% endfor %}
-    <li class="navigation__item category__item">
+    {% comment %} <li class="navigation__item category__item">
       <a href="{% url 'blog:about' %}" class="sidebar__link">О сайте</a>
-    </li>
+    </li> {% endcomment %}
   </ul>
 </nav>
 {% get_site_settings as site_settings %}
