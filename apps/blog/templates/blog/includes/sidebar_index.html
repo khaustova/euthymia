@@ -27,3 +27,28 @@
   {% subscribe_form %}
 {% endif %}
 
+<div class="sidebar-content about">
+  <strong>
+    <span class="sidebar__title">
+    <span class="material-symbols-outlined navigation-icon middle-icon">grade</span> О сайте</span>
+  </strong>
+  <hr class="sidebar__line">
+  <div class="about__message"><a href="{% url 'blog:index' %}">Эвтюмия</a> - сайт, на ко&shy;то&shy;ром пуб&shy;ли&shy;ку&shy;ются о&shy;бра&shy;зо&shy;ва&shy;тель&shy;ные 
+    ма&shy;те&shy;ри&shy;а&shy;лы 
+    по ин&shy;фор&shy;ма&shy;ти&shy;ке и ма&shy;те&shy;ма&shy;ти&shy;ке, пред&shy;наз&shy;на&shy;чен&shy;ные для стар&shy;шек&shy;лас&shy;сни&shy;ков и всех 
+    ин&shy;те&shy;ре&shy;сую&shy;щих&shy;ся.<br>
+  </div>
+</div>
+
+<div class="sidebar-content about feedback">
+  <strong>
+    <span class="sidebar__title">
+    <span class="material-symbols-outlined navigation-icon middle-icon">mail</span> Обратная связь</span>
+  </strong>
+  <hr class="sidebar__line">
+  <div class="about__message">
+    С ав&shy;то&shy;ром мож&shy;но свя&shy;зать&shy;ся с по&shy;мощь&shy;ю 
+    <a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">фор&shy;мы об&shy;рат&shy;ной свя&shy;зи</a>.
+  </div>
+</div>
+
