@@ -9,11 +9,7 @@
         width: 98vw;
         column-gap: 10px;
     }
-
-    .summary__image-block {
-        display: none
-    }
-
+    
     .bunny-message {
         flex-direction: column;
     }
@@ -167,7 +163,9 @@
         margin-top: 8px;
     }
 
-    .article__navigation {
+    .article__navigation,
+    .back-to-top,
+    .feedback {
         display: none;
     }
 
@@ -177,10 +175,6 @@
 
     .timeline_wrapper {
         flex-direction: column;
-    }
-
-    .back-to-top {
-        display: none;
     }
 }
 

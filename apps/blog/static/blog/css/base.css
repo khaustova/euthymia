@@ -1,10 +1,10 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 :root {
-    --color-primary: #0B0C10;
+    --color-primary: #1a1a1a;
     --color-secondary: #1F2833;
     --color-accent: #66FCF1;
-    --color-text: #C5C6C7;
+    --color-text: #dfe6ed;
     --color-sidebar-block: #1F2833;
     --color-sidebar: #04DED3;
     --color-hover: rgba(243, 246, 253, 0.87);
@@ -249,6 +249,7 @@ ul, ol {
 }
 
 .hljs {
+    background-color: #21252d !important;
     overflow-block: auto !important;
     margin: 0 !important;
 }
