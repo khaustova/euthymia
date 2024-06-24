@@ -28,6 +28,9 @@ class UserProfile(models.Model):
 
 
 class Category(models.Model):
+    """
+    Модель категории статьи.
+    """
     name = models.CharField(max_length=256, verbose_name='Категория')
     slug = models.SlugField(unique=True, verbose_name='url')
 
@@ -41,6 +44,9 @@ class Category(models.Model):
 
 
 class Subcategory(models.Model):
+    """
+    Модель подкатегории статьи.
+    """
     name = models.CharField(max_length=256, verbose_name='Подкатегория')
     category = models.ForeignKey(
         'Category',
@@ -58,11 +64,17 @@ class Subcategory(models.Model):
 
 
 class Status(models.TextChoices):
-        DRAFT = 'draft', 'Черновик'
-        PUBLISHED = 'published', 'Опубликовано' 
+    """
+    Модель статуса статьи.
+    """
+    DRAFT = 'draft', 'Черновик'
+    PUBLISHED = 'published', 'Опубликовано' 
 
 
-class Article(models.Model):  
+class Article(models.Model):
+    """
+    Модель статьи.
+    """
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     summary = models.TextField(verbose_name='Краткое содержание')
     body = RichTextUploadingField(verbose_name='Текст статьи')
@@ -131,6 +143,9 @@ class Article(models.Model):
 
 
 class Comment(MPTTModel):
+    """
+    Модель комментария к статье.
+    """
     article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,

@@ -5,7 +5,7 @@ from apps.blog.models import Article
 
 class ArticleSitemap(Sitemap):
     """
-    Карта-сайта для статей
+    Карта-сайта для статей.
     """
     changefreq = 'monthly'
     priority = 0.9
@@ -20,7 +20,7 @@ class ArticleSitemap(Sitemap):
     
 class StaticSitemap(Sitemap):
     """
-    Карта-сайта для статичных страниц
+    Карта-сайта для статичных страниц.
     """
     def items(self):
         return ['index', 'hot_index']

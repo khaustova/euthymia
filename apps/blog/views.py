@@ -18,6 +18,9 @@ from .forms import CommentForm, SubscribeForm, FeedbackForm
 
 
 class ArticleView(ListView):
+    """
+    Отображает список опубликованных статей по популярности или по дате.
+    """
     model = Article
     template_name = 'blog/index.html'
     context_object_name = 'articles'
@@ -25,6 +28,9 @@ class ArticleView(ListView):
     paginate_orphans = 1
 
     def get_queryset(self):
+        """
+        Возвращает список опубликованных статей по популярности или по дате.
+        """
         sort = self.kwargs.get('sort')
         if sort == 'views':
             return Article.objects.filter(
@@ -34,11 +40,18 @@ class ArticleView(ListView):
 
 
 class ArticleDetailView(DetailView):
+    """
+    Отображает информацию о статье.
+    """
     model = Article
     template_name = 'blog/article_detail.html'
     context_object_name = 'article'
 
     def get_context_data(self, **kwargs: Any) -> dict:
+        """
+        Добавляет в контекст данные о комментариях к статье, их количестве 
+        и форме для отправки комментариев.
+        """
         context = super().get_context_data()
         context['comments'] = Comment.objects.filter(article=self.get_object())
         context['comments_number'] = context['comments'].count()
@@ -51,6 +64,11 @@ class ArticleDetailView(DetailView):
         *args: Any, 
         **kwargs: Any
     ) -> HttpResponseRedirect:
+        """
+        Обрабатывает отправку комментариев.
+        Если включена проверка на спам с помощью Akismet, то проверяет данные перед
+        их сохранением.
+        """
         if self.request.method == 'POST':
             comment_form = CommentForm(self.request.POST)
             if comment_form.is_valid():     
@@ -103,6 +121,9 @@ class ArticleDetailView(DetailView):
         *args: Any, 
         **kwargs: Any
     ) -> Callable:
+        """
+        Увеличивает количество просмотров статьи при её открытии.
+        """
         obj = self.get_object()
         obj.views += 1
         obj.save()
@@ -110,6 +131,9 @@ class ArticleDetailView(DetailView):
 
 
 class SearchView(ListView):
+    """
+    Отображает список опубликованных в соответствии с запросом.
+    """
     model = Article
     context_object_name = 'articles'
     template_name = 'blog/search.html'
@@ -117,6 +141,9 @@ class SearchView(ListView):
     paginate_orphans = 5
 
     def get_queryset(self) -> Article:
+        """
+        Возвращает список статей в соответствии с запросом.
+        """
         query = self.request.GET.get('query')
         search_vector = SearchVector('title', 'body')
         search_query = SearchQuery(query)

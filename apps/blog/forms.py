@@ -6,6 +6,9 @@ from .models import Comment
 
 
 class CommentForm(ModelForm):
+    """
+    Форма для написания комментария.
+    """
     parent = TreeNodeChoiceField(queryset=Comment.objects.all())
 
     def __init__(self, *args, **kwargs):
@@ -43,6 +46,9 @@ class CommentForm(ModelForm):
 
 
 class FeedbackForm(ModelForm):
+    """
+    Форма для обратной связи.
+    """
 
     class Meta:
         model = Feedback
