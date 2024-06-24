@@ -80,8 +80,6 @@ def get_content_links(article: Article) -> dict:
         )
 
     return content_links
-    
-    
 
 
 @register.filter

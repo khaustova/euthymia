@@ -82,8 +82,16 @@
     }
 
     .menu,
-    .search_wrapper {
+    .search_wrapper,
+    .article__navigation,
+    .back-to-top,
+    .about,
+    .feedback {
         display: none;
+    }
+
+    .about__link {
+        display: block;
     }
 
     .search__input_wrapper input[type="search"].search__input:focus {
@@ -107,6 +115,10 @@
     .top-navigation {
         display: flex;
         justify-content: end;
+    }
+
+    .logo_wrapper {
+        right: 12px;
     }
 
     .menu {
@@ -161,12 +173,6 @@
         width: 100%;
         max-width: none;
         margin-top: 8px;
-    }
-
-    .article__navigation,
-    .back-to-top,
-    .feedback {
-        display: none;
     }
 
     .article__bottom {

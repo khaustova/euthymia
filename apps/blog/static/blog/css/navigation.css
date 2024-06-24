@@ -25,7 +25,7 @@
     opacity: 0.9;
     border: 1px solid rgba(177, 220, 222, .3);
     border-radius: 10px;
-    padding: 18px 10px 15px 10px;
+    padding: 12px 10px 15px 10px;
     margin-bottom: 10px;
 }
 
@@ -160,6 +160,10 @@ ul.content__list {
     margin: 5px 0;
 }
 
+.navigation__item:last-child {
+    margin-bottom: 0;
+}
+
 .navigation__icon {
     font-size: 22px;
 }
@@ -180,10 +184,6 @@ ul.content__list {
 /* About */
 
 .about {
-    /* background-color: var(--color-primary); */
-    /* text-align: center;
-    line-height: 2rem;
-    padding: 5px; */
     margin-top: 0;
 }
 
@@ -197,10 +197,8 @@ ul.content__list {
     line-height: 2.4rem;
 }
 
-.about__links {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+.about__link {
+    display: none;
 }
 
 .about-block {
@@ -209,10 +207,6 @@ ul.content__list {
     border-radius: 10px;
     padding: 18px 18px 25px 23px;
     margin: 0 0 10px 0;
-}
-
-.about-me {
-    margin-top: 7px;
 }
 
 /* Subscribe */
@@ -320,11 +314,9 @@ button[type="submit"].mobile-search__button {
     margin: 10px 0 10px 0;
 }
 
-
 .mobile-search__input {
     width: calc(100% + 3px);
 }
-
 
 button.search-button_open {
     border: none;

@@ -36,11 +36,10 @@
     font-size: 1.7rem;
 }
 
-.comment-form__post-button {
+button[type="submit"].comment-form__post-button {
     grid-row: 3;
     border: 1px solid var(--color-accent);
     color: var(--color-accent);
-    background: var(--color-primary);
     padding: 8px;
 }
 
@@ -54,6 +53,7 @@
     grid-template-rows: 30px auto 30px;
     background:var(--color-primary);
     opacity: 0.9;
+    border: 1px solid rgba(177, 220, 222, .3);
     border-radius: 15px;
     padding: 12px 15px 3px 15px;
     margin-bottom: 10px;
