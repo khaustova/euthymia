@@ -32,6 +32,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'body', 
         'category', 
         'subcategory',
+        'created_date',
         'description',
         'status',
     )

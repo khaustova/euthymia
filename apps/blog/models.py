@@ -79,7 +79,6 @@ class Article(models.Model):
     summary = models.TextField(verbose_name='Краткое содержание')
     body = RichTextUploadingField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(
-        auto_now_add=True,
         verbose_name='Время создания',
     )
     updated_date = models.DateTimeField(
