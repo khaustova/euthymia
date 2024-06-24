@@ -12,4 +12,7 @@ def post_save_artcile(
     update_fields: list, 
     **kwargs : Any
 ):
+    """
+    Обновляет поисковый вектор при создании новой статьи. 
+    """
     instance.update_search_vector()
