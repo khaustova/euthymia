@@ -156,7 +156,7 @@ input[type="search"] {
 }
 
 .input-item {
-    background: var(--color-primary);
+    background: #000;
     height: 35px;
     width: 35px;
     color: var(--color-accent);
@@ -164,6 +164,8 @@ input[type="search"] {
     vertical-align: middle;
     padding: 5px 0px 5px 5px;
     border-radius: 4px 0px 0px 4px;
+    border: 1px solid rgba(177, 220, 222, .3);
+    border-right: none;
 }
 
 input[type="text"].custom-input,
