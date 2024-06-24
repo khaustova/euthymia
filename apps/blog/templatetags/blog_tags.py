@@ -146,7 +146,7 @@ def get_results_word(n: int, i: int) -> str:
 @register.simple_tag
 def get_comments_word(n: int) -> str:
     """
-    Возвращает склонение слова "комментарии" в зависимости от их количества
+    Возвращает склонение слова "комментарии" в зависимости от их количества.
     """
     ind = get_word(int(n))
     pairs = {0: 'комментариев',
