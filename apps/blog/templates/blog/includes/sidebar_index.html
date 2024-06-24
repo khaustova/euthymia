@@ -11,13 +11,13 @@
     {% get_categories as categories %} 
     {% for category in categories %}
       {% get_first_category_article category as article_url %}
-      <li class="navigation__item category__item">
+      <li class="navigation__item">
         <a href="{{ article_url }}" class="sidebar__link">
           {{ category.name|cut_number }}
         </a>
       </li>
     {% endfor %}
-    <li class="navigation__item category__item about__link">
+    <li class="navigation__item about__link">
       <a href="{% url 'blog:about' %}" class="sidebar__link">О сайте</a>
     </li>
   </ul>
@@ -39,7 +39,7 @@
       {{ site_settings.about_site|safe }}
     {% else %}
       <a href="{% url 'blog:about' %}">Эвтюмия</a> - сайт с о&shy;бра&shy;зо&shy;ва&shy;тель&shy;ны&shy;ми 
-      ма&shy;те&shy;ри&shy;а&shy;лами по ин&shy;фор&shy;ма&shy;ти&shy;ке и ма&shy;те&shy;ма&shy;ти&shy;ке, пред&shy;наз&shy;на&shy;чен&shy;ными 
+      ма&shy;те&shy;ри&shy;а&shy;лами по ин&shy;фор&shy;ма&shy;ти&shy;ке и ма&shy;те&shy;ма&shy;ти&shy;ке 
       для стар&shy;шек&shy;лас&shy;сни&shy;ков и всех ин&shy;те&shy;ре&shy;сую&shy;щих&shy;ся.<br>
     {% endif %}
   </div>

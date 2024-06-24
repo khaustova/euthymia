@@ -415,10 +415,6 @@ footer {
 
 /* Icons */
 
-.navigation-icon {
-    font-size: 24px !important;
-}
-
 .bottom-icon {
     vertical-align: bottom;
 }
@@ -475,17 +471,8 @@ footer {
     font-size: 18px !important;
 }
 
-.read-more-icon,
 .close-comment-icon {
     font-size: 24px !important;
-}
-
-.yellow-element {
-    color: #ffbf00
-}
-
-.gray-element {
-    color: #b1b1b1;
 }
 
 /* Back to top */

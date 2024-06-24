@@ -117,6 +117,15 @@
         justify-content: end;
     }
 
+    .navigation__item:not(:last-child) {
+        border-bottom: 1px solid var(--color-secondary);
+    }
+    
+    .navigation__item:last-child {
+        margin-bottom: 0;
+        border: none;
+    }
+
     .logo_wrapper {
         right: 12px;
     }
