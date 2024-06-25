@@ -675,7 +675,6 @@ ul.sessions, li.sessions {
     padding: 5px;
     margin: 0.4em 0;
     display: flex;
-    justify-content: center;
 }
 
 .responsive-data-block {
@@ -685,7 +684,6 @@ ul.sessions, li.sessions {
 }
 
 .extra-info {
-    /* background: url('/static/blog/img/mark_bg.png') repeat; */
     background-color: #d3efeb;
     color: black;
     padding: 10px;
