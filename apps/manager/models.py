@@ -47,7 +47,17 @@ class SiteSettings(models.Model):
     about_site = RichTextUploadingField(
         blank=True, 
         null=True, 
-        verbose_name='О сайте (описание)'
+        verbose_name='О сайте (сайдбар)'
+    )
+    about_me = RichTextUploadingField(
+        blank=True, 
+        null=True, 
+        verbose_name='О сайте (страница)'
+    )
+    description = RichTextUploadingField(
+        blank=True, 
+        null=True, 
+        verbose_name='Описание сайта'
     )
     contacts = RichTextUploadingField(
         blank=True, 
