@@ -229,22 +229,19 @@ table {
 	border: 2px solid var(--color-table-background);
 	border-top: 2px solid var(--color-table-background);
 	border-collapse: collapse; 
-    background-color: #1e1f20;
 }
 
 table th {
 	font-weight: bold;
-    color: black;
+    color: var(--color-primary);
 	padding: 5px;
 	background: var(--color-table-background);
 	border: none;
-
 }
 
 table td {
 	padding: 5px 10px;
-    border: 1px solid var(--color-table-background)
-
+    border: 1px solid rgba(211, 239, 235, 0.3);
 }
 
 table caption {
