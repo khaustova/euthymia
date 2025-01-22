@@ -74,8 +74,8 @@
     <aside>
       {% block sidebar %}{% endblock %}
     </aside>
-
     <main>
+      {% block about_site %}{% endblock %}
       {% block info %}{% endblock %}
       <div class="feedback-modal">
         <div class="feedback-modal__inner">
@@ -92,9 +92,11 @@
 
     <footer>
       {% block pagination %}{% endblock %}
-      <span>&#169 <a href="{% url 'blog:index' %}">euthymia.ru</a>, 2024. Все права защищены</span>
+      <span>&#169 Хаустова Ирина, <a href="{% url 'blog:index' %}">euthymia.ru</a>, 2025. Все права защищены</span>
     </footer>
+
   </div>
+
   
   <button class="back-to-top back-to-top_hide">
       <span class="material-symbols-outlined back-to-top-icon">

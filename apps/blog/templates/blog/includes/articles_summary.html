@@ -1,10 +1,10 @@
-{% load blog_tags %}
+{% load blog_tags static %}
 
 {% for article in articles %}
   <div class="summary article-block">
     <div class="summary__text">
       <div class="summary__title">
-        <a href="{{ article.get_absolute_url }}">{{ article.title|cut_number }}</a>
+        <strong><a href="{{ article.get_absolute_url }}">{{ article.title|cut_number }}</a></strong>
       </div>
       <div class="summary__about">
         <div class="summary__date">
@@ -20,12 +20,10 @@
         </div>
       </div>
       <hr class="summary__line">
-      {{ article.summary|safe|truncatechars:256 }}
-      <div class="read-more_wrapper">
-        <a href="{{ article.get_absolute_url }}" class="read-more">
+      <p class="summary__p">{{ article.summary|safe|truncatechars:256 }}</p>
+      <strong><a href="{{ article.get_absolute_url }}">
         Читать далее
-        </a>
-      </div>
+      </a></strong>
     </div>
   </div>
 {% endfor %}

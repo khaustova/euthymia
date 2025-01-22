@@ -1,10 +1,12 @@
 {% load static %}
 {% load blog_tags %}
 
-<nav class="sidebar-content menu menu_index">
+<nav>
+
+<div class="sidebar-content menu menu_index">
   <strong>
     <span class="sidebar__title">
-    <span class="material-symbols-outlined sidebar-icon">bookmark</span> Навигация</span>
+      📚 Учебник</span>
   </strong>
   <hr class="sidebar__line">
   <ul class="navigation">    
@@ -17,48 +19,32 @@
         </a>
       </li>
     {% endfor %}
-    <li class="navigation__item about__link">
-      <a href="{% url 'blog:about' %}" class="sidebar__link">О сайте</a>
-    </li>
   </ul>
-</nav>
+</div>
+
+<div class="sidebar-content menu menu_index">
+  <strong>
+    <span class="sidebar__title">
+      💻 Проекты</span>
+  </strong>
+  <hr class="sidebar__line">
+  <ul class="navigation">    
+    {% get_categories as categories %} 
+    {% for category in categories %}
+      {% get_first_category_article category as article_url %}
+      <li class="navigation__item">
+        <a href="{{ article_url }}" class="sidebar__link">
+          {{ category.name|cut_number }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
 {% get_site_settings as site_settings %}
 {% if site_settings.is_subscribe %}
   {% subscribe_form %}
 {% endif %}
 
-<div class="sidebar-content about">
-  <strong>
-    <span class="sidebar__title">
-    <span class="material-symbols-outlined navigation-icon sidebar-icon">help</span> О сайте</span>
-  </strong>
-  <hr class="sidebar__line">
-  <div class="about__message">
-    {% get_site_settings as site_settings %}
-    {% if site_settings.about_site%}
-      {{ site_settings.about_site|safe }}
-    {% else %}
-      <a href="{% url 'blog:about' %}">Эвтюмия</a> - сайт с о&shy;бра&shy;зо&shy;ва&shy;тель&shy;ны&shy;ми 
-      ма&shy;те&shy;ри&shy;а&shy;лами по ин&shy;фор&shy;ма&shy;ти&shy;ке и ма&shy;те&shy;ма&shy;ти&shy;ке 
-      для стар&shy;шек&shy;лас&shy;сни&shy;ков и всех ин&shy;те&shy;ре&shy;сую&shy;щих&shy;ся.<br>
-    {% endif %}
-  </div>
-</div>
-
-<div class="sidebar-content about feedback">
-  <strong>
-    <span class="sidebar__title">
-    <span class="material-symbols-outlined navigation-icon sidebar-icon">mail</span> Обратная связь</span>
-  </strong>
-  <hr class="sidebar__line">
-  <div class="about__message">
-    {% if site_settings.contacts %}
-    {{ site_settings.contacts|safe }}
-  {% else %}
-  С ав&shy;то&shy;ром мож&shy;но свя&shy;зать&shy;ся с по&shy;мощь&shy;ю 
-  <a href="javascript:void(0)" class="sidebar__link" onclick="openFeedbackModal();">фор&shy;мы об&shy;рат&shy;ной свя&shy;зи</a>.
-  {% endif %}
-
-  </div>
-</div>
+</nav>
 

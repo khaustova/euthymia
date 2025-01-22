@@ -4,7 +4,7 @@
     grid-template-rows: 150px repeat(2, auto);
     row-gap: 8px;
     column-gap: 10px;
-    margin: 5px 0 15px 0;
+    margin: 0px 10px 10px 10px;
 }
 
 .admin-comment-form {
@@ -14,6 +14,7 @@
 .comment__info {
     display: flex;
     justify-content: space-between;
+    color: var(--color-article-text);
 }
 
 .comment-form__name-field {
@@ -38,8 +39,8 @@
 
 button[type="submit"].comment-form__post-button {
     grid-row: 3;
-    border: 1px solid var(--color-accent);
-    color: var(--color-accent);
+    /* border: 1px solid var(--color-accent);
+    color: var(--color-accent); */
     padding: 8px;
 }
 
@@ -49,18 +50,22 @@ button[type="submit"].comment-form__post-button {
 
 .comments__each {
     display: grid;
-    grid-template-columns: 55px auto auto;
+    grid-template-columns: 55px auto;
     grid-template-rows: 30px auto 30px;
-    background:var(--color-primary);
-    opacity: 0.9;
-    border: 1px solid rgba(177, 220, 222, .3);
-    border-radius: 15px;
+    /* background: var(--color-comment); */
+    color: var(--color-article-text);
+    border-bottom: 1px solid #d5d5d5;
     padding: 12px 15px 3px 15px;
-    margin-bottom: 10px;
+    margin: 0 10px 10px 10px;
 }
 
 .comments__number {
-    color: var(--color-accent);
+    color: var(--color-article-text);
+    margin-left: 20px;
+}
+
+.comment-form {
+    margin: 0 25px 25px 25px;
 }
 
 .parent-comment-form {
@@ -72,7 +77,7 @@ button[type="submit"].comment-form__post-button {
 }
 
 .comments__tab {
-    margin-left: 40px;
+    margin-left: 40px !important;
 }
 
 .comments__parent {
@@ -82,15 +87,15 @@ button[type="submit"].comment-form__post-button {
 .comments__date {
     font-size: 1.2rem;
     color: rgb(151, 151, 151);
-    grid-row: 1;
+    margin-right: 10px;
+    /* grid-row: 1;
     grid-column: 3;
-    justify-self: end;
+    justify-self: end; */
 }
 
 .comments__avatar-block {
     grid-column: 1;
     grid-row: span 3;
-    margin-top: 10px;
 }
 
 .comments__avatar {
@@ -98,27 +103,32 @@ button[type="submit"].comment-form__post-button {
 }
 
 .comments__name {
-    color: var(--color-accent);
+    color: var(--color-article-text);
     grid-column: 2;
     grid-row: 1;
-    margin-left: 10px;
+    margin-left: 15px;
     font-weight: bold;
 }
 
 .comments__guest-name {
-    color: var(--color-text);
+    color: var(--color-article-text);
 }
 
 .comments__body {
     grid-column: 2/4;
     grid-row: 2;
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .comments__reply {
     color: var(--color-accent);
     grid-row: 3;
-    grid-column: 3;
-    justify-self: end;
+    grid-column: 2;
+    justify-self: start;
     padding-bottom: 10px;
+    margin-left: 15px;
+}
+
+.comment__info {
+    margin-left: 25px;
 }

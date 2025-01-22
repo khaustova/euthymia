@@ -127,14 +127,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
-STORAGES = {
-    'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
-    },
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
-}
+# STORAGES = {
+#     'default': {
+#         'BACKEND': 'django.core.files.storage.FileSystemStorage',
+#     },
+#     'staticfiles': {
+#         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+#     },
+# }
 
 # Media files
 
@@ -184,6 +184,7 @@ CKEDITOR_CONFIGS = {
         'skin': 'moonocolor',
         'width': '100%',
         'contentsCss': '/static/dashboard/css/editor.css',
+        'extraAllowedContent': '*[*]{*}(*)',
         'toolbar': [
             {
                 'name': 'document',
@@ -330,7 +331,7 @@ CKEDITOR_CONFIGS = {
             },
             {
                 'name': 'Дополнительная информация', 
-                'element': 'p', 
+                'element': 'div', 
                 'attributes': {
                     'class': 'extra-info'
                 }
@@ -349,10 +350,6 @@ CKEDITOR_CONFIGS = {
                     'class': 'code'
                 }
             }, 
-            {
-                'name': 'Figure', 
-                'element': 'figure', 
-            },  
             {
                 'name': 'Figcaption', 
                 'element': 'figcaption', 
@@ -459,3 +456,4 @@ IS_CUT_NUMBER = True
 IS_USE_AKISMET = env('IS_USE_AKISMET')
 AKISMET_API_KEY = env('AKISMET_API_KEY')
 AKISMET_BLOG_URL = env('AKISMET_BLOG_URL')
+

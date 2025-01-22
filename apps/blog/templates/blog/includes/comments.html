@@ -3,14 +3,12 @@
 {% load blog_tags %}
 
 <div class="comments__number">
-  <strong class="navigation__title">&nbsp;<span class="material-symbols-outlined bottom-icon">
-    forum
-    </span>
+  <span class="navigation__title">&nbsp;💬 
     {% with count=comments.count %}
       {% get_comments_word count as comment_word %} {{ comments.count }} 
       {{ comment_word }}
     {% endwith %}
-  </strong>
+  </span>
 </div>
 
 <div class="comment">
@@ -43,14 +41,11 @@
           {% if node.author.userprofile.avatar.url %}
             <img src="{{ node.author.userprofile.avatar.url }}">
           {% else %}
-            <img src="{% static 'blog/img/admin_avatar.png' %}">
+            <img src="{% static 'blog/img/robot_avatar.png' %}">
           {% endif %}
         {% else %}
           <img src="{% static 'blog/img/guest_avatar.png' %}">
         {% endif %}
-      </div>
-      <div class="comments__date">
-        <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ node.created_date }}
       </div>
       <div class="comments__name {% if node.guest %}comments__guest-name{% endif %}">
         {% if node.author %}
@@ -68,8 +63,9 @@
           {{ node.body }}
       </div>
       <div class="comments__reply">
+        <span class="comments__date">{{ node.created_date }}</span>
         <a href="javascript:void(0)" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if node.author %}'{{ node.author.username }}'{% else %} '{{ node.guest }}'{% endif %}, {{ node.id }} )">
-          <span class="material-symbols-outlined reply-icon middle-icon">reply</span> Ответить
+          Ответить
         </a>
       </div>
     </div>
@@ -81,14 +77,11 @@
               {% if child.author.userprofile.avatar.url %}
                 <img src="{{ child.author.userprofile.avatar.url }}">
               {% else %}
-                <img src="{% static 'blog/img/admin_avatar.png' %}">
+                <img src="{% static 'blog/img/robot_avatar.png' %}">
               {% endif %}
             {% else %}
               <img src="{% static 'blog/img/guest_avatar.png' %}">
             {% endif %}
-          </div>
-          <div class="comments__date">
-            <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ child.created_date }}
           </div>
           <div class="comments__name {% if child.guest %}comments__guest-name{% endif %}">
             {% if child.author %}
@@ -101,8 +94,9 @@
             {{ child.body }}
           </div>
           <div class="comments__reply">
+            <span class="comments__date">{{ node.created_date }}</span>
             <a href="javascript:void(0)" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if child.author %}'{{ child.author.username }}'{% else %}'{{ child.guest }}'{% endif %}, {{ parent_id }}, {{ child.id }} )">
-              <span class="material-symbols-outlined reply-icon middle-icon">reply</span> Ответить
+              Ответить
             </a>
           </div>
         </div>

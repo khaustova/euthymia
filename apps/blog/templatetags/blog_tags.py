@@ -1,5 +1,6 @@
 from typing import Any, Optional, Union
 from django import template
+from django.conf import settings
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
 from django.conf import settings

@@ -18,6 +18,31 @@
   <script src="{% static 'vendor/highlight.js/js/highlight.min.js' %}"></script>
   <script src="{% static 'vendor/ckeditor/js/ckeditor.js' %}"></script>
   <script src="https://yastatic.net/share2/share.js" defer></script>
+
+  <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
+  <script type="text/javascript">
+    VK.init({ apiId: 52936124, onlyWidgets: true });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+{% comment %} <script>
+  $(document).ready(function() {
+    $("#popimg").fancybox({
+      openEffect	: 'elastic',
+      closeEffect	: 'elastic',
+      helpers : {
+      title : {
+      type : 'inside'
+           }
+        }
+   });
+   });
+</script> {% endcomment %}
+
 {% endblock %}
 
 {% block sidebar %}
@@ -33,7 +58,7 @@
       </span> 
     {{ article.title|cut_number }}
   </div>
-  <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
+  <form action="{% url 'blog:search' %}" method="get" autocomplete="on" class="form__search">
     <div class="search_wrapper">
       <div class="search__button">
         <span class="material-symbols-outlined button-icon search__button-icon top-menu-icon">search</span>
@@ -49,7 +74,7 @@
 {% block content %}
   <article class="article article-block article-detail">
     <div class="article__title_wrapper">
-      <h1 class="article__title">{{ article.title|cut_number }}</h1> 
+      <strong><h1 class="article__title">{{ article.title|cut_number }}</h1></strong> 
       {% if user.is_authenticated %}
         <div class="article_edit_wrapper">
           <a href="{{ article.get_admin_url }}" class="object_edit"><span class="material-symbols-outlined">
@@ -59,7 +84,7 @@
       {% endif %}
     </div>
     <div class="summary__about">
-      <div class="article__date">
+      <div class="summary__date">
         <span class="material-symbols-outlined info-icon middle-icon">calendar_month</span> {{ article.created_date }}
       </div>
       <div class="summary__info article__info">
@@ -94,7 +119,7 @@
               <path
                 d="M767.99994 585.142857q75.995429 0 129.462857 53.394286t53.394286 129.462857-53.394286 129.462857-129.462857 53.394286-129.462857-53.394286-53.394286-129.462857q0-6.875429 1.170286-19.456l-205.677714-102.838857q-52.589714 49.152-124.562286 49.152-75.995429 0-129.462857-53.394286t-53.394286-129.462857 53.394286-129.462857 129.462857-53.394286q71.972571 0 124.562286 49.152l205.677714-102.838857q-1.170286-12.580571-1.170286-19.456 0-75.995429 53.394286-129.462857t129.462857-53.394286 129.462857 53.394286 53.394286 129.462857-53.394286 129.462857-129.462857 53.394286q-71.972571 0-124.562286-49.152l-205.677714 102.838857q1.170286 12.580571 1.170286 19.456t-1.170286 19.456l205.677714 102.838857q52.589714-49.152 124.562286-49.152z"
                 p-id="9774"
-                fill="#04DED3">
+                fill="#074c91">
               </path>
             </svg>
             &nbsp;Поделиться
@@ -119,6 +144,13 @@
     </div>
     <hr>
   </article>
+
+
+{% comment %} <div id="vk_comments"></div>
+<script type="text/javascript">
+  VK.Widgets.Comments("vk_comments", {limit: 10, attach: "photo,graffiti"});
+</script> {% endcomment %}
+
 {% include 'blog/includes/comments.html' %}
 {% endblock %}
 

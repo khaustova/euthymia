@@ -7,11 +7,13 @@
 
 .active-sort {
     padding-bottom: 4px;
-    border-bottom: 1px solid var(--color-accent)
+    font-weight: bold;
+    color: var(--color-link) !important;
+    border-bottom: 1px solid var(--color-link) !important;
 }
 
 .active-sort:hover {
-    color: var(--color-accent);
+    color: var(--color-link) !important;
 }
 
 .hot-sort {
@@ -21,10 +23,7 @@
 /* Sidebar */
 
 .sidebar-content {
-    background-color: var(--color-primary);
     opacity: 0.9;
-    border: 1px solid rgba(177, 220, 222, .3);
-    border-radius: 10px;
     padding: 12px 10px 15px 10px;
     margin-bottom: 10px;
 }
@@ -44,17 +43,17 @@
 .sidebar__title {
     padding: 10px;
     font-size: 1.8rem;
-    color: var(--color-navigation)
+    color: var(--color-sidebar-title)
 }
 
 .sidebar__link, 
 .sidebar__link:link, 
 .sidebar__link:visited  {
-    color: var(--color-sidebar);
+    color: var(--color-sidebar-link);
 }
 
 .sidebar__link:hover  {
-    color: var(--color-hover);
+    color: var(--color-sidebar-link-hover);
 }
 
 .close_button {
@@ -87,10 +86,6 @@
     margin: 10px 5px 5px;
 }
 
-.content__item {
-    padding-left: 10px;
-}
-
 .content__title {
     color: var(--color-navigation) !important;
     display: flex;
@@ -101,7 +96,8 @@
 }
 
 .content__item {
-    margin-top: 2px;
+    margin-top: 5px;
+    padding-left: 10px;
 }
 
 .content__links {
@@ -133,7 +129,7 @@ ul.content__list {
 .plusminus:before, .plusminus:after {
     content: "";
     display: block;
-    background-color: #333;
+    background-color: var(--color-accent);
     position: absolute;
     top: 50%;
     left: 0;
@@ -155,24 +151,19 @@ ul.content__list {
     margin: 5px 0;
 }
 
-.navigation__item:not(:nth-last-child(2)) {
-    border-bottom: 1px solid var(--color-secondary);
+.navigation__item:not(:last-child) {
+    border-bottom: 1px solid #3b3b3b;
 }
 
-.navigation__item:nth-last-child(2) {
+.navigation__item:last-child {
     margin-bottom: 0;
 }
 
 /* About */
 
-.about {
-    margin-top: 0;
-}
-
 .about__message {
-    text-align: center;
-    color: var(--color-navigation);
     margin-top: 10px;
+    padding: 0px 10px;
 }
 
 .about-content {
@@ -201,6 +192,10 @@ ul.content__list {
 
 /* Search */
 
+.form__search {
+    margin-right: 10px;
+}
+
 .search_wrapper *,
 .search_wrapper *:after,
 .search_wrapper *:before {
@@ -212,7 +207,7 @@ ul.content__list {
 
 .search_wrapper *:focus {
     background: var(--color-primary);
-    color: var(--color-text);
+    color: var(--color-article-text);
     outline: 0;
 }
 
@@ -223,7 +218,7 @@ ul.content__list {
 }
 
 .search__button {
-    background-color: var(--color-secondary);
+    background-color: var(--color-article);
     border: none;
     display: table-cell;
     margin-top: 2px;
@@ -247,14 +242,14 @@ ul.content__list {
     position: absolute;
     right: 0;
     z-index: 1;
-    background-color: var(--color-secondary);
+    background-color: var(--color-article);
 }
 
 .search__input_wrapper input[type="search"].search__input {
     height: 38px;
     padding: 0px;
     width: 37px;
-    background-color: var(--color-secondary);
+    background-color: var(--color-article);
 }
 
 .search__input_wrapper input[type="search"].search__input:focus {
@@ -290,7 +285,7 @@ button[type="submit"].mobile-search__button {
 
 .mobile-search__form {
     display: grid;
-    grid-template-columns: 255px 35px;
+    grid-template-columns: 255px 45px;
     grid-template-rows: 35px;
     justify-content: center;
     margin: 10px 0 10px 0;
@@ -330,7 +325,7 @@ input[type="search"].search-nothing-input {
 }
 
 .search-results__title {
-    color: var(--color-accent);
+    color: var(--color-accent-2);
     font-size: 1.8rem;
     font-weight: bold;
 }
@@ -350,15 +345,16 @@ input[type="search"].search-nothing-input {
 }
 
 input[type="search"].nothing-found__input {
-    border: 1px solid var(--color-accent);
+    border: 1px solid var(--color-accent-2);
     border-right: none;
     border-radius: 4px 0 0 4px;
 }
 
 button[type="submit"].nothing-found__button {
-    border: 1px solid var(--color-accent);
+    border: 1px solid var(--color-accent-2);
     border-left: none;
     border-radius: 0 4px 4px 0;
+    padding-left: 8px;
 }
 
 #menuClose{
