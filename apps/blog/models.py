@@ -27,12 +27,26 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Type(models.TextChoices):
+    """
+    Тип категории статьи.
+    """
+    ТEXTBOOK = 'textbook', 'Учебник'
+    PROJECTS = 'projects', 'Проекты' 
+
+
 class Category(models.Model):
     """
     Модель категории статьи.
     """
     name = models.CharField(max_length=256, verbose_name='Категория')
     slug = models.SlugField(unique=True, verbose_name='url')
+    type = models.CharField(
+        max_length=64,
+        choices=Type.choices,
+        default=Type.ТEXTBOOK,
+        verbose_name='Тип'
+    )
 
     class Meta:
         verbose_name = 'Категория'
@@ -68,8 +82,8 @@ class Status(models.TextChoices):
     Модель статуса статьи.
     """
     DRAFT = 'draft', 'Черновик'
-    PUBLISHED = 'published', 'Опубликовано' 
-
+    PUBLISHED = 'published', 'Опубликовано'
+    
 
 class Article(models.Model):
     """

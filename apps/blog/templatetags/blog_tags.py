@@ -5,7 +5,7 @@ from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
 from django.conf import settings
 from apps.manager.models import SiteSettings
-from ..models import Article, Category, Subcategory, Status
+from ..models import Article, Category, Subcategory, Status, Type
 from ..forms import SubscribeForm, FeedbackForm
 from ..utils import get_word
 
@@ -13,11 +13,18 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_categories() -> Category:
+def get_textbook_categories() -> Category:
     """
     Возвращает все категории.
     """
-    return Category.objects.all()
+    return Category.objects.filter(type=Type.ТEXTBOOK)
+
+@register.simple_tag
+def get_projects_categories() -> Category:
+    """
+    Возвращает все категории.
+    """
+    return Category.objects.filter(type=Type.PROJECTS)
 
 
 @register.simple_tag

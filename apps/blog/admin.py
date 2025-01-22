@@ -11,8 +11,7 @@ from .models import Article, Category, Comment, UserProfile, Subcategory
 class CategoryFilter(AutocompleteFilter):
     title = 'Категория'
     field_name = 'category'
-
-
+    
 class SubcategoryFilter(AutocompleteFilter):
     title = 'Подкатегория'
     field_name = 'subcategory'
@@ -69,11 +68,14 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'type')
     search_fields = ('name',)
     prepopulated_fields = {
         'slug': ('name',)
     }
+    list_filter = [
+        'type',
+    ]
     
     
 @admin.register(Subcategory)
