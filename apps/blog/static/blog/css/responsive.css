@@ -40,7 +40,10 @@
 
     .info {
         align-self: start;
-        margin: 0;
+    }
+
+    .info_index {
+        margin-top: 10px;
     }
 
     .info_end {

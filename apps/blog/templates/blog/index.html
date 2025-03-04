@@ -30,12 +30,12 @@
 
 {% block info %}
   {% url 'blog:index' as index %}
-  <div class="info">
+  <div class="info info_index">
     <div class="sort-links">
       <a href="{% url 'blog:index' %}" class="{% if request.path == index %} active-sort {% endif %}">
-      <span class="material-symbols-outlined sort-icon middle-icon">calendar_month</span> По дате</a>
+      📅 По дате</a>
       <a href="{% url 'blog:hot_index' %}" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
-      <span class="material-symbols-outlined sort-icon middle-icon">local_fire_department</span> По популярности</a>
+      🔥 По популярности</a>
     </div>
     <form action="{% url 'blog:search' %}" method="get" autocomplete="on" class="form__search">
       <div class="search_wrapper">
