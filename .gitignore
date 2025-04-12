@@ -9,6 +9,7 @@ media
 .env.prod
 .env
 robots.txt
+Примеры
 
 # Docker #
 docker
