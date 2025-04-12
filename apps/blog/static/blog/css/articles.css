@@ -94,10 +94,6 @@ a.article__link:hover  {
     transition: transform 0.3s ease;
 }
 
-.summary-block:hover {
-    transform: translateY(-5px);   
-}
-
 .summary__about {
     display: flex;
     justify-content: space-between;
@@ -261,4 +257,8 @@ div.spoiler div.spoiler-content {
 
 .compensate-for-scrollbar {
     margin-right: 0 !important;
+}
+
+code.string-code {
+    background-color: #ced8df;
 }

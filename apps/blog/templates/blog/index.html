@@ -19,11 +19,11 @@
   {% include 'blog/includes/sidebar_index.html' %}
 {% endblock %}
 
-{% block about_site %}
+{% block about %}
 {% if is_paginated and page_obj.number == 1 %}
-  {% include 'blog/includes/about_site.html' %}
+  {% include 'blog/includes/about.html' %}
 {% elif is_paginated == False %}
-  {% include 'blog/includes/about_site.html' %}
+  {% include 'blog/includes/about.html' %}
 {% endif %}
 {% endblock %}
 
