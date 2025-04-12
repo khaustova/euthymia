@@ -44,25 +44,10 @@ class Feedback(models.Model):
 
 
 class SiteSettings(models.Model):
-    about_site = RichTextUploadingField(
-        blank=True, 
-        null=True, 
-        verbose_name='О сайте (шапка)'
-    )
     about_me = RichTextUploadingField(
         blank=True, 
         null=True, 
-        verbose_name='О сайте (страница)'
-    )
-    description = RichTextUploadingField(
-        blank=True, 
-        null=True, 
         verbose_name='Описание сайта'
-    )
-    contacts = RichTextUploadingField(
-        blank=True, 
-        null=True, 
-        verbose_name='Об авторе (контакты)'
     )
     is_subscribe = models.BooleanField(
         verbose_name = 'Возможность подписки'
