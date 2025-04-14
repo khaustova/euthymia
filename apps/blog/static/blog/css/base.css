@@ -818,7 +818,7 @@ ul.sessions, li.sessions {
 .extra-info div:nth-child(2) {
     margin-left: 15px;
     display: flex;
-    justify-items: center;
+    align-items: center;
 }
 
 .extra-info div:nth-child(1) {
