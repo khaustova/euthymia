@@ -19,10 +19,6 @@
   <script src="{% static 'vendor/ckeditor/js/ckeditor.js' %}"></script>
   <script src="https://yastatic.net/share2/share.js" defer></script>
 
-  <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
-  <script type="text/javascript">
-    VK.init({ apiId: 52936124, onlyWidgets: true });
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
@@ -37,7 +33,7 @@
 {% block info %}
 <div class="info">
   <div class="breadcrumbs">
-    <a href="{% url 'blog:index' %}" class="article__link">🏠 Главная</a>
+    <a href="{% url 'blog:index' %}" class="article__link">&#x1F3E0; Главная</a>
     &nbsp;<span class="material-symbols-outlined middle-icon arrow-icon">
       arrow_back_ios
       </span> 
@@ -70,10 +66,10 @@
     </div>
     <div class="summary__about">
       <div class="summary__date">
-        📅 {{ article.created_date }}
+        &#x1F4C5; {{ article.created_date }}
       </div>
       <div class="summary__info article__info">
-        👁️‍🗨️&nbsp;{{ article.views }}&nbsp;&nbsp;
+        &#x1F441;&#xFE0F;&#x200D;&#x1F5E8;&#xFE0F;&nbsp;{{ article.views }}&nbsp;&nbsp;
       </div>
     </div>
     <hr class="summary__line">
@@ -127,12 +123,6 @@
     </div>
     <hr>
   </article>
-
-
-{% comment %} <div id="vk_comments"></div>
-<script type="text/javascript">
-  VK.Widgets.Comments("vk_comments", {limit: 10, attach: "photo,graffiti"});
-</script> {% endcomment %}
 
 {% include 'blog/includes/comments.html' %}
 {% endblock %}

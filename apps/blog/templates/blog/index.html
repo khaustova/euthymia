@@ -33,9 +33,9 @@
   <div class="info info_index">
     <div class="sort-links">
       <a href="{% url 'blog:index' %}" class="{% if request.path == index %} active-sort {% endif %}">
-      📅 По дате</a>
+      &#x1F4C5; По дате</a>
       <a href="{% url 'blog:hot_index' %}" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
-      🔥 По популярности</a>
+      &#x1F525; По популярности</a>
     </div>
     <form action="{% url 'blog:search' %}" method="get" autocomplete="on" class="form__search">
       <div class="search_wrapper">
