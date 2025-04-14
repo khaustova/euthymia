@@ -79,8 +79,12 @@
     }
 
     .article-block {
-        margin-bottom: 7px;
-        padding: 12px;
+        margin: 0 0 7px 0 !important;
+        padding: 15px;
+    }
+
+    .about__text {
+        margin: 0;
     }
 
     footer {
