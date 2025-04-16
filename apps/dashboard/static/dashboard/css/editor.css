@@ -47,6 +47,11 @@ figcaption {
     font-size: 1.2rem;
 }
 
+code.string-code {
+    background-color: #ced8df;
+    color: #02014b;
+}
+
 /* Separator */
 
 .separator {

@@ -183,6 +183,7 @@ CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moonocolor',
         'width': '100%',
+        'height': '800px',
         'contentsCss': '/static/dashboard/css/editor.css',
         'extraAllowedContent': '*[*]{*}(*)',
         'toolbar': [
@@ -309,50 +310,18 @@ CKEDITOR_CONFIGS = {
         },
         'stylesSet': [
             {
+                'name': 'Код в тексте',
+                'element': 'code',
+                'attributes': {
+                    'class': 'string-code'
+                }
+            },
+            {
                 'name': 'Адаптивный блок', 
                 'element': 'div', 
                 'attributes': {
                     'class': 'responsive-block'
                 }
-            },
-            {
-                'name': 'Примеры данных', 
-                'element': 'div', 
-                'attributes': {
-                    'class': 'responsive-data-block'
-                }
-            },
-            {
-                'name': 'Разделитель', 
-                'element': 'div', 
-                'attributes': {
-                    'class': 'separator'
-                }
-            },
-            {
-                'name': 'Дополнительная информация', 
-                'element': 'div', 
-                'attributes': {
-                    'class': 'extra-info'
-                }
-            },
-            {
-                'name': 'Внимание!', 
-                'element': 'div', 
-                'attributes': {
-                    'class': 'warning-info'
-                }
-            },
-            {
-                'name': 'Код в тексте',
-                'element': 'span',
-                'attributes': {
-                    'class': 'code'
-                }
-            }, 
-            {
-                'name': 'Figcaption', 
-                'element': 'figcaption', 
             },
         ],
     }
