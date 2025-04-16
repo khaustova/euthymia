@@ -316,13 +316,6 @@ CKEDITOR_CONFIGS = {
                     'class': 'string-code'
                 }
             },
-            {
-                'name': 'Адаптивный блок', 
-                'element': 'div', 
-                'attributes': {
-                    'class': 'responsive-block'
-                }
-            },
         ],
     }
 }
