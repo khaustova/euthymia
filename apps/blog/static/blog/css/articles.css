@@ -113,6 +113,8 @@ a.article__link:hover  {
 }
 
 .summary__info {
+    display: flex;
+    align-items: center;
     margin-top: 5px;
 }
 

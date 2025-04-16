@@ -282,7 +282,6 @@ figcaption {
 
 table {
 	width: 100%;
-	margin-bottom: 20px;
 	border: 15px solid var(--color-bg);
 	border-top: 5px solid var(--color-bg);
 	border-collapse: collapse; 
@@ -796,14 +795,8 @@ ul.sessions, li.sessions {
 .responsive-block {
     overflow-x: auto;
     padding: 5px;
-    margin: 0.4em 0;
+    margin: 0.8rem 0;
     display: flex;
-}
-
-.responsive-data-block {
-    overflow-x: auto;
-    padding: 5px;
-    margin: 0.4em 0;
 }
 
 .extra-info {
