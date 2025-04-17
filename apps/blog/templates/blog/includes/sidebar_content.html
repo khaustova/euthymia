@@ -13,16 +13,16 @@
     {% if article.subcategory %}  
       {% for subcategory, articles in content_links.items %}
         <div class="content__title {% if article.subcategory == subcategory %}active{% endif %}">
-          <div>{{ subcategory }}</div><div class="plusminus"></div>
+          <div><span class="article__number">{{ subcategory|cut_text }}</span></div><div>{{ subcategory|cut_number }}</div><div class="plusminus"></div>
         </div>
         <li class="content__links {% if article.subcategory == subcategory %}show{% endif %}">
           {% for content_article in articles %}
             <ul class="content__list">
               <li class="content__item">
                 {% if content_article.get_absolute_url == article.get_absolute_url %}
-                  {{ content_article.title }}
+                  <div class="article__number">{{ content_article.title|cut_text }}</div><div>{{ content_article.title|cut_number }}</div>
                 {% else %}
-                  <a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title }}</a>
+                <div class="article__number">{{ content_article.title|cut_text }}</div><div><a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title|cut_number }}</a></div>
                 {% endif %}
               </li>
             </ul>
@@ -41,5 +41,5 @@
       {% endfor %}
     {% endif %}
 
-  </ul>
+  </ol>
 </nav>

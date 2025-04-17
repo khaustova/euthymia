@@ -37,6 +37,14 @@ a.article__link:hover  {
     margin-bottom: 0;
 }
 
+.article__number {
+    font-size: 1.2rem;
+}
+
+.article_subcategory__number {
+    margin-right: 10px;
+}
+
 .article__date {
     align-self: end;
     font-size: 1.2rem;

@@ -87,8 +87,8 @@
 
 .content__title {
     color: white !important;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 20px 1fr 20px;
     align-items: center;
     cursor: pointer;
     margin-bottom: 5px;
@@ -97,6 +97,8 @@
 .content__item {
     margin-top: 5px;
     padding-left: 10px;
+    display: grid;
+    grid-template-columns: 32px 1fr;
 }
 
 .content__links {

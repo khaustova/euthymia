@@ -110,6 +110,21 @@ def cut_number(text: str) -> Union[SafeText, str]:
 
     return mark_safe(text)
 
+@register.filter
+def cut_text(text: str) -> Union[SafeText, str]:
+    """
+    Обрезает всё, кроме первого слова.
+    """
+
+    text_words = escape(text).split()
+    
+    if not len(text_words):
+        return ''
+
+    text = text_words[0]
+
+    return mark_safe(text)
+
 
 @register.simple_tag
 def get_comments_count(article: Article) -> int:
