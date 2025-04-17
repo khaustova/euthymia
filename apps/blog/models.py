@@ -129,11 +129,18 @@ class Article(models.Model):
         blank=True,
     )
     search_vector = SearchVectorField(null=True, blank=True)
+    main_number = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Основной номер'
+    )
+    sub_number = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Подномер')
 
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
-        ordering = ['title']
+        ordering = ['main_number', 'sub_number']
         indexes = [
             GinIndex(fields=['search_vector',]),
         ]
