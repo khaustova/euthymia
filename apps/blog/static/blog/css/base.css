@@ -408,6 +408,8 @@ main {
 header {
     align-self: center;
     align-items: center;
+    position: sticky; 
+    top: 0;
 }
 
 .info {
@@ -436,7 +438,7 @@ header {
 
 aside {
     grid-row: 2/4;
-
+    position: relative;
 }
 
 footer {
@@ -450,7 +452,6 @@ footer {
 /* Logo */
 
 .logo {
-    margin-top: 10px;
     text-align: center;
 }
 

@@ -76,3 +76,24 @@ backToTopButton.addEventListener("click", function() {
         behavior: "smooth"
       });
 });
+
+
+// Прокрутка липкого сайдбара
+
+function adjustSidebarHeight() {
+    const header = document.querySelector('header');
+    const sidebar = document.querySelector('nav');
+    const headerHeight = header ? header.offsetHeight : 0;
+    
+    sidebar.style.height = `calc(100vh - ${headerHeight}px)`;
+    sidebar.style.overflowY = 'auto';
+  }
+  
+  function isDesktop() {
+    return window.matchMedia('(min-width: 768px)').matches;
+  }
+  
+  if (isDesktop()) {
+    window.addEventListener('load', adjustSidebarHeight);
+    window.addEventListener('resize', adjustSidebarHeight);
+  }
