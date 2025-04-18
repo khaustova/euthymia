@@ -116,48 +116,20 @@ h1 {
     font-size: 3rem;
 }
 
-
 h2, h3 {
     margin: 0.1rem 0;
-    font-size: 2.1rem;
     font-weight: 400;
 }
 
 h2 {
-    font-size: 1.8rem;
-    color: black;
-}
-
-h2 {
-    margin: 0;
-    display: grid;
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    grid-template-columns: minmax(20px, 1fr) auto minmax(20px, 1fr);
-    grid-gap: 20px;
-    font-weight: 400;
     font-size: 2.5rem;
-    color: var(--color-accent-2);
+    border-bottom: 2px solid var(--color-accent-2);
 }
 
-h2:before,
-h2:after {
-    content: '';
-    height: 1px;
+h3 {
+    font-size: 2.1rem;
+    border-bottom: 1px dashed var(--color-accent-2);
 }
-
-h2:after {
-    background: linear-gradient(to right, transparent, var(--color-navigation));
-    opacity: .5;
-}
-
-h2:before {
-    background: linear-gradient(to right, var(--color-navigation), transparent);
-    opacity: .5;
-}
-
-
 
 .form-row {
     display: flex;
