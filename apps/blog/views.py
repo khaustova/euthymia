@@ -24,7 +24,7 @@ class ArticleView(ListView):
     model = Article
     template_name = 'blog/index.html'
     context_object_name = 'articles'
-    paginate_by = 10
+    paginate_by = 6
     paginate_orphans = 3
 
     def get_queryset(self):
