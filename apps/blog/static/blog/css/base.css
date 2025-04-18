@@ -438,7 +438,6 @@ header {
 
 aside {
     grid-row: 2/4;
-    position: relative;
 }
 
 footer {
