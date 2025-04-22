@@ -272,3 +272,7 @@ div.spoiler div.spoiler-content {
 code.string-code {
     background-color: #ced8df;
 }
+
+div.list {
+    margin: 0.8rem 0;
+}
