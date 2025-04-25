@@ -503,7 +503,7 @@ footer {
 
 .pagination__number:hover {
     background-color: var(--color-accent);
-    color: var(--color-primary);
+    color: var(--color-primary) !important;
     border: 1px solid var(--color-accent);
 }
 
