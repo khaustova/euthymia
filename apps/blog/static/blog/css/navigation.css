@@ -259,6 +259,7 @@ ul.content__list {
     padding: 0px;
     width: 37px;
     background-color: var(--color-bg);
+    color: var(--color-article);
 }
 
 .search__input_wrapper input[type="search"].search__input:focus {

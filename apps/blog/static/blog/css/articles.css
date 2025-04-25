@@ -34,7 +34,7 @@ a.article__link:hover  {
 }
 
 .article-block:last-child {
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 .article__number {

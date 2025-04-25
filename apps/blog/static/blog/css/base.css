@@ -484,9 +484,9 @@ footer {
 .pagination__number, 
 .pagination__number:active, 
 .pagination__number:visited {
-    color: var(--color-accent);
+    color: var(--color-accent) !important;
     padding: 3px 6px;
-    border: 1px solid var(--color-accent);
+    border: 1px solid var(--color-accent) !important;
     border-radius: 3px;
     text-decoration: none;
     margin-left: 6px;
@@ -497,7 +497,7 @@ footer {
 .pagination__current, 
 .pagination__current:active, 
 .pagination__current:visited {
-    background-color: var(--color-accent);
+    background-color: var(--color-accent) !important;
     color: var(--color-primary) !important;
 }
 
@@ -613,8 +613,7 @@ footer {
 .robot-message__bubble {
     text-align: center;
 	position: relative;
-	background: var(--color-article);
-    color: var(--color-article-text);
+    color: var(--color-article);
     padding: 20px 10px;
     max-width: 400px;
 }
