@@ -10,11 +10,11 @@ from apps.blog.sitemaps import StaticSitemap, ArticleSitemap
 
 
 def page_not_found_handler(request: HttpRequest, exception=None) -> HttpResponse:
-    return render(request, 'blog/404.html')
+    return render(request, 'blog/404.html', status=404)
 
 
 def server_error_handler(request: HttpRequest, exception=None) -> HttpResponse:
-    return render(request, 'blog/500.html')
+    return render(request, 'blog/500.html', status=500)
 
 
 handler404 = page_not_found_handler
