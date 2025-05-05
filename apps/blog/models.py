@@ -90,6 +90,12 @@ class Article(models.Model):
     Модель статьи.
     """
     title = models.CharField(max_length=150, verbose_name='Заголовок')
+    image = models.ImageField(
+        upload_to='articles_images/',
+        blank=True,
+        null=True,
+        verbose_name='Изображение'
+    )
     summary = models.TextField(verbose_name='Краткое содержание')
     body = RichTextUploadingField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(

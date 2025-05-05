@@ -69,6 +69,14 @@
         border: none;
     }
 
+    .summary__summary {
+        display: block;
+    }
+
+    .summary__image {
+        display: none;
+    }
+
     .menu {
         order: 0;
     }

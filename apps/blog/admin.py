@@ -27,6 +27,7 @@ class ArticleAdmin(admin.ModelAdmin):
     fields = (
         'title', 
         'slug', 
+        'image',
         'summary', 
         'body', 
         'category', 
