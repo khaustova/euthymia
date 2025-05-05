@@ -21,7 +21,7 @@
     --color-navigation: #9f9f9f; 
     --color-line:  #b1b7de;
     --color-table-background: #d3efeb;
-    --color-spoiler: #c7d0d7;
+    --color-spoiler: #c9d1d7;
 }
 
 @font-face {
@@ -280,56 +280,6 @@ table td:first-child {
 
 table td:last-child {
 	padding-right: 10px;
-}
-
-table.data-table {
-    width: auto;
-}
-
-table.function-table,
-table.data-table,
-table.data-table td,
-table.function-table td {
-    border: none;
-}
-
-table.function-table td:first-child {
-    width: 10%;
-}
-
-table.data-table th {
-    background: transparent;
-    font-weight: normal;
-    color: var(--color-bg);
-    border-bottom: 2px solid var(--color-bg);
-}
-
-table.data-table td {
-    color: var(--color-bg);
-}
-
-table.data-table th:not(:first-child) {
-    border-right: 30px solid transparent;
-    border-left: 30px solid transparent;
-}
-
-table.data-table td:not(:first-child) {
-    border-right: 30px solid transparent;
-    border-left: 30px solid transparent;
-  }
-
-table.function-table tbody tr {
-	padding: 10px;
-	line-height: 20px;
-}
-
-table.function-table tbody tr:not(:last-child) {
-    border: none;
-	border-bottom: 1px solid var(--color-bg);
-}
-
-table.function-table tbody td:first-child {
-    font-weight: bold;
 }
 
 table caption {

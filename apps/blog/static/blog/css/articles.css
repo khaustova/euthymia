@@ -301,3 +301,66 @@ code.string-code {
 div.list {
     margin: 0.8rem 0;
 }
+
+table.function-table,
+table.data-table,
+table.data-table td,
+table.function-table td {
+    border: none;
+}
+
+/* Таблица с входными и выходными данными */
+
+table.data-table {
+    width: auto;
+}
+
+table.data-table tr:not(:last-child) {
+    border-bottom: 2px solid #d7dee3;
+}
+
+table.data-table tr:first-child {
+    border-bottom: none;
+}
+
+table.data-table th {
+    background: transparent;
+    font-weight: normal;
+    color: var(--color-bg);
+    border-bottom: 2px solid var(--color-bg);
+}
+
+table.data-table td {
+    color: var(--color-bg);
+}
+
+table.data-table th:not(:first-child) {
+    border-right: 30px solid transparent;
+    border-left: 30px solid transparent;
+}
+
+table.data-table td:not(:first-child) {
+    border-right: 30px solid transparent;
+    border-left: 30px solid transparent;
+}
+
+/* Taблица с описанием метода  */
+
+table.function-table td:first-child {
+    width: 10%;
+}
+
+table.function-table tbody tr {
+	padding: 10px;
+	line-height: 20px;
+    background-color: #e4eff6;
+}
+
+table.function-table tbody tr:not(:last-child) {
+    border: none;
+	border-bottom: 7px solid var(--color-article);
+}
+
+table.function-table tbody td:first-child {
+    font-weight: bold;
+}
