@@ -32,7 +32,7 @@ class Type(models.TextChoices):
     Тип категории статьи.
     """
     ТEXTBOOK = 'textbook', 'Учебник'
-    PROJECTS = 'projects', 'Проекты' 
+    PROJECTS = 'projects', 'Проекты'
 
 
 class Category(models.Model):
@@ -83,20 +83,14 @@ class Status(models.TextChoices):
     """
     DRAFT = 'draft', 'Черновик'
     PUBLISHED = 'published', 'Опубликовано'
-    
+
 
 class Article(models.Model):
     """
     Модель статьи.
     """
     title = models.CharField(max_length=150, verbose_name='Заголовок')
-    image = models.ImageField(
-        upload_to='articles_images/',
-        blank=True,
-        null=True,
-        verbose_name='Изображение'
-    )
-    summary = models.TextField(verbose_name='Краткое содержание')
+    summary = RichTextUploadingField(verbose_name='Краткое содержание')
     body = RichTextUploadingField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(
         verbose_name='Время создания',
@@ -220,3 +214,23 @@ class Comment(MPTTModel):
 
     def get_admin_url(self):
         return reverse('admin:%s_%s_change' % (self._meta.app_label, self._meta.model_name), args=(self.id,))
+
+
+class SiteSettings(models.Model):
+    about_me = RichTextUploadingField(
+        blank=True,
+        null=True,
+        verbose_name='Об авторе'
+    )
+    site_description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name='Описание сайта'
+    )
+
+    class Meta:
+        verbose_name = 'Настройки'
+        verbose_name_plural = 'Настройки'
+
+    def __str__(self):
+        return 'Настройки сайта'
