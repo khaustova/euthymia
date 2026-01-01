@@ -29,12 +29,17 @@ def pre_save_artcile(
     """
     Обновляет номер статьи для сортировки. 
     """
+    
+    article_number = instance.title.split()[0]
+
     try:
-        article_number = instance.title.split()[0]
         main_number = int(article_number.split('.')[0])
-        sub_number = int(article_number.split('.')[1])
     except:
         main_number = 0
+        
+    try:
+        sub_number = int(article_number.split('.')[1])
+    except:
         sub_number = 0
     
     instance.main_number = main_number
