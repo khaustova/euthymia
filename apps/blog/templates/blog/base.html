@@ -12,20 +12,23 @@
 
   <title>{% block title %}{% endblock %}</title>
 
-  <link href="{% static 'blog/css/base.css' %}" rel="stylesheet">
-  <link href="{% static 'blog/css/navigation.css' %}" rel="stylesheet">
-  <link href="{% static 'blog/css/articles.css' %}" rel="stylesheet">
+  <link href="{% static 'blog/css/style.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
+  <link href="{% static 'vendor/awesome/css/all.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'blog/img/icons/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'blog/img/icons/favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'blog/img/icons/favicon-16x16.png' %}">
   <link rel="manifest" href="{% static 'blog/img/icons/site.webmanifest' %}">
-
+  <script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+  <script src="{% static 'vendor/highlight.js/js/highlight.min.js' %}"></script>
+  <script src="{% static 'vendor/ckeditor/js/ckeditor.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  
   {% block extra_head %}{% endblock %}
-
-  <link href="{% static 'blog/css/responsive.css' %}" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+  
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript" >
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -42,71 +45,52 @@
   </script>
   <!-- /Yandex.Metrika counter -->
 </head>
+
 <body>
   <noscript><div><img src="https://mc.yandex.ru/watch/94751613" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-
-  <div class="wrapper">
-    <header>
-      <div class="logo">
-        <a href="{% url 'blog:index' %}">
-          <div class="logo_wrapper">
-            <div class="logo__main">E</div><div class="logo__logo">втюмия</div>
-          </div>
-          <div class="logo__about">учимся вместе</div>
-        </a>
-      </div>
-      <div class="mobile-search_wrapper">
-        <span class="material-symbols-outlined button-icon top-icon" id="mobile-search_close" onclick="closeSearch()">undo</span>
-        <form action="{% url 'blog:search' %}" method="get" class="mobile-search__form" autocomplete="on">
-          <input type="search" name="query" class="mobile-search__input" required=True placeholder="Поиск...">
-          <button type="submit" class="mobile-search__button">
-            <span class="material-symbols-outlined button-icon top-menu-icon">search</span>
-          </button>
-        </form>
-      </div>
-      <div class="top-navigation">
-        <span class="material-symbols-outlined button-icon top-menu-icon" id="mobile-search_open" onclick="openSearch()">search</span>
-        <span class="material-symbols-outlined button-icon top-menu-icon" id="menuOpen" onclick="openMenu()">menu</span>
-        <span class="material-symbols-outlined button-icon top-icon" id="menuClose" onclick="closeMenu()">close</span>
-      </div>
+    <header class="mobile-header">
+        <div class="logo-mobile">ЭВТЮМИЯ</div>
+        <div class="mobile-controls">
+            <button class="mobile-icon-btn" id="mobileSearchToggle">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="mobile-icon-btn" id="hamburgerBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-search-container" id="mobileSearchContainer">
+            <input type="text" placeholder="Найти статью..." class="mobile-search-input">
+        </div>
     </header>
     
-    <aside>
+  <div class="main-container">
+    <aside class="sidebar" id="sidebarNav">
+    <button class="close-menu-btn" id="closeMenuBtn">&times;</button>
+        <div class="logo">
+        <a href="{% url 'blog:index' %}">
+          <div class="logo-wrapper">
+            <div class="logo-1st-letter">E</div><div class="logo-other-letter">втюмия</div>
+          </div>
+          <div class="logo-slogan">учимся вместе</div>
+        </a>
+        </div>
       {% block sidebar %}{% endblock %}
     </aside>
-    <main>
+
+    <main class="content">
       {% block about %}{% endblock %}
-      {% block info %}{% endblock %}
-      <div class="feedback-modal">
-        <div class="feedback-modal__inner">
-          <div class="feedback__info">
-            <span class="material-symbols-outlined button-icon middle-icon feedback__close" onclick="closeFeedbackModal()">close</span>
-            <h2>Обратная связь</h2>
-            <p class="feedback__text">Если вы хотите связаться со мной, то можете использовать следующую форму обратной связи:</p>
-          </div>
-          {% feedback_form %}
-        </div>
-      </div>
       {% block content %}{% endblock %}
-    </main>
-
-    <footer>
       {% block pagination %}{% endblock %}
-      <span>&#169 Хаустова Ирина, <a href="{% url 'blog:index' %}">euthymia.ru</a>, 2025. Все права защищены</span>
-    </footer>
-
+      <div class="footer">&#169 Хаустова Ирина, <a href="{% url 'blog:index' %}">euthymia.ru</a>, 2026. Все права защищены</div>
+    </main>
   </div>
-
+  <div class="overlay" id="overlay"></div>
+  <script src="{% static 'blog/js/script.js' %}" defer></script>
+  <script>
+    hljs.highlightAll();
+  </script>
   
-  <button class="back-to-top back-to-top_hide">
-      <span class="material-symbols-outlined back-to-top-icon">
-          arrow_upward
-      </span>
-  </button>
-
-  <script src="{% static 'blog/js/navigation.js' %}" defer></script>
-  <script src="{% static 'blog/js/modal.js' %}" defer></script>
-
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>

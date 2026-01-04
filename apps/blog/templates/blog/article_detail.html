@@ -11,129 +11,65 @@
 {% block title %}{{ article.title|cut_number }}{% endblock %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
-  <link href="{% static 'blog/css/comments.css' %}" rel="stylesheet">
-  <script src="{% static "admin/js/vendor/jquery/jquery.js" %}"></script>
-  <script src="{% static "dashboard/js/spoiler.js" %}"></script>
-  <script src="{% static 'vendor/highlight.js/js/highlight.min.js' %}"></script>
-  <script src="{% static 'vendor/ckeditor/js/ckeditor.js' %}"></script>
+  <script src="{% static 'blog/js/comments.js' %}"></script>
   <script src="https://yastatic.net/share2/share.js" defer></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <script id="MathJax-script" async src="{% static 'vendor/mathjax/js/tex-mml-svg.js' %}"></script>
 {% endblock %}
 
 {% block sidebar %}
   {% include 'blog/includes/sidebar_content.html' %}
 {% endblock %}
 
-{% block info %}
-<div class="info">
-  <div class="breadcrumbs">
-    <a href="{% url 'blog:index' %}" class="article__link">&#x1F3E0; Главная</a>
-    &nbsp;<span class="material-symbols-outlined middle-icon arrow-icon">
-      arrow_back_ios
-      </span> 
-    {{ article.title|cut_number }}
-  </div>
-  <form action="{% url 'blog:search' %}" method="get" autocomplete="on" class="form__search">
-    <div class="search_wrapper">
-      <div class="search__button">
-        <span class="material-symbols-outlined button-icon search__button-icon top-menu-icon">search</span>
-      </div>
-      <div class="search__input_wrapper">
-        <input type="search" name="query" class="search__input" placeholder="Поиск...">
-      </div>
-    </div>
-  </form>
-</div>
-{% endblock %}
-
 {% block content %}
-  <article class="article article-block article_detail">
-    <div class="article__title_wrapper">
-      <strong><h1 class="article__title">{{ article.title|cut_number }}</h1></strong> 
-      {% if user.is_authenticated %}
-        <div class="article_edit_wrapper">
-          <a href="{{ article.get_admin_url }}" class="object_edit"><span class="material-symbols-outlined">
-            edit
-            </span></a>
-        </div>
-      {% endif %}
-    </div>
-
-    <div class="summary__about">
-      <div class="summary__info article__info">
-        <svg width="15px" height="15px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet"><path fill="#E1E8ED" d="M35.059 18c0 3.304-7.642 11-17.067 11C8.566 29 .925 22.249.925 18c0-3.314 34.134-3.314 34.134 0z"></path><path fill="#292F33" d="M35.059 18H.925c0-3.313 7.642-11 17.067-11s17.067 7.686 17.067 11z"></path><path fill="#F5F8FA" d="M33.817 18c0 2.904-7.087 9.667-15.826 9.667c-8.74 0-15.825-5.935-15.825-9.667c0-2.912 7.085-9.666 15.825-9.666C26.73 8.333 33.817 15.088 33.817 18z"></path><circle fill="#03223a" cx="18" cy="18" r="8.458"></circle><circle fill="#292F33" cx="18" cy="18" r="4.708"></circle><circle fill="#F5F8FA" cx="14.983" cy="15" r="2"></circle></svg>&nbsp;&nbsp;{{ article.views }}&nbsp;&nbsp;
-        &#x1F4AC; {% get_comments_count article as comments_count %} {{ comments_count }}
-      </div>
-      <div class="summary__date">
-        &#x1F4C5; {{ article.created_date }}
-      </div>
-    </div>
-    <hr class="summary__line">
-    {{ article.body|safe }}
-    <div class="article__bottom">
-      <div class="article__prev">
-        {% get_next_and_prev_article article as articles %}
-        {% if articles.prev_article %}
-          <a href="{{ articles.prev_article.get_absolute_url }}" class="article__navigation-button">
-            <span class="material-symbols-outlined next-icon prev-icon">
-              arrow_back_ios
-            </span> <span class="article__navigation">Назад</span>
+  <article class="article-content card">
+    <div class="article-header">
+      <h1>{{ article.title|cut_number }}</h1>
+    <div class="summary-meta">
+      <span class="summary-date"><i class="fa-regular fa-calendar"></i> {{ article.created_date|date:"d.m.Y" }}</span>
+      <div class="summary-stats">
+        <span><i class="fa-regular fa-eye"></i> {{ article.views }}</span>
+        <span><i class="fa-regular fa-comments"></i> {% get_comments_count article as comments_count %}{{ comments_count }}</span>
+        {% if user.is_authenticated %}
+          <a href="{{ article.get_admin_url }}" class="object_edit">
+            <i class="fas fa-edit"></i>
           </a>
         {% endif %}
       </div>
-      <div class="share_wrapper">
-          <span class="share__text"><svg
-            t="1580465783605"
-            class="icon share__svg"
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            p-id="9773"
-            width="18"
-            height="18">
-              <path
-                d="M767.99994 585.142857q75.995429 0 129.462857 53.394286t53.394286 129.462857-53.394286 129.462857-129.462857 53.394286-129.462857-53.394286-53.394286-129.462857q0-6.875429 1.170286-19.456l-205.677714-102.838857q-52.589714 49.152-124.562286 49.152-75.995429 0-129.462857-53.394286t-53.394286-129.462857 53.394286-129.462857 129.462857-53.394286q71.972571 0 124.562286 49.152l205.677714-102.838857q-1.170286-12.580571-1.170286-19.456 0-75.995429 53.394286-129.462857t129.462857-53.394286 129.462857 53.394286 53.394286 129.462857-53.394286 129.462857-129.462857 53.394286q-71.972571 0-124.562286-49.152l-205.677714 102.838857q1.170286 12.580571 1.170286 19.456t-1.170286 19.456l205.677714 102.838857q52.589714-49.152 124.562286-49.152z"
-                p-id="9774"
-                fill="#074c91">
-              </path>
-            </svg>
-            &nbsp;Поделиться
-          </span>
-          <span class="ya-share2 share__buttons share__icon" data-curtain data-limit="6" data-more-button-type="short" 
+    </div>
+
+    <div class="article-text">{{ article.body|safe }}<div>
+
+    <div class="nav-buttons">
+      {% get_next_and_prev_article article as articles %}
+      {% if articles.prev_article %}
+        <a href="{{ articles.prev_article.get_absolute_url }}" class="nav-button"><i class="fas fa-arrow-left"></i> <span class="nav-command">Назад</span></a>
+      {% else %}
+        <span class="nav-button nav-text"><i class="fas fa-arrow-left"></i> <span>Назад</span></span>
+      {% endif %}
+
+      <div class="share-block" id="shareBlock">
+        <button class="share-toggle-btn" id="shareToggleBtn">
+          <i class="fas fa-share-alt"></i> <span class="nav-command">Поделиться</span>
+        </button>
+        <div class="share-icons">
+          <span class="ya-share2" data-curtain data-limit="6" data-more-button-type="short" 
             data-title="{{ article.title|cut_number }}"
             data-description="{{ article.summary }}"
             {% if article.image %}
               data-image="{{ article.image.url }}"
-          {% endif %}
+            {% endif %}
             data-services="vkontakte,telegram,whatsapp,odnoklassniki,">
           </span>
+        </div>
       </div>
-      <div class="article__next">
-        {% get_next_and_prev_article article as articles %}
-        {% if articles.next_article %}
-          <a href="{{ articles.next_article.get_absolute_url }}" class="article__navigation-button">
-            <span class="article__navigation">Дальше</span> <span class="material-symbols-outlined next-icon">
-              arrow_forward_ios
-            </span>
-          </a>
-        {% endif %}
-      </div>
+
+      {% if articles.next_article %}
+        <a href="{{ articles.next_article.get_absolute_url }}" class="nav-button"><span class="nav-command">Далее</span> <i class="fas fa-arrow-right"></i></a>
+      {% else %}
+        <span class="nav-button nav-text"><span>Далее</span> <i class="fas fa-arrow-right"></i></span>
+      {% endif %}
     </div>
-    <hr>
   </article>
 
-{% include 'blog/includes/comments.html' %}
-{% endblock %}
-
-{% block extra_scripts %}
-  <script src="{% static 'blog/js/article_detail.js' %}" defer></script>
-  <script>
-    hljs.highlightAll();
-  </script>
+{% include "blog/includes/comments.html" %}
 {% endblock %}

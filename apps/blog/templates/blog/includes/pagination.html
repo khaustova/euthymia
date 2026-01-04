@@ -1,13 +1,38 @@
-<div class="pagination">
+<nav class="pagination" aria-label="Навигация по страницам">
   {% if is_paginated %}
+
+    {# Кнопка "Назад" #}
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
+        <i class="fa-solid fa-arrow-left"></i> Назад
+      </a>
+    {% else %}
+      <span class="page-link disabled">
+        <i class="fa-solid fa-arrow-left"></i> Назад
+      </span>
+    {% endif %}
+
+    {# Номера страниц #}
     {% for page_number in page_obj.paginator.get_elided_page_range %}
       {% if page_number == page_obj.paginator.ELLIPSIS %}
-        {{ page_number }}
+        <span class="page-link dots">{{ page_number }}</span>
       {% else %}
-        <a href="?page={{ page_number }}" class="pagination__number {% if page_number == page_obj.number %}pagination__current{% endif %}">
+        <a href="?page={{ page_number }}" class="page-link {% if page_number == page_obj.number %}active{% endif %}">
           {{ page_number }}
         </a>
       {% endif %}
     {% endfor %}
+
+    {# Кнопка "Вперед" #}
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="page-link">
+        Вперед <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    {% else %}
+      <span class="page-link disabled">
+        Вперед <i class="fa-solid fa-arrow-right"></i>
+      </span>
+    {% endif %}
+      
   {% endif %}
-</div>
+</nav>

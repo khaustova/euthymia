@@ -1,7 +1,0 @@
-<form action="{% url 'blog:feedback' %}" method="post" class="feedback__form">
-  {% csrf_token %}
-  {{ feedback_form.name }}
-  {{ feedback_form.email }}
-  {{ feedback_form.message }}
-  <button type="submit" class="feedback-form__post-button">Отправить</button>
-</form>

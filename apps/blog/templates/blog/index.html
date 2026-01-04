@@ -2,8 +2,8 @@
 {% load blog_tags static %}
 
 {% block description %}
-  <meta name="description" content="euthymia.ru - сайт репетитора по математике и информатике, на котором публикуются различные образовательные материалы по программированию. 
-  Надеюсь, здесь вы найдёте что-нибудь полезное и интересное для себя.">
+  {% get_site_settings as site_settings %}
+  <meta name="description" content="{% if site_settings.site_description %}{{ site_settings.site_description }}{% else %}Образовательные материалы по основам Python: переменные, коллекции, функции, классы, модули и пакеты, работа с файлами. Основы работа с Anaconda.{% endif %}">
 {% endblock %}
 
 {% block title %}Эвтюмия - сайт о программировании 
@@ -27,33 +27,26 @@
 {% endif %}
 {% endblock %}
 
-
-{% block info %}
-  {% url 'blog:index' as index %}
-  <div class="info info_index">
-    <div class="sort-links">
-      <a href="{% url 'blog:index' %}" class="{% if request.path == index %} active-sort {% endif %}">
-      &#x1F4C5; По дате</a>
-      <a href="{% url 'blog:hot_index' %}" class="hot-sort {% if not request.path == index %} active-sort {% endif %}">
-      &#x1F525; По популярности</a>
-    </div>
-    <form action="{% url 'blog:search' %}" method="get" autocomplete="on" class="form__search">
-      <div class="search_wrapper">
-        <div class="search__button">
-          <span class="material-symbols-outlined button-icon search__button-icon top-menu-icon">search</span>
-        </div>
-        <div class="search__input_wrapper">
-          <input type="search" name="query" class="search__input" placeholder="Поиск...">
-        </div>
-      </div>
-    </form>
-  </div>
-{% endblock %}
-
 {% block content %}
-{% include 'blog/includes/articles_summary.html' %}
+<div class="controls">
+    <div class="sort-buttons">
+        {% url "blog:index" as index %}
+        <a href="{% url 'blog:index' %}" class="sort-btn{% if request.path == index %} active{% endif %}">По дате</a>
+        <a href="{% url 'blog:hot_index' %}" class="sort-btn{% if not request.path == index %} active{% endif %}">По популярности</a>
+    </div>
+    <div class="search-wrapper">
+      <form action="{% url 'blog:search' %}" method="get" autocomplete="on">
+      <div class="search_wrapper">
+        <input type="text" name="query" placeholder="Найти статью..." class="search-input" id="searchInput">
+        <button type="button" class="search-btn" id="searchBtn"><i class="fa fa-search"></i></button>
+      </form>
+      </div>
+    </div>
+</div>
+<div class="posts-list">
+  {% include 'blog/includes/articles_summary.html' %}
+</div>
 {% endblock %}
-
 
 {% block pagination %}
   {% include 'blog/includes/pagination.html' %}

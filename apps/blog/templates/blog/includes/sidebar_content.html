@@ -1,45 +1,32 @@
 {% load static %}
 {% load blog_tags %}
 
-<nav class="sidebar-content menu">
-  <strong>
-    <span class="sidebar__title">
-      {{ article.category|cut_number }}
-    </span>
-  </strong>
-  <hr class="sidebar__line">
-  <ul class="navigation navigation__content"> 
+<nav class="toc-nav">
+  <h3 class="toc-title">{{ article.category|cut_number }}</h3>
+  <ul class="toc-list">
     {% get_content_links article as content_links %}
-    {% if article.subcategory %}  
+    {% if article.subcategory %}
       {% for subcategory, articles in content_links.items %}
-        <div class="content__title {% if article.subcategory == subcategory %}active{% endif %}">
-          <div><span class="article__number">{{ subcategory|cut_text }}</span></div><div>{{ subcategory|cut_number }}</div><div class="plusminus"></div>
-        </div>
-        <li class="content__links {% if article.subcategory == subcategory %}show{% endif %}">
-          {% for content_article in articles %}
-            <ul class="content__list">
-              <li class="content__item">
-                {% if content_article.get_absolute_url == article.get_absolute_url %}
-                  <div class="article__number">{{ content_article.title|cut_text }}</div><div>{{ content_article.title|cut_number }}</div>
-                {% else %}
-                <div class="article__number">{{ content_article.title|cut_text }}</div><div><a href="{{ content_article.get_absolute_url }}" class="sidebar__link">{{ content_article.title|cut_number }}</a></div>
-                {% endif %}
-              </li>
-            </ul>
-          {% endfor %}
+        <li class="toc-category{% if article.subcategory == subcategory %} is-open{% endif %}">
+          <div class="toc-category-header">
+            <a href="#">{{ subcategory }}</a>
+            <button class="toc-toggle-btn" data-action="toggle">
+              {% if article.subcategory == subcategory %}-{% else %}+{% endif %}
+            </button>
+          </div>
+          <ul class="toc-submenu">
+            {% for content_article in articles %}
+              <li><a href="{{ content_article.get_absolute_url }}" {% if content_article.get_absolute_url == article.get_absolute_url %}class="active"{% endif %}>{{ content_article.title }}</a></li>
+            {% endfor %}
+          </ul>
         </li>
       {% endfor %}
     {% else %}
-      {% for category_article in content_links %}
-      <li class="content__item">
-        {% if category_article.get_absolute_url == article.get_absolute_url %}
-          {{ category_article.title }}
-        {% else %}
-          <a href="{{ category_article.get_absolute_url }}" class="sidebar__link">{{ category_article.title }}</a>
-        {% endif %}
-      </li>
-      {% endfor %}
+      <ul class="toc-list no-sub">
+        {% for content_article in content_links %}
+              <li><a href="{{ content_article.get_absolute_url }}" {% if content_article.get_absolute_url == article.get_absolute_url %}class="active"{% endif %}>{{ content_article.title }}</a></li>
+        {% endfor %}
+      </ul>
     {% endif %}
-
-  </ol>
+  </ul>
 </nav>
