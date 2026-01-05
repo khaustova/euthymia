@@ -217,6 +217,9 @@ class Comment(MPTTModel):
 
 
 class SiteSettings(models.Model):
+    """
+    Модель настроек сайта.
+    """
     about_me = RichTextUploadingField(
         blank=True,
         null=True,
