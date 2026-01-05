@@ -4,9 +4,8 @@ from django.conf import settings
 from django.utils.html import escape
 from django.utils.safestring import SafeText, mark_safe
 from django.conf import settings
-from apps.manager.models import SiteSettings
+from apps.blog.models import SiteSettings
 from ..models import Article, Category, Subcategory, Status, Type
-from ..forms import SubscribeForm, FeedbackForm
 from ..utils import get_word
 
 register = template.Library()
@@ -80,7 +79,6 @@ def get_content_links(article: Article) -> dict:
                 subcategory__name=subcategory,
                 status=Status.PUBLISHED,
             )
-        return content_links
     else:
         content_links = Article.objects.filter(
             category__name=article.category, 
@@ -134,24 +132,6 @@ def get_comments_count(article: Article) -> int:
     return article.comment_set.count()
 
 
-@register.inclusion_tag('blog/includes/subscribe_form.html')
-def subscribe_form(**kwargs: Any) -> dict:
-    """
-    Возвращает форму подписки на блог.
-    """
-    form = SubscribeForm()
-    return {'subscribe_form': form}
-
-
-@register.inclusion_tag('blog/includes/feedback_form.html')
-def feedback_form(**kwargs: Any) -> dict:
-    """
-    Возвращает форму обратной связи.
-    """
-    form = FeedbackForm()
-    return {'feedback_form': form}
-
-
 @register.simple_tag
 def get_results_word(n: int, i: int) -> str:
     """
@@ -159,9 +139,9 @@ def get_results_word(n: int, i: int) -> str:
     в зависимости от их количества.
     """
     ind = get_word(int(n))
-    pairs = {0: ('найдено', 'результатов'),
-             1: ('найден', 'результат'),
-             2: ('найдено', 'результата')
+    pairs = {0: ('найдено', 'статей'),
+             1: ('найдена', 'статья'),
+             2: ('найдено', 'статьи')
              }
     return pairs[ind][i]
 
