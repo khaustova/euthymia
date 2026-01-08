@@ -47,9 +47,13 @@ figcaption {
     font-size: 1.2rem;
 }
 
-code.string-code {
-    background-color: #ced8df;
-    color: #02014b;
+:not(pre)>code {
+    background-color: #f3f4f6;
+    color: black;
+    border: 1px solid #ecedf1;
+    border-radius: 3px;
+    padding: 2px 5px;
+    font-size: 14px;
 }
 
 /* Separator */
@@ -68,13 +72,4 @@ h1, h2 {
     color: #00a194;
     text-align: center;
     margin: 0.5rem 0;
-}
-
-/* Code in text */
-
-.code {
-    padding: 0 2px;
-    background-color: #8fbbb8;
-    color: var(--color-primary);
-    border-radius: 2px;
 }
