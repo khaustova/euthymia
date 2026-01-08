@@ -1,13 +1,12 @@
 from django import forms
 from django.forms import ModelForm
 from mptt.forms import TreeNodeChoiceField
-from apps.manager.models import Feedback, EmailSubscription
 from .models import Comment
 
 
 class CommentForm(ModelForm):
     """
-    Форма для написания комментария.
+    Форма для комментария.
     """
     parent = TreeNodeChoiceField(queryset=Comment.objects.all())
 
@@ -42,48 +41,4 @@ class CommentForm(ModelForm):
                 'placeholder': 'Оставьте комментарий...',
                 }
             )
-        }
-
-
-class FeedbackForm(ModelForm):
-    """
-    Форма для обратной связи.
-    """
-
-    class Meta:
-        model = Feedback
-        fields = ('name', 'email', 'message')
-        widgets = {
-            'name': forms.TextInput(attrs={
-                'class': 'feedback-form__field',
-                'placeholder': 'Имя',
-                'autocomplete': 'on',
-                }
-            ),
-            'email': forms.EmailInput(attrs={
-                'class': 'feedback-form__field',
-                'placeholder': 'E-mail',
-                'autocomplete': 'on',
-                }
-            ),
-            'message': forms.Textarea(attrs={
-                'class': 'feedback-form__field',
-                'placeholder': 'Написать сообщение...',
-                }
-            )
-        }
-
-
-class SubscribeForm(ModelForm):
-
-    class Meta:
-        model = EmailSubscription
-        fields = ('email',)
-        widgets = {
-            'email': forms.EmailInput(attrs={
-                'class': 'custom-input',
-                'placeholder': 'E-mail',
-                'autocomplete': 'on',
-                }
-            ),
         }

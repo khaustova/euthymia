@@ -41,9 +41,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'admin_auto_filters',
     'mptt',
-    'django_celery_results',
     'apps.blog.apps.BlogConfig',
-    'apps.manager.apps.ManagerConfig',
 ]
 
 SITE_ID = 1
@@ -303,19 +301,17 @@ CKEDITOR_CONFIGS = {
         ),
         'codeSnippet_languages': {
             'python': 'Python',
-            'C': 'C',
+            'cpp': 'C++',
             'bash': 'Bash',
             'xml': 'XML',
-            'javascript': 'JavaScript'
+            'javascript': 'JavaScript',
+            'json': 'JSON'
         },
         'stylesSet': [
             {
                 'name': 'Код в тексте',
                 'element': 'code',
-                'attributes': {
-                    'class': 'string-code'
-                }
-            },
+            }
         ],
     }
 }
@@ -331,17 +327,6 @@ EMAIL_USE_TLS = True
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
-
-# Celery
-
-CELERY_BROKER_URL = env('CELERY_BROKER_URL')
-CELERY_ACCEPT_CONTENT = {'application/json'}
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Europe/Moscow'
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_RESULT_EXTENDED = True
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # Analytics
 
@@ -359,10 +344,7 @@ DASHBOARD_CUSTOMIZATION = {
         'blog.category': 'category',
         'blog.subcategory': 'bookmark',
         'blog.comment': 'chat_bubble',
-        'manager.feedback': 'rate_review',
-        'manager.emailsubscription': 'email',
-        'manager.sitesettings': 'settings',
-        'django_celery_results.taskresult': 'task',
+        'blog.sitesettings': 'settings',
     },
     'hidden_apps': [
         'dashboard',
@@ -370,7 +352,6 @@ DASHBOARD_CUSTOMIZATION = {
     ],
     'hidden_models': [
         'auth.group',
-        'django_celery_results.groupresult',
     ],
     'apps_order': [
         'blog',
@@ -378,21 +359,12 @@ DASHBOARD_CUSTOMIZATION = {
         'blog.comment',
         'blog.category',
         'blog.subcategory',
-        'manager',
-        'manager.feedback',
-        'manager.emailsubscription',
-        'manager.sitesettings',
-        'django_celery_results',
+        'blog.sitesettings',
         'auth',
     ],
     'extra_links': [
         {
-            'manager': [
-                {
-                    'name': 'Документация',
-                    'admin_url': '/admin/doc/',
-                    'icon': 'description'
-                },
+            'blog': [
                 {
                     'name': 'Яндекс Метрика',
                     'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id='
@@ -418,4 +390,3 @@ IS_CUT_NUMBER = True
 IS_USE_AKISMET = env('IS_USE_AKISMET')
 AKISMET_API_KEY = env('AKISMET_API_KEY')
 AKISMET_BLOG_URL = env('AKISMET_BLOG_URL')
-

@@ -5,16 +5,18 @@ from ipware import get_client_ip
 
 from django.conf import settings
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView
-
-from apps.manager.tasks import add_email, add_feedback
-from apps.manager.models import EmailSubscription
+from django.http import (
+    HttpRequest, 
+    HttpResponse, 
+    HttpResponseForbidden, 
+    HttpResponseRedirect, 
+    Http404
+)
+from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView, View
 
 from .models import Article, Comment, Category, Subcategory, Status
-from .forms import CommentForm, SubscribeForm, FeedbackForm
+from .forms import CommentForm
 
 
 class ArticleView(ListView):
@@ -59,9 +61,9 @@ class ArticleDetailView(DetailView):
         return context
 
     def post(
-        self, 
-        request: HttpRequest, 
-        *args: Any, 
+        self,
+        request: HttpRequest,
+        *args: Any,
         **kwargs: Any
     ) -> HttpResponseRedirect:
         """
@@ -112,13 +114,13 @@ class ArticleDetailView(DetailView):
 
                 new_comment.article = self.get_object()
                 new_comment.save()
-            return redirect(self.request.path_info)
+            return redirect(self.request.path_info + '#comments')
 
     def dispatch(
-        self, 
-        request: HttpRequest, 
-        slug: str, 
-        *args: Any, 
+        self,
+        request: HttpRequest,
+        slug: str,
+        *args: Any,
         **kwargs: Any
     ) -> Callable:
         """
@@ -130,13 +132,30 @@ class ArticleDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 
+class CategoryRedirectView(View):
+    """
+    Находит первую статью в указанной категории и перенаправляет на нее.
+    """
+    def get(self, request, category):
+        try:
+            first_article = Article.objects.filter(category__slug=category).order_by('created_date').first()
+            
+            if first_article:
+                return redirect('blog:article_detail', category, first_article.slug)
+            else:
+                raise Http404('В этой категории нет статей.')
+                
+        except Article.DoesNotExist:
+            raise Http404('Категория не найдена или в ней нет статей.')
+
+
 class SearchView(ListView):
     """
     Отображает список опубликованных в соответствии с запросом.
     """
     model = Article
     context_object_name = 'articles'
-    template_name = 'blog/search.html'
+    template_name = 'blog/search_results.html'
     paginate_by = 10
     paginate_orphans = 5
 
@@ -156,65 +175,6 @@ class SearchView(ListView):
         )
 
 
-def feedback_form(request: HttpRequest) -> HttpResponse:
-    """
-    Получает заполненную форму обратной связи и передаёт данные из неё в задачу, 
-    отвечающую за добавление их в базу данных.
-    Если включена проверка на спам с помощью Akismet, то проверяет данные перед
-    их сохранением.
-    """
-    if request.method == 'POST':
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data.get('name')
-            email = form.cleaned_data.get('email')
-            message = form.cleaned_data.get('message')
-            
-            client_ip, is_routable = get_client_ip(request)
-            if client_ip is None:
-                feedback_ip = 'Unable'
-            else:
-                if is_routable:
-                    feedback_ip = client_ip
-                else:
-                    feedback_ip = 'Private'
-
-            if settings.IS_USE_AKISMET:
-                akismet_api = Akismet(
-                    key=settings.AKISMET_API_KEY, 
-                    blog_url=settings.AKISMET_BLOG_URL
-                )
-                is_spam = akismet_api.comment_check(
-                    user_ip=feedback_ip,
-                    user_agent=request.META.get('HTTP_USER_AGENT'),
-                    comment_type='comment',
-                    comment_author=name,
-                    comment_author_email=email,
-                    comment_content=message,
-                )
-
-                if is_spam:
-                    return HttpResponseForbidden('Упс! Доступ запрещён!')
-
-            add_feedback.delay(name, email, feedback_ip, message) 
-
-    return render(request, 'blog/feedback_success.html')
-
-
-def subscribe_form(request: HttpRequest) -> HttpResponse:
-    """
-    Получает заполненную форму подписки на блог и передаёт данные из неё в
-    задачу, отвечающую за добавление email в базу данных.
-    """
-    if request.method == 'POST':
-        form = SubscribeForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            add_email.delay(email)
-
-    return render(request, 'blog/subscribe_success.html')
-
-
 def get_subcategory(request):
     """
     В формате JSON возвращает только те подкатегории, что принадлежат 
@@ -227,21 +187,3 @@ def get_subcategory(request):
     )
 
     return HttpResponse(dumps(result), content_type='application/json')
-
-
-def unsubscribe(request: HttpRequest) -> HttpResponse:
-    """
-    Если пользователь перешёл по ссылке для отписки, где в качестве GET-пара-
-    метров передаётся хэш и сам email, то, если такой email существует в базе
-    данных, удаляет его, иначе - сообщает об ошибке.
-    """
-    try:
-        sub_email = EmailSubscription.objects.get(
-            email_hash=request.GET['uid'],
-            email=request.GET['email']
-            )
-        sub_email.delete()
-        return render(request, 'blog/unsubscribe_success.html')
-
-    except ObjectDoesNotExist:
-        return render(request, 'blog/unsubscribe_failure.html')
