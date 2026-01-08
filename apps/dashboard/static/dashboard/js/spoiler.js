@@ -1,13 +1,12 @@
 // Скрывает/показывает содержимое под спойлером
 
-$(function() {
-	$('div.spoiler-title').click(function() {
-		$(this)
-			.children()
-			.first()
-			.toggleClass('show-icon')
-			.toggleClass('hide-icon');
-		$(this)
-			.parent().children().last().toggle();
-	});
+const spoilerToggles = document.querySelectorAll('.spoiler-toggle');
+
+spoilerToggles.forEach(button => {
+    button.addEventListener('click', () => {
+        const spoiler = button.closest('.spoiler');
+        if (spoiler) {
+            spoiler.classList.toggle('is-open');
+        }
+    });
 });
