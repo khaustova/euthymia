@@ -11,10 +11,10 @@ media
 robots.txt
 .examples
 
-# Docker #
-docker
-Dockerfile.prod
-docker-compose.prod.yml
+# Logs
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
 
 # Backup files # 
 *.bak 
@@ -63,9 +63,6 @@ coverage.xml
 
 # pyenv 
 .python-version 
-
-# celery 
-celerybeat-schedule.* 
 
 # SageMath parsed files 
 *.sage.py 

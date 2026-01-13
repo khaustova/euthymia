@@ -1,6 +1,9 @@
 from pathlib import Path
 from environ import Env
 
+# ═══════════════════════════════════════════════════════════════════
+# Общие настройки
+# ═══════════════════════════════════════════════════════════════════
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,8 +25,6 @@ CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS').split(' ')
 
 INTERNAL_IPS = env('INTERNAL_IPS').split(' ')
 
-# Application definition
-
 INSTALLED_APPS = [
     'apps.dashboard.apps.DashboardConfig',
     'django.contrib.admindocs',
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'admin_auto_filters',
     'mptt',
-    'apps.blog.apps.BlogConfig',
+    'apps.website.apps.WebsiteConfig',
 ]
 
 SITE_ID = 1
@@ -80,21 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database
-
-DATABASES = {
-    'default': {
-        'ENGINE': env('POSTGRES_ENGINE'),
-        'NAME': env('POSTGRES_DB'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('POSTGRES_HOST'),
-        'PORT': env('POSTGRES_PORT'),
-    }
-}
-
-# Password validation
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -110,69 +96,211 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+IS_CUT_NUMBER = True  # Обрезается ли номер в заголовке статьи
+
+# ═══════════════════════════════════════════════════════════════════
+# База данных
+# ═══════════════════════════════════════════════════════════════════
+
+DATABASES = {
+    'default': {
+        'ENGINE': env('POSTGRES_ENGINE'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
+    }
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ═══════════════════════════════════════════════════════════════════
+# Язык и время
+# ═══════════════════════════════════════════════════════════════════
 
 LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
-
 USE_I18N = True
-
 USE_TZ = True
 
-# Static files
+# ═══════════════════════════════════════════════════════════════════
+# Работа с файлами
+# ═══════════════════════════════════════════════════════════════════
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
-# STORAGES = {
-#     'default': {
-#         'BACKEND': 'django.core.files.storage.FileSystemStorage',
-#     },
-#     'staticfiles': {
-#         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-#     },
-# }
-
-# Media files
+if not DEBUG:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        },
+    }
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
+# ═══════════════════════════════════════════════════════════════════
+# Логирование
+# ═══════════════════════════════════════════════════════════════════
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Logs
+LOGS_DIR = BASE_DIR / 'logs'
+LOGS_DIR.mkdir(exist_ok=True)
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(name)-12s %(message)s'
+            'format': '[{levelname}] {asctime} {name} {module} {funcName} | {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'simple': {
+            'format': '[{levelname}] {asctime} | {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'detailed': {
+            'format': '''
+────────────────────────────────────────────────────
+[{levelname}] {asctime}
+Module: {module} | Function: {funcName}
+Path: {pathname}:{lineno}
+Message: {message}
+────────────────────────────────────────────────────''',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
         },
     },
+    
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    
     'handlers': {
-        'logit': {
-            'level': env('LOG_LEVEL'),
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+            'filters': ['require_debug_true'],
+        },
+
+        'file_all': {
+            'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': str(BASE_DIR / 'django.log'),
-            'maxBytes': 15728640,  # 1024 * 1024 * 15B = 15MB
-            'backupCount': 10,
+            'filename': LOGS_DIR / 'all.log',
+            'maxBytes': 1024 * 1024 * 10,  # 10 MB
+            'backupCount': 5,
             'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        
+        'file_errors': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_DIR / 'errors.log',
+            'maxBytes': 1024 * 1024 * 10,  # 10 MB
+            'backupCount': 10,
+            'formatter': 'detailed',
+            'encoding': 'utf-8',
+        },
+        
+        'file_website': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_DIR / 'website.log',
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 5,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        
+        'file_comments': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_DIR / 'comments.log',
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 3,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        
+        'file_security': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_DIR / 'security.log',
+            'maxBytes': 1024 * 1024 * 10,  # 10 MB
+            'backupCount': 10,
+            'formatter': 'detailed',
+            'encoding': 'utf-8',
         },
     },
+    
     'loggers': {
-        'django.server': {
-            'handlers': ['logit'],
-            'level': env('LOG_LEVEL'),
-            'propagate': True,
+        'django': {
+            'handlers': ['console', 'file_all', 'file_errors'],
+            'level': 'INFO',
+            'propagate': False,
         },
+        
+        'website': {
+            'handlers': ['console', 'file_website', 'file_errors'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        
+        'website.comments': {
+            'handlers': ['console', 'file_comments', 'file_errors'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        
+        'security': {
+            'handlers': ['console', 'file_security'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        
+        'django.request': {
+            'handlers': ['file_errors'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        
+        'django.security': {
+            'handlers': ['file_security'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+    
+    'root': {
+        'handlers': ['console', 'file_all'],
+        'level': 'INFO',
     },
 }
 
-# CKEDITOR config
+# ═══════════════════════════════════════════════════════════════════
+# Ckeditor
+# ═══════════════════════════════════════════════════════════════════
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
@@ -316,35 +444,27 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-# Email
-
-EMAIL_BACKEND = env('EMAIL_BACKEND')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_USE_TLS = True
-SERVER_EMAIL = EMAIL_HOST_USER
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = EMAIL_HOST_USER
-
-# Analytics
+# ═══════════════════════════════════════════════════════════════════
+# Яндекс Метрика
+# ═══════════════════════════════════════════════════════════════════
 
 YANDEX_METRIKA_TOKEN = env('YANDEX_METRIKA_TOKEN')
 YANDEX_METRIKA_COUNTER = env('YANDEX_METRIKA_COUNTER')
 
+# ═══════════════════════════════════════════════════════════════════
 # Dashboard
+# ═══════════════════════════════════════════════════════════════════
 
 DASHBOARD_CUSTOMIZATION = {
-    'search_model': 'blog.article',
+    'search_model': 'website.article',
     'sidebar_icons': {
         'auth.user': 'person',
         'auth.group': 'groups',
-        'blog.article': 'article',
-        'blog.category': 'category',
-        'blog.subcategory': 'bookmark',
-        'blog.comment': 'chat_bubble',
-        'blog.sitesettings': 'settings',
+        'website.article': 'article',
+        'website.category': 'category',
+        'website.subcategory': 'bookmark',
+        'website.comment': 'chat_bubble',
+        'website.sitesettings': 'settings',
     },
     'hidden_apps': [
         'dashboard',
@@ -354,17 +474,17 @@ DASHBOARD_CUSTOMIZATION = {
         'auth.group',
     ],
     'apps_order': [
-        'blog',
-        'blog.article',
-        'blog.comment',
-        'blog.category',
-        'blog.subcategory',
-        'blog.sitesettings',
+        'website',
+        'website.article',
+        'website.comment',
+        'website.category',
+        'website.subcategory',
+        'website.sitesettings',
         'auth',
     ],
     'extra_links': [
         {
-            'blog': [
+            'website': [
                 {
                     'name': 'Яндекс Метрика',
                     'admin_url': 'https://metrika.yandex.ru/dashboard?group=day&period=week&id='
@@ -381,12 +501,10 @@ DASHBOARD_CUSTOMIZATION = {
     ],
 }
 
-# Обрезается ли номер в заголовке статьи
-
-IS_CUT_NUMBER = True
-
-# Защита от спама с помощью Akismet 
+# ═══════════════════════════════════════════════════════════════════
+# Akismet
+# ═══════════════════════════════════════════════════════════════════
 
 IS_USE_AKISMET = env('IS_USE_AKISMET')
 AKISMET_API_KEY = env('AKISMET_API_KEY')
-AKISMET_BLOG_URL = env('AKISMET_BLOG_URL')
+AKISMET_URL = env('AKISMET_URL')
