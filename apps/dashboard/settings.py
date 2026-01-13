@@ -1,9 +1,9 @@
-from logging import getLogger
 from copy import deepcopy
 from django.conf import settings
+from logging import getLogger
+from typing import Any
 
 logger = getLogger(__name__)
-
 
 DASHBOARD_CUSTOMIZATION = {
     'dashboard_name': 'Админпанель',
@@ -20,9 +20,8 @@ DASHBOARD_CUSTOMIZATION = {
 }
 
 
-def get_settings() -> dict:
-    """
-    Возвращает словарь с настройками кастомизации, обновленный в соответствии
+def get_settings() -> dict[str, Any]:
+    """Возвращает словарь с настройками кастомизации, обновленный в соответствии
     с настройками, указанными в файле настроек проекта.
     """
     customization_settings = deepcopy(DASHBOARD_CUSTOMIZATION)

@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Notification(models.Model):
+    """Модель уведомлений."""
     created_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Время',

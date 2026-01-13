@@ -5,15 +5,20 @@ from .models import Notification
 
 
 @admin.action(description="Отметить как прочитанное")
-def make_read(modeladmin, request: HttpRequest, queryset: Notification):
-    """
-    Действие для отметки всех сообщений модели Уведомления прочитанными
-    """
+def make_read(modeladmin, request: HttpRequest, queryset: Notification) -> None:
+    """Действие для отметки всех уведомлений прочитанными."""
     queryset.update(read=True)
 
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
+    """Настройки администрирования модели уведомлений Notification.
+
+    Добавляет дополнительные кнопки для:
+    - отметки всех уведомлений прочитанными;
+    - удаления всех уведомлений.
+    """
+    
     list_display = ('created_date', 'notifications_message', 'read')
     list_per_page = 50
     actions = [make_read]
@@ -35,11 +40,13 @@ class NotificationAdmin(admin.ModelAdmin):
         return read_url + delete_url + urls
 
     def set_read(self, request: HttpRequest):
+        """Отмечает все уведомления прочитанными."""
         Notification.objects.all().update(read=True)
         self.message_user(request, 'Все уведомления отмечены как прочитанные.')
         return HttpResponseRedirect('../')
 
     def delete_all(self, request: HttpRequest):
+        """Удаляет все уведомления."""
         Notification.objects.all().delete()
         self.message_user(request, 'Все уведомления удалены.')
         return HttpResponseRedirect('../')

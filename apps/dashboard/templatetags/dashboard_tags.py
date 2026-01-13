@@ -1,79 +1,99 @@
 import requests
 import json
-
+import logging
+import html
+import re
 from copy import deepcopy
-from typing import Optional
-
+from typing import Optional, Any
 from django import template
 from django.apps import apps
 from django.urls import reverse
 from django.http import HttpRequest
-from django.utils.html import escape
+from django.core.cache import cache
+from django.utils.html import escape, strip_tags
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import get_text_list
 from django.utils.translation import gettext
 from django.contrib.admin.models import LogEntry
-
 from django.contrib.admin.templatetags.admin_list import result_list
 from django.contrib.admin.templatetags.base import InclusionAdminNode
-from django.utils.html import format_html
-
-from bs4 import BeautifulSoup
-
 from core.settings import YANDEX_METRIKA_TOKEN, YANDEX_METRIKA_COUNTER
 from ..settings import get_settings
 from ..utils import order_items
 from ..models import Notification
 
 register = template.Library()
+logger = logging.getLogger('website')
+
+# Константы для кэширования
+CACHE_TIMEOUT_SHORT = 60        # 1 минута
+CACHE_TIMEOUT_MEDIUM = 300      # 5 минут
+CACHE_TIMEOUT_LONG = 3600       # 1 час
 
 
 @register.simple_tag
 def sidebar_status(request: HttpRequest) -> str:
-    """
-    Если у пользователя боковая панель свёрнута, то возвращает
+    """Если у пользователя боковая панель свёрнута, то возвращает
     соответствующий CSS класс.
     """
     if request.COOKIES.get('menu', '') == 'closed':
         return 'sidebar-collapse'
-
-    return
-
-
-@register.simple_tag
-def get_customization_settings() -> dict:
-    """
-    Возвращает словарь с настройками кастомизации панели администратора.
-    """
-    customization_settings = get_settings()
-
-    return customization_settings
+    return ''
 
 
 @register.simple_tag
-def get_search_model() -> dict:
+def get_customization_settings() -> dict[str, Any]:
+    """Возвращает словарь с настройками кастомизации панели администратора."""
+    cache_key = 'admin_customization_settings'
+    settings = cache.get(cache_key)
+    
+    if settings is None:
+        settings = get_settings()
+        cache.set(cache_key, settings, CACHE_TIMEOUT_LONG)
+        logger.debug('Настройки кастомизации админки загружены и закэшированы')
+    
+    return settings
+
+
+@register.simple_tag
+def get_search_model() -> Optional[dict]:
     """
     Возвращает словарь с параметрами для поиска по модели.
+    Кэш: 1 час.
     """
-    settings = get_settings()
-
-    if not settings['search_model']:
-        return
-
-    search_model = settings['search_model']
-    search_model_params = {}
-    search_app_name, search_model_name = search_model.split('.')
-    search_model_params['search_url'] = reverse(f'admin:{search_app_name}_{search_model_name}_changelist')
-    search_model_meta = apps.get_registered_model(search_app_name, search_model_name)._meta
-    search_model_params['search_name'] = search_model_meta.verbose_name_plural.title()
-
+    cache_key = 'admin_search_model_params'
+    search_model_params = cache.get(cache_key)
+    
+    if search_model_params is None:
+        settings = get_settings()
+        
+        if not settings.get('search_model'):
+            return None
+        
+        search_model = settings['search_model']
+        search_model_params = {}
+        search_app_name, search_model_name = search_model.split('.')
+        
+        search_model_params['search_url'] = reverse(
+            f'admin:{search_app_name}_{search_model_name}_changelist'
+        )
+        
+        search_model_meta = apps.get_registered_model(
+            search_app_name, 
+            search_model_name
+        )._meta
+        
+        search_model_params['search_name'] = search_model_meta.verbose_name_plural.title()
+        
+        cache.set(cache_key, search_model_params, CACHE_TIMEOUT_LONG)
+        logger.debug('Параметры поиска модели загружены и закэшированы')
+    
     return search_model_params
 
 
 @register.simple_tag(takes_context=True)
-def get_apps(context: template.Context) -> list:
-    """
-    Возвращает список приложений, отфильтрованный и упорядоченный в соответ-
+def get_apps(context: template.Context) -> list[dict]:
+    """Возвращает список приложений, отфильтрованный и упорядоченный в соответ-
     ствии с настройками кастомизации.
     """
     available_apps = deepcopy(context.get('available_apps', []))
@@ -119,14 +139,13 @@ def get_apps(context: template.Context) -> list:
 
 
 @register.simple_tag(takes_context=True)
-def get_sidebar_menu(context: template.Context) -> list:
-    """
-    Возвращает список приложений, включающий в себя (при наличии) дополнитель-
-    ные ссылки, для меню на боковой панели.
+def get_sidebar_menu(context: template.Context) -> list[dict]:
+    """Возвращает список приложений, включающий в себя дополнительные 
+    ссылки, для меню на боковой панели.
     """
     menu = get_apps(context)
     settings = get_settings()
-    extra_links = settings.get('extra_links')
+    extra_links = settings.get('extra_links', [])
 
     if extra_links:
         for links_group in extra_links:
@@ -138,114 +157,106 @@ def get_sidebar_menu(context: template.Context) -> list:
 
     return menu
 
-
 @register.simple_tag
-def action_message_to_list(action: LogEntry) -> list:
+def action_message_to_list(action: LogEntry) -> list[dict]:
     """
     Возвращает отформатированный список со всеми действиями пользователя.
     """
     messages = []
 
-    if action.change_message and action.change_message[0] == '[':
-        try:
-            change_message = json.loads(action.change_message)
-        except json.JSONDecodeError:
-            return [action.change_message]
+    if not action.change_message:
+        return [{'message': ''}]
+    
+    if action.change_message[0] != '[':
+        return [{'message': gettext(action.change_message)}]
+    
+    try:
+        change_message = json.loads(action.change_message)
+    except json.JSONDecodeError as e:
+        logger.warning(f'Не удалось распарсить change_message: {e}')
+        return [{'message': action.change_message}]
 
-        for sub_message in change_message:
-            if 'added' in sub_message:
-                if sub_message['added']:
-                    sub_message['added']['name'] = gettext(
-                        sub_message['added']['name']
-                    )
-                    messages.append(
-                        {
-                            'message': (gettext('Added {name} «{object}».').format(**sub_message['added']))
-                        }
-                    )
-                else:
-                    messages.append({'message': (gettext('Added.'))})
-
-            elif 'changed' in sub_message:
-                sub_message['changed']['fields'] = get_text_list(
-                    [
-                        gettext(field_name) for field_name in sub_message['changed']['fields']
-                    ], 
-                    gettext('and'),
+    for sub_message in change_message:
+        if 'added' in sub_message:
+            if sub_message['added']:
+                sub_message['added']['name'] = gettext(
+                    sub_message['added']['name']
                 )
-                if 'name' in sub_message['changed']:
-                    sub_message['changed']['name'] = gettext(
-                        sub_message['changed']['name']
+                messages.append({
+                    'message': gettext('Added {name} «{object}».').format(
+                        **sub_message['added']
                     )
-                    messages.append(
-                        {
-                            'message': (gettext('Changed {fields}.').format(**sub_message['changed']))
-                        }
-                    )
-                else:
-                    messages.append(
-                        {
-                            'message': (gettext('Changed {fields}.').format(**sub_message['changed']))
-                        }
-                    )
+                })
+            else:
+                messages.append({'message': gettext('Added.')})
 
-            elif 'deleted' in sub_message:
-                sub_message['deleted']['name'] = gettext(sub_message['deleted']['name'])
-                messages.append(
-                    {
-                        'message': (gettext('Deleted «{object}».').format(**sub_message['deleted']))
-                    }
+        elif 'changed' in sub_message:
+            sub_message['changed']['fields'] = get_text_list(
+                [gettext(field_name) for field_name in sub_message['changed']['fields']], 
+                gettext('and'),
+            )
+            if 'name' in sub_message['changed']:
+                sub_message['changed']['name'] = gettext(
+                    sub_message['changed']['name']
                 )
+            messages.append({
+                'message': gettext('Changed {fields}.').format(
+                    **sub_message['changed']
+                )
+            })
 
-    return messages if len(messages) else [
-        {
-            'message': (gettext(action.change_message))
-        }
-    ]
+        elif 'deleted' in sub_message:
+            sub_message['deleted']['name'] = gettext(
+                sub_message['deleted']['name']
+            )
+            messages.append({
+                'message': gettext('Deleted «{object}».').format(
+                    **sub_message['deleted']
+                )
+            })
+
+    return messages if messages else [{'message': gettext(action.change_message)}]
 
 
 @register.filter
 def bold_first_word(text: str) -> SafeText:
-    """
-    Возвращает текст, в котором первое слово обернуто в тег <strong>.
-    """
-    text_words = escape(text).split()
-
-    if not len(text_words):
+    """Возвращает текст, в котором первое слово обернуто в тег <strong>."""
+    if not text:
         return ''
 
-    text_words[0] = '<strong>{}</strong>'.format(text_words[0])
-    text = ' '.join([word for word in text_words])
+    text_words = escape(text).split()
+
+    if not text_words:
+        return ''
+
+    text_words[0] = f'<strong>{text_words[0]}</strong>'
+    text = ' '.join(text_words)
 
     return mark_safe(text)
 
 
 @register.simple_tag
-def sort_header(header: dict, forloop: dict) -> str:
-    """
-    Вовзращает классы CSS для сортировки данных в столбцах таблицы модели.
-    """
+def sort_header(header: dict[str, Any], forloop: dict[str, Any]) -> str:
+    """Возвращает классы CSS для сортировки данных в столбцах таблицы модели."""
     classes = []
-    sorted, asc, desc = (
-        header.get('sorted'),
-        header.get('ascending'),
-        header.get('descending'),
+    sorted_col = header.get('sorted')
+    asc = header.get('ascending')
+    desc = header.get('descending')
+
+    is_checkbox_column = (
+        forloop.get('counter0') == 0 and
+        header.get('class_attrib') == ' class="action-checkbox-column"'
     )
 
-    is_checkbox_column_conditions = (
-        forloop['counter0'] == 0,
-        header.get('class_attrib') == ' class="action-checkbox-column"',
-    )
-
-    if all(is_checkbox_column_conditions):
+    if is_checkbox_column:
         classes.append('djn-checkbox-select-all')
 
-    if not header['sortable']:
+    if not header.get('sortable'):
         return ' '.join(classes)
 
-    if sorted and asc:
+    if sorted_col and asc:
         classes.append('sorting_asc')
-    elif sorted and desc:
+    elif sorted_col and desc:
         classes.append('sorting_desc')
     else:
         classes.append('sorting')
@@ -255,88 +266,113 @@ def sort_header(header: dict, forloop: dict) -> str:
 
 @register.simple_tag()
 def get_metrics() -> Optional[dict]:
-    """
-    Возвращает количество посителей и просмотров за день, неделю и месяц,
+    """Возвращает количество посетителей и просмотров за день, неделю и месяц,
     полученное из Яндекс Метрики.
     """
-    if YANDEX_METRIKA_COUNTER == 'counter':
-        return
+    if YANDEX_METRIKA_COUNTER == 'counter' or not YANDEX_METRIKA_TOKEN:
+        return None
     
-    API_URL = 'https://api-metrika.yandex.ru/stat/v1/data/bytime'
-    params = {
-        'date1': '30daysAgo',
-        'date2': 'today',
-        'metrics': 'ym:s:hits,ym:s:users',
-        'group': 'day',
-        'filters': "ym:s:isRobot=='No'",
-        'id': YANDEX_METRIKA_COUNTER,
-    }
-    req = requests.get(
-        API_URL, params=params, headers={
-            'Authorization': YANDEX_METRIKA_TOKEN
-        }
-    )
-    json_data = json.loads(req.text)
+    cache_key = 'yandex_metrika_stats'
+    results = cache.get(cache_key)
+    
+    if results is None:
+        try:
+            API_URL = 'https://api-metrika.yandex.ru/stat/v1/data/bytime'
+            params = {
+                'date1': '30daysAgo',
+                'date2': 'today',
+                'metrics': 'ym:s:hits,ym:s:users',
+                'group': 'day',
+                'filters': "ym:s:isRobot=='No'",
+                'id': YANDEX_METRIKA_COUNTER,
+            }
+            
+            req = requests.get(
+                API_URL,
+                params=params,
+                headers={'Authorization': YANDEX_METRIKA_TOKEN},
+                timeout=5
+            )
+            
+            req.raise_for_status()
+            json_data = req.json()
 
-    results = {}
-    results['today'] = {
-        'views': int(json_data['totals'][0][-1]),
-        'guests': int(json_data['totals'][1][-1])
-    }
-    results['week'] = {
-        'views': int(sum(json_data['totals'][0][-7:])),
-        'guests': int(sum(json_data['totals'][1][-7:])),
-    }
-    results['month'] = {
-        'views': int(sum(json_data['totals'][0])),
-        'guests': int(sum(json_data['totals'][1])),
-    }
+            results = {
+                'today': {
+                    'views': int(json_data['totals'][0][-1]),
+                    'guests': int(json_data['totals'][1][-1])
+                },
+                'week': {
+                    'views': int(sum(json_data['totals'][0][-7:])),
+                    'guests': int(sum(json_data['totals'][1][-7:])),
+                },
+                'month': {
+                    'views': int(sum(json_data['totals'][0])),
+                    'guests': int(sum(json_data['totals'][1])),
+                }
+            }
+            
+            # Кэшируем на 5 минут
+            cache.set(cache_key, results, CACHE_TIMEOUT_MEDIUM)
+            logger.debug("Статистика Яндекс.Метрики получена и закэширована")
+            
+        except requests.exceptions.Timeout:
+            logger.error("Таймаут при запросе к Яндекс Метрике")
+            return None
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Ошибка запроса к Яндекс Метрике: {e}")
+            return None
+        except (KeyError, IndexError, ValueError) as e:
+            logger.error(f"Ошибка парсинга данных Яндекс Метрики: {e}", exc_info=True)
+            return None
+        except Exception as e:
+            logger.error(f"Неожиданная ошибка при получении метрики: {e}", exc_info=True)
+            return None
 
     return results
 
 
 @register.simple_tag
-def get_notifications_message(list: list) -> SafeText:
-    """
-    Вовзращает сообщение уведомления из html.
-    """
-    message = list[2]
-    soup = BeautifulSoup(message, 'lxml')
-    notification = soup.find('td')
+def get_notifications_message(list_item) -> str:
+    """Возвращает текст уведомления из html."""
+    if len(list_item) < 3:
+        return ''
 
-    return format_html(notification.text)
+    message = list_item[2]
+    match = re.search(r'<td[^>]*>(.*?)</td>', message, re.DOTALL)
+    content = match.group(1) if match else message
+    content = html.unescape(content)
 
+    return mark_safe(content.strip())
+
+@register.simple_tag
+def get_notifications_date(list_item) -> str:
+    """Возвращает дату уведомления из html."""
+    if len(list_item) < 2:
+        return ''
+
+    message = list_item[1]
+    message = html.unescape(message)
+    text = strip_tags(message)
+    return text.strip()
 
 
 @register.simple_tag
-def get_notifications_date(list: list) -> SafeText:
-    """
-    Вовзращает дату уведомления из html.
-    """
-    message = list[1]
-    soup = BeautifulSoup(message, 'lxml')
-    date = soup.find('a')
+def get_notifications_status(notification: list[str]) -> bool:
+    """Возвращает статус уведомления."""
+    if not notification or len(notification) < 1:
+        return True
 
-    return format_html(date.text)
-
-
-@register.simple_tag
-def get_notifications_status(notification: Notification) -> bool:
-    """
-    Возвращает статус уведомления, как прочитанное или непрочитанное.
-    """
     field_read = notification[-1].split()
-
-    if field_read[-1].startswith('alt="False"'):
+    
+    if field_read and field_read[-1].startswith('alt="False"'):
         return False
     return True
 
 
 @register.tag(name="notifications_result_list")
 def notifications_result_list_tag(parser, token):
-    """
-    Возвращает шаблон для страницы с уведомлениями.
-    """
+    """Возвращает шаблон страницы с уведомлениями."""
     return InclusionAdminNode(
         parser,
         token,
@@ -348,9 +384,44 @@ def notifications_result_list_tag(parser, token):
 
 @register.simple_tag
 def get_notifications() -> int:
+    """Возвращает количество непрочитанных уведомлений с кэшированием.
+    Кэш: 1 минута.
     """
-    Возвращает количество непрочитанных уведомлений.
-    """
-    unread_notifications = Notification.objects.filter(read=False)
+    cache_key = 'unread_notifications_count'
+    count = cache.get(cache_key)
+    
+    if count is None:
+        try:
+            count = Notification.objects.filter(read=False).count()
+            cache.set(cache_key, count, CACHE_TIMEOUT_SHORT)
+            logger.debug(f'Количество непрочитанных уведомлений: {count}')
+        except Exception as e:
+            logger.error(f'Ошибка получения уведомлений: {e}', exc_info=True)
+            return 0
+    
+    return count
 
-    return unread_notifications.count()
+
+# ═══════════════════════════════════════════════════════════════════
+# Функции для управления кэшем админки
+# ═══════════════════════════════════════════════════════════════════
+
+def clear_admin_cache() -> None:
+    """Очищает весь кэш админ-панели."""
+    cache_keys = [
+        'admin_customization_settings',
+        'admin_search_model_params',
+        'yandex_metrika_stats',
+        'unread_notifications_count',
+    ]
+    
+    for key in cache_keys:
+        cache.delete(key)
+
+    logger.debug('Кэш админ-панели очищен')
+
+
+def clear_notifications_cache() -> None:
+    """Очищает кэш уведомлений."""
+    cache.delete('unread_notifications_count')
+    logger.debug('Кэш уведомлений очищен')

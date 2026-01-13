@@ -1,12 +1,12 @@
-from typing import Callable
+from typing import Callable, Any
 
 
-def order_items(original: list,
-                reference: list,
-                getter: Callable = lambda x: x
-                ) -> list:
-    """
-    Возвращает список, упорядоченный в соответствии с расположением элементов 
+def order_items(
+    original: list[Any], 
+    reference: list[Any],
+    getter: Callable = lambda x: x
+) -> list[Any]:
+    """Возвращает список, упорядоченный в соответствии с расположением элементов 
     в списке-образце.
     """
     ordered_indexes = []
@@ -16,5 +16,7 @@ def order_items(original: list,
         except:
             ind = len(original)
         ordered_indexes.append(ind)
+        
+    result = [y for x, y in sorted(zip(ordered_indexes, original), key=lambda x: x[0])]
 
-    return [y for x, y in sorted(zip(ordered_indexes, original), key=lambda x: x[0])]
+    return result
