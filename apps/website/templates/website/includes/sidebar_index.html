@@ -1,0 +1,37 @@
+{% load static %}
+{% load website_tags %}
+
+<nav class="main-nav">
+    <div class="nav-category">
+        <h3 class="category-title">
+            <i class="fa-solid fa-book-bookmark icon"></i> Учебник
+        </h3>
+        <ul>
+          {% get_textbook_categories as categories %} 
+          {% for category in categories %}
+            {% get_first_category_article category as article_url %}
+            <li>
+              <a href="{{ article_url }}">
+                {{ category.name|cut_number }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+    </div>
+    {% comment %} <div class="nav-category">
+        <h3 class="category-title">
+            <i class="fa-solid fa-lightbulb icon"></i> Проекты
+        </h3>
+        <ul>
+          {% get_projects_categories as categories %} 
+          {% for category in categories %}
+            {% get_first_category_article category as article_url %}
+            <li>
+              <a href="{{ article_url }}" >
+                {{ category.name|cut_number }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+    </div> {% endcomment %}
+</nav>

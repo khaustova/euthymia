@@ -1,0 +1,94 @@
+{% load static %}
+{% load mptt_tags %}
+{% load website_tags %}
+
+<section class="comments-section card">
+  <h2 id="comments">
+      {% with count=comments.count %}
+        {% get_comments_word count as comment_word %} {{ comments.count }} 
+        {{ comment_word }}
+      {% endwith %}
+  </h2>
+
+<form method="post" class="comment-form parent-comment-form {% if user.is_authenticated %}admin-comment-form{% endif %}" id="commentForm">
+  {% csrf_token %} 
+  {{ form.body }} 
+  <div class="comment-form-fields">
+    {% if not user.is_authenticated %}
+      {{ form.guest }}
+      {{ form.email }}
+    {% endif %}
+    <button type="submit">Отправить</button>
+  </div>
+</form>
+
+<div class="comments-list">
+  {% for node in comments %}
+    {% if node.level == 0 %}
+    <div class="comment" id="{{ node.id }}">
+      {% if node.author %}
+        {% if node.author.userprofile.avatar.url %}
+          <img src="{{ node.author.userprofile.avatar.url }}">
+        {% else %}
+          <img src="{% static 'website/img/robot_avatar.png' %}">
+        {% endif %}
+      {% else %}
+        <img src="{% static 'website/img/guest_avatar.png' %}">
+      {% endif %}
+      <div class="comment-body">
+        <div class="comment-header">
+          <span class="comment-author">{% if node.author %}
+            {% if node.author.first_name %}{{ node.author.first_name }}{% else %}{{ node.author.username }}{% endif%}
+          {% else %}
+            {{ node.guest }}
+          {% endif %}</span> 
+          <span class="comment-date">{{ node.created_date }}</span>
+        </div>
+        <p class="comment-text">
+            {{ node.body }}
+        </p>
+        <a href="javascript:void(0)" class="comment-reply-btn" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if node.author %}'{{ node.author.username }}'{% else %} '{{ node.guest }}'{% endif %}, {{ node.id }} )">
+          Ответить
+        </a>
+      </div>
+    </div>
+
+    {% with parent_id=node.id %}
+      {% if node.children.all %}
+      <div class="comment-replies">
+      {% for child in node.children.all %}
+        <div class="comment is-reply" id="{{ child.id }}">
+            {% if child.author %}
+              {% if child.author.userprofile.avatar.url %}
+                <img src="{{ child.author.userprofile.avatar.url }}">
+              {% else %}
+                <img src="{% static 'website/img/robot_avatar.png' %}">
+              {% endif %}
+            {% else %}
+              <img src="{% static 'website/img/guest_avatar.png' %}">
+            {% endif %}
+          <div class="comment-body">
+          <div class="comment-header">
+            <span class="comment-author">{% if child.author %}
+              {% if child.author.first_name %}{{ child.author.first_name }}{% else %}{{ child.author.username }}{% endif%}
+            {% else %}
+              {{ child.guest }}
+            {% endif %}</span>
+            <span class="comment-date">{{ child.created_date }}</span>
+          </div>
+          <p class="comment-text">
+            {{ child.body }}
+          </p>
+          <a href="javascript:void(0)" class="comment-reply-btn" onclick="{% if user.is_authenticated %}createAdminCommentForm{% else%}createGuestCommentForm{% endif %}({% if child.author %}'{{ child.author.username }}'{% else %}'{{ child.guest }}'{% endif %}, {{ parent_id }}, {{ child.id }} )">
+            Ответить
+          </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}  
+    {% endwith %}
+    {% endif %}
+  {% endfor %}
+</div>
+</section>

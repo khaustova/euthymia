@@ -1,0 +1,96 @@
+{% load static %}
+{% load website_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% block description %}{% endblock %}
+
+  <title>{% block title %}{% endblock %}</title>
+
+  <link href="{% static 'website/css/style.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'ckeditor/css/code-snippet.css' %}">
+  <link href="{% static 'vendor/awesome/css/all.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'website/img/icons/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'website/img/icons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'website/img/icons/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'website/img/icons/site.webmanifest' %}">
+  <script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+  <script src="{% static 'vendor/highlight.js/js/highlight.min.js' %}"></script>
+  <script src="{% static 'vendor/ckeditor/js/ckeditor.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  
+  {% block extra_head %}{% endblock %}
+  
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(94751613, "init", {
+      clickmap:true,
+      trackLinks:true,
+      accurateTrackBounce:true
+    });
+  </script>
+  <!-- /Yandex.Metrika counter -->
+</head>
+
+<body>
+  <noscript><div><img src="https://mc.yandex.ru/watch/94751613" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <header class="mobile-header">
+        <div class="logo-mobile">ЭВТЮМИЯ</div>
+        <div class="mobile-controls">
+            <button class="mobile-icon-btn" id="mobileSearchToggle">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="mobile-icon-btn" id="hamburgerBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-search-container" id="mobileSearchContainer">
+            <input type="text" placeholder="Найти статью..." class="mobile-search-input">
+        </div>
+    </header>
+    
+  <div class="main-container">
+    <aside class="sidebar" id="sidebarNav">
+    <button class="close-menu-btn" id="closeMenuBtn">&times;</button>
+        <div class="logo">
+        <a href="{% url 'website:index' %}">
+          <div class="logo-wrapper">
+            <div class="logo-1st-letter">E</div><div class="logo-other-letter">втюмия</div>
+          </div>
+          <div class="logo-slogan">учимся вместе</div>
+        </a>
+        </div>
+      {% block sidebar %}{% endblock %}
+    </aside>
+
+    <main class="content">
+      {% block about %}{% endblock %}
+      {% block content %}{% endblock %}
+      {% block pagination %}{% endblock %}
+      <div class="footer">&#169 Хаустова Ирина, <a href="{% url 'website:index' %}">euthymia.ru</a>, 2026. Все права защищены</div>
+    </main>
+  </div>
+  <div class="overlay" id="overlay"></div>
+  <script src="{% static 'website/js/script.js' %}" defer></script>
+  <script>
+    hljs.highlightAll();
+  </script>
+  
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

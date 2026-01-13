@@ -1,0 +1,53 @@
+{% extends 'website/base.html' %}
+{% load website_tags static %}
+
+{% block description %}
+  {% get_site_settings as site_settings %}
+  <meta name="description" content="{% if site_settings.site_description %}{{ site_settings.site_description }}{% else %}Образовательные материалы по основам Python: переменные, коллекции, функции, классы, модули и пакеты, работа с файлами. Основы работа с Anaconda.{% endif %}">
+{% endblock %}
+
+{% block title %}Эвтюмия - сайт с образовательными материалами по программированию 
+  {% if 'hot' in request.path %}
+    | Популярное
+  {% endif %}
+  {% if request.GET.page %}
+     [Страница {{ request.GET.page }}]
+  {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'website/includes/sidebar_index.html' %}
+{% endblock %}
+
+{% block about %}
+{% if is_paginated and page_obj.number == 1 %}
+  {% include 'website/includes/about.html' %}
+{% elif is_paginated == False %}
+  {% include 'website/includes/about.html' %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="controls">
+    <div class="sort-buttons">
+        {% url "website:index" as index %}
+        <a href="{% url 'website:index' %}" class="sort-btn{% if request.path == index %} active{% endif %}">По дате</a>
+        <a href="{% url 'website:hot_index' %}" class="sort-btn{% if not request.path == index %} active{% endif %}">По популярности</a>
+    </div>
+    <div class="search-wrapper">
+      <form action="{% url 'website:search' %}" method="get" autocomplete="on">
+      <div class="search_wrapper">
+        <input type="text" name="query" placeholder="Найти статью..." class="search-input" id="searchInput">
+        <button type="button" class="search-btn" id="searchBtn"><i class="fa fa-search"></i></button>
+      </form>
+      </div>
+    </div>
+</div>
+<div class="posts-list">
+  {% include 'website/includes/articles_summary.html' %}
+</div>
+{% endblock %}
+
+{% block pagination %}
+  {% include 'website/includes/pagination.html' %}
+{% endblock %}
